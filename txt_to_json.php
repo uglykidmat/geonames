@@ -30,10 +30,10 @@ if(file_exists("testCountries.txt") && filesize("testCountries.txt") > 0){
     echo "<br/>".gettype($testCountriesArray)."<br/><br/>";
 
     //_____________________Iterate array
-    foreach($testCountriesArray as $key=>$value)
-    {
-        $conents_arr[$key]  = rtrim($value, "\r");
-    }
+    // foreach($testCountriesArray as $key=>$value)
+    // {
+    //     $conents_arr[$key]  = rtrim($value, "\r");
+    // }
 
     }
 fclose($testCountriesTxt);
