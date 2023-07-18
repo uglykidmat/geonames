@@ -1,6 +1,6 @@
 <?php
 
-$zipcodes = file_get_contents("mxZipcodes.txt");
+$zipcodes = file_get_contents("usZipcodes.txt");
 
 $zipcodesArray = explode(PHP_EOL,$zipcodes);
 
@@ -16,7 +16,7 @@ foreach ($zipcodesArray as $key => $value) {
 
 foreach ($tableau as $key => $value) {
     // Je récupère mes valeurs intéréssantes
-    $cp = substr($tableau[$key][1],0,3);
+    $cp = substr($tableau[$key][1],0,2);
     //echo $cp;
     $n = $tableau[$key][4];
     //Si la clé CP existe
@@ -35,7 +35,7 @@ $tableaufinal = [];
 
 foreach ($tableauvalues as $key => $value) {
     if (count($tableauvalues[$key])>1){
-        print_r($key." => ". implode(", ", $tableauvalues[$key])."\n");
+        //print_r($key." => ". implode(", ", $tableauvalues[$key])."\n");
         //echo $cp.'":{"adminCode1":"'.$adminCode1.'"},<br/>';
         $tableaufinal[] = $key.'":{"adminCode1":"'. implode(", ", $tableauvalues[$key]).'"},<br/>';
     }

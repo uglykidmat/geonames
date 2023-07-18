@@ -1,6 +1,6 @@
 <?php
 
-$zipcodes = file_get_contents("mxZipcodes.txt");
+$zipcodes = file_get_contents("usZipcodes.txt");
 
 $zipcodesArray = explode(PHP_EOL,$zipcodes);
 
