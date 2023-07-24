@@ -10,7 +10,6 @@ $num=[];
 $tableaukeys = [];
 
 foreach ($zipcodesArray as $key => $value) {
-    //$value = preg_split("/\t+/", $value);
     $tableau[] = preg_split("/\t+/", $value);
 }
 
@@ -25,7 +24,5 @@ foreach ($tableau as $key => $value) {
             $cpAlreadyDone [] = $cp;    
             $adminCode1 = $tableau[$key][4];
             echo '"'.$cp.'":{"adminCode1":"'.$adminCode1.'"},<br/>';
-        }
-    
-}
-?>
+        }  
+    }

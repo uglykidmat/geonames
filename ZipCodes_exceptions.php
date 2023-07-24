@@ -10,7 +10,6 @@ $num=[];
 $tableaukeys = [];
 
 foreach ($zipcodesArray as $key => $value) {
-    //$value = preg_split("/\t+/", $value);
     $tableau[] = preg_split("/\t+/", $value);
 }
 
@@ -28,21 +27,13 @@ foreach ($tableau as $key => $value) {
         $tableauvalues["$cp"] = array();
         $tableauvalues[$cp][] = $n;
     }
-    // echo $cp."=>".$n;
 }
 
 $tableaufinal = [];
 
 foreach ($tableauvalues as $key => $value) {
     if (count($tableauvalues[$key])>1){
-        //print_r($key." => ". implode(", ", $tableauvalues[$key])."\n");
-        //echo $cp.'":{"adminCode1":"'.$adminCode1.'"},<br/>';
         $tableaufinal[] = $key.'":{"adminCode1":"'. implode(", ", $tableauvalues[$key]).'"},<br/>';
     }
 }
-
 print_r ($tableaufinal);
-// $jsonfinalpourgwendelapartdemila = json_encode($tableaufinal);
-// file_put_contents("jsonfinalpourgwendelapartdemila.json",$jsonfinalpourgwendelapartdemila);
-
-?>
