@@ -6,10 +6,8 @@ require (__DIR__ . '/config/init.php');
 echo 'Countries_id_and_geojson:<br/>';
 
 $geojsonPDO = createPDOandQuery('geojsonPDO','geojson');
-foreach ($geojsonPDO as $geojson) {
-     print_r ($geojson);
-     echo '<br>';
-}
+print_r ($geojsonPDO);
+echo '<br>';
 
 //______________________________Database Request
 $countries_level_1 = array();

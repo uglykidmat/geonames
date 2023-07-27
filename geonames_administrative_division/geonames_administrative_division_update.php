@@ -19,7 +19,7 @@ $geonames_url_cont = 'http://api.geonames.org/searchJSON?maxRows=' . $maxrows . 
 $client = new GuzzleHttp\Client();
 $res = $client->request('GET', $geonames_url_adm1);
 echo '<h1>Geonames Update :</h1>';
-echo 'fetching ' . $geonames_url_adm1 . '...<br/>';
+echo 'fetching ' . $geonames_url_adm1 . ' ...<br/>';
 
 //______________________________Geonames Response
 $responseArray = json_decode($res->getBody(), true);
