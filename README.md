@@ -12,6 +12,17 @@ Download/Installation
 ```bash
   composer install
 ```
+Mettre à jour les infos DB : 
+```doctrine
+  DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
+```
+puis 
+```
+php bin/console doctrine:database:create
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+```
+
 Main route :
 
 ```bash
