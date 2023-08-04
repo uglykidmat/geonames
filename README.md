@@ -28,8 +28,10 @@ Main route :
 ```bash
   https://localhost:8000/geonames
 ```
-## Usage/Examples (02/08/2023)
+## Usage/Examples (04/08/2023)
 The Geoname controller has a few functions :
+
+### Subdivisions
 
 Global search within database : 
 ```php
@@ -37,21 +39,33 @@ Global search within database :
 ```
 Add a geonames entry to the local database :
 ```php
-/geonames/globalgetjson/{int GeonamesId}
+/geonames/globalgetjson/{int $geonamesId}
 ```
 Information on a specific Geonames Id :
 ```php
-/geonames/geonamesid/{int geonamesId}
+/geonames/geonamesid/{int $geonamesId}
 ```
 Search by postal code :
 ```php
-/geonames/postalcodesearch/{int postalcode}
+/geonames/postalcodesearch/{int $postalcode}
 ```
 Search by nearby postal code :
 ```php
-/geonames/nearbypostalcode/{string countrycode}-{int postalcode}
+/geonames/nearbypostalcode/{string $countrycode}-{int postalcode}
 ```
 Search by Latitude and Longitude :
 ```php
-/geonames/{int lat}-{int lng}
+/geonames/{int $lat}-{int $lng}
 ```
+### Countries
+
+Add all country information
+```php
+/geonames/country/all
+```
+Search for a country :
+```php
+/geonames/country/{string $countryCode}
+```
+
+
