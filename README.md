@@ -35,8 +35,10 @@ The Geoname controller has a few functions :
 
 Global search within database : 
 ```php
-/geonames
+/geonames/search/{string $geoquery}-{string $featureCode}
 ```
+Search for a keyword $geoquery associated with a featureCode (ADM1,ADM1H,ADM2,ADM2,ADM3,ADM3,ADM4,ADM4,ADM5,ADM5,ADMD,ADMD,LTER,PC,PCLD,PCLF,PCLH,PCLI,PCLI,PCLS,PRSH,TERR,Z,ZNB). See https://www.geonames.org/export/codes.html for more information.
+
 Add a geonames entry to the local database :
 ```php
 /geonames/globalgetjson/{int $geonamesId}

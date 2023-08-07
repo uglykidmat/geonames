@@ -35,6 +35,9 @@ class GeonamesAdministrativeDivision
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $countryCode = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $countryId = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adminName1 = null;
 
@@ -66,13 +69,16 @@ class GeonamesAdministrativeDivision
     private ?int $adminId5 = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $adminCode1 = null;
+    private ?string $adminCode1 = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $adminCode2 = null;
+    private ?string $adminCode2 = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $adminCode3 = null;
+    private ?string $adminCode3 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $adminCode4 = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6, nullable: true)]
     private ?string $lat = null;
@@ -100,6 +106,15 @@ class GeonamesAdministrativeDivision
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $geojson = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $fcl = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $srtm3 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $astergdem = null;
 
     public function getId(): ?int
     {
@@ -310,38 +325,50 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getAdminCode1(): ?int
+    public function getAdminCode1(): ?string
     {
         return $this->adminCode1;
     }
 
-    public function setAdminCode1(?int $adminCode1): static
+    public function setAdminCode1(?string $adminCode1): static
     {
         $this->adminCode1 = $adminCode1;
 
         return $this;
     }
 
-    public function getAdminCode2(): ?int
+    public function getAdminCode2(): ?string
     {
         return $this->adminCode2;
     }
 
-    public function setAdminCode2(?int $adminCode2): static
+    public function setAdminCode2(?string $adminCode2): static
     {
         $this->adminCode2 = $adminCode2;
 
         return $this;
     }
 
-    public function getAdminCode3(): ?int
+    public function getAdminCode3(): ?string
     {
         return $this->adminCode3;
     }
 
-    public function setAdminCode3(?int $adminCode3): static
+    public function setAdminCode3(?string $adminCode3): static
     {
         $this->adminCode3 = $adminCode3;
+
+        return $this;
+    }
+
+    public function getAdminCode4(): ?string
+    {
+        return $this->adminCode4;
+    }
+
+    public function setAdminCode4(?string $adminCode4): static
+    {
+        $this->adminCode4 = $adminCode4;
 
         return $this;
     }
@@ -394,12 +421,12 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getTimezoneTimeZoneId(): ?int
+    public function getTimezoneTimeZoneId(): ?string
     {
         return $this->timezone_timeZoneId;
     }
 
-    public function setTimezoneTimeZoneId(?int $timezone_timeZoneId): static
+    public function setTimezoneTimeZoneId(?string $timezone_timeZoneId): static
     {
         $this->timezone_timeZoneId = $timezone_timeZoneId;
 
@@ -453,4 +480,53 @@ class GeonamesAdministrativeDivision
 
         return $this;
     }
+
+    public function getCountryId(): ?int
+    {
+        return $this->countryId;
+    }
+
+    public function setCountryId(?int $countryId): static
+    {
+        $this->countryId = $countryId;
+
+        return $this;
+    }
+
+    public function getFcl(): ?string
+    {
+        return $this->fcl;
+    }
+
+    public function setFcl(?string $fcl): static
+    {
+        $this->fcl = $fcl;
+
+        return $this;
+    }
+
+    public function getSrtm3(): ?int
+    {
+        return $this->srtm3;
+    }
+
+    public function setSrtm3(?int $srtm3): static
+    {
+        $this->srtm3 = $srtm3;
+
+        return $this;
+    }
+
+    public function getAstergdem(): ?int
+    {
+        return $this->astergdem;
+    }
+
+    public function setAstergdem(?int $astergdem): static
+    {
+        $this->astergdem = $astergdem;
+
+        return $this;
+    }
+
 }

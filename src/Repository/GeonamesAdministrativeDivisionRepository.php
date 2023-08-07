@@ -45,4 +45,18 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
            ->getOneOrNullResult()
        ;
    }
+
+   public function findByLatLng($lat,$lng): ?GeonamesAdministrativeDivision
+   {
+       return $this->createQueryBuilder('g')
+           ->andWhere('g.lat = :lat')
+           ->setParameter('lat', $lat)
+           ->andWhere('g.lng = :lng')
+           ->setParameter('lng', $lng)
+           ->getQuery()
+           ->getOneOrNullResult()
+        ;
+   }
+
+
 }
