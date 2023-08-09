@@ -18,7 +18,7 @@ class GeonamesTranslationController extends AbstractController
     {
         $getResponse = $translationEntityManager->getRepository(GeonamesTranslation::class)->findAll();
 
-        $result = array_map(static fn(GeonamesTranslation $value): array => $value->toArray(), $getResponse);
+        $result = array_map(static fn (GeonamesTranslation $value): array => $value->toArray(), $getResponse);
         //TODO: return paginated filtered list
         return new JsonResponse($result);
     }
@@ -39,7 +39,7 @@ class GeonamesTranslationController extends AbstractController
         //________________________________JSON Syntax check
         $postContent = (array) @json_decode($postRequest->getContent());
 
-        if (!(json_last_error() === JSON_ERROR_NONE)){
+        if (!(json_last_error() === JSON_ERROR_NONE)) {
             $postResponse->setStatusCode(422);
             $postResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
 
@@ -51,7 +51,7 @@ class GeonamesTranslationController extends AbstractController
 
         foreach ($postContent as $postKey => $postValue) {
             $postValue = (array)$postValue;
-            if(
+            if (
                 !isset($postValue["geonameId"]) ||
                 !isset($postValue["name"]) ||
                 !isset($postValue["countryCode"]) ||
@@ -63,8 +63,7 @@ class GeonamesTranslationController extends AbstractController
                 ($postValue["fcode"] == null) ||
                 ($postValue["locale"] == null) ||
                 $errorsInPostContent == true
-            )
-            {
+            ) {
                 $errorsInPostContent = true;
                 $postResponse->setStatusCode(400);
                 $postResponse->setContent('{"Json error" : "Missing fields or null values are not allowed"}');
@@ -80,17 +79,17 @@ class GeonamesTranslationController extends AbstractController
         foreach ($postContent as $postKey => $postValue) {
             $postValue = (array)$postValue;
             if ($translationEntityManager->getRepository(GeonamesTranslation::class)
-            ->findByGeonameId($postValue["geonameId"])){
+                ->findByGeonameId($postValue["geonameId"])
+            ) {
                 $dbInsertionFound[] = $postValue["geonameId"];
-            }
-            else{
+            } else {
                 $postTranslation = new GeonamesTranslation();
                 $postTranslation
-                ->setGeonameId($postValue["geonameId"])
-                ->setName($postValue["name"])
-                ->setCountryCode($postValue["countryCode"])
-                ->setFcode($postValue["fcode"])
-                ->setLocale($postValue["locale"]);
+                    ->setGeonameId($postValue["geonameId"])
+                    ->setName($postValue["name"])
+                    ->setCountryCode($postValue["countryCode"])
+                    ->setFcode($postValue["fcode"])
+                    ->setLocale($postValue["locale"]);
 
                 $translationEntityManager->persist($postTranslation);
 
@@ -101,16 +100,14 @@ class GeonamesTranslationController extends AbstractController
 
         $postResponse->setStatusCode(201);
 
-        if (count($dbInsertionDone) == 0){
-            $postResponse->setContent('{"POST" : "Success", "GeonameIds already found" : "'. implode(',',$dbInsertionFound) .'"}');
+        if (count($dbInsertionDone) == 0) {
+            $postResponse->setContent('{"POST" : "Success", "GeonameIds already found" : "' . implode(',', $dbInsertionFound) . '"}');
+        } else if (count($dbInsertionFound) == 0) {
+            $postResponse->setContent('{"POST" : "Success", "GeonameIds inserted" : "' . implode(',', $dbInsertionDone) . '"}');
+        } else {
+            $postResponse->setContent('{"POST" : "Success", "GeonameIds already found" : "' . implode(',', $dbInsertionFound) . '", "GeonameIds inserted" : "' . implode(',', $dbInsertionDone) . '"}');
         }
-        else if (count($dbInsertionFound) == 0){
-            $postResponse->setContent('{"POST" : "Success", "GeonameIds inserted" : "'. implode(',',$dbInsertionDone) .'"}');
-        }
-        else {
-            $postResponse->setContent('{"POST" : "Success", "GeonameIds already found" : "'. implode(',',$dbInsertionFound) .'", "GeonameIds inserted" : "'. implode(',',$dbInsertionDone) .'"}');
-        }
-        
+
         return $postResponse;
     }
 
@@ -130,7 +127,7 @@ class GeonamesTranslationController extends AbstractController
         //________________________________JSON Syntax check
         $patchContent = (array) @json_decode($patchRequest->getContent());
 
-        if (!(json_last_error() === JSON_ERROR_NONE)){
+        if (!(json_last_error() === JSON_ERROR_NONE)) {
             $patchResponse->setStatusCode(422);
             $patchResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
 
@@ -144,22 +141,23 @@ class GeonamesTranslationController extends AbstractController
         foreach ($patchContent as $patchKey => $patchValue) {
             $patchValue = (array)$patchValue;
             if ($translationToPatch = $translationEntityManager->getRepository(GeonamesTranslation::class)
-            ->findByGeonameId($patchValue["geonameId"])){
+                ->findByGeonameId($patchValue["geonameId"])
+            ) {
                 $translationToPatch = $translationToPatch[0];
                 // dd($translationToPatch);
-                if(isset($patchValue["geonameId"]) && $patchValue["geonameId"] != "null"){
+                if (isset($patchValue["geonameId"]) && $patchValue["geonameId"] != "null") {
                     $translationToPatch->setGeonameId($patchValue["geonameId"]);
                 }
-                if(isset($patchValue["name"]) && $patchValue["name"] != "null"){
+                if (isset($patchValue["name"]) && $patchValue["name"] != "null") {
                     $translationToPatch->setName($patchValue["name"]);
                 }
-                if(isset($patchValue["countryCode"]) && $patchValue["countryCode"] != "null"){
+                if (isset($patchValue["countryCode"]) && $patchValue["countryCode"] != "null") {
                     $translationToPatch->setCountryCode($patchValue["countryCode"]);
                 }
-                if(isset($patchValue["fcode"]) && $patchValue["fcode"] != "null"){
+                if (isset($patchValue["fcode"]) && $patchValue["fcode"] != "null") {
                     $translationToPatch->setFcode($patchValue["fcode"]);
                 }
-                if(isset($patchValue["locale"]) && $patchValue["locale"] != "null"){
+                if (isset($patchValue["locale"]) && $patchValue["locale"] != "null") {
                     $translationToPatch->setLocale($patchValue["locale"]);
                 }
 
@@ -170,7 +168,7 @@ class GeonamesTranslationController extends AbstractController
         $translationEntityManager->flush();
 
         $patchResponse->setStatusCode(200);
-        $patchResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "'. implode(',',$dbPatchDone) .'"}');
+        $patchResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "' . implode(',', $dbPatchDone) . '"}');
 
         return $patchResponse;
     }
@@ -191,7 +189,7 @@ class GeonamesTranslationController extends AbstractController
         //________________________________JSON Syntax check
         $deleteContent = (array) @json_decode($deleteRequest->getContent());
 
-        if (!(json_last_error() === JSON_ERROR_NONE)){
+        if (!(json_last_error() === JSON_ERROR_NONE)) {
             $deleteResponse->setStatusCode(422);
             $deleteResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
 
@@ -203,7 +201,8 @@ class GeonamesTranslationController extends AbstractController
         foreach ($deleteContent as $deleteKey => $deleteValue) {
             $deleteValue = (array)$deleteValue;
             if ($translationToDelete = $translationEntityManager->getRepository(GeonamesTranslation::class)
-            ->findByGeonameId($deleteValue["geonameId"])){
+                ->findByGeonameId($deleteValue["geonameId"])
+            ) {
                 $translationToDelete = $translationToDelete[0];
                 $translationEntityManager->remove($translationToDelete);
 
@@ -213,7 +212,7 @@ class GeonamesTranslationController extends AbstractController
         $translationEntityManager->flush();
 
         $deleteResponse->setStatusCode(200);
-        $deleteResponse->setContent('{"DELETE" : "Success", "GeonameIds deleted" : "'. implode(',',$dbDeleteDone) .'"}');
+        $deleteResponse->setContent('{"DELETE" : "Success", "GeonameIds deleted" : "' . implode(',', $dbDeleteDone) . '"}');
 
         return $deleteResponse;
     }
@@ -222,22 +221,21 @@ class GeonamesTranslationController extends AbstractController
     public function update(EntityManagerInterface $translationEntityManager): Response
     {
         $translationResponse = '';
-        $translationJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_translation.json'),true);
+        $translationJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_translation.json'), true);
 
         foreach ($translationJson as $translationJsonKey => $translationJsonValue) {
             if (!$translationEntityManager->getRepository(GeonamesTranslation::class)
-            ->findByCountryCode($translationJsonValue["countryCode"])){
+                ->findByCountryCode($translationJsonValue["countryCode"])) {
                 $translation = new GeonamesTranslation();
                 $translation
-                ->setGeonameId($translationJsonValue["geonameId"])
-                ->setName($translationJsonValue["name"])
-                ->setCountryCode($translationJsonValue["countryCode"])
-                ->setFcode($translationJsonValue["fcode"])
-                ->setLocale($translationJsonValue["locale"]);
+                    ->setGeonameId($translationJsonValue["geonameId"])
+                    ->setName($translationJsonValue["name"])
+                    ->setCountryCode($translationJsonValue["countryCode"])
+                    ->setFcode($translationJsonValue["fcode"])
+                    ->setLocale($translationJsonValue["locale"]);
 
                 $translationEntityManager->persist($translation);
-            }
-            else {
+            } else {
                 //$translationResponse .= 'KO';
             }
         }
