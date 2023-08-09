@@ -130,6 +130,15 @@ Running the tests :
 ```bash
 php vendor/bin/phpunit --testdox
 ```
+(countryCode being a 2-letter string)
+
+### Translations
+
+Update your translations base (be sure you have 'geonames_translation.json' in your 'base_data' folder) :
+```php
+/geonames/translation/update
+``` 
+
 
 Translation API endpoint :
 ```php
