@@ -2,29 +2,48 @@
 // src/Controller/GeonamesController.php
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\GeonamesAdministrativeDivision;
 use App\Entity\GeonamesCountry;
-use App\Repository\GeonamesAdministrativeDivisionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpClient\HttpClient;
+use App\Entity\GeonamesAdministrativeDivision;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 
+#[Route('/geonames', name: 'geonames_base')]
 class GeonamesController extends AbstractController
 {
     private $token = 'mathieugtr';
     public $sentence = 'Hello, I\'m the controller.';
 
-    #[Route('/geonames/search/{geoquery}-{featurecode}', name: 'geonames')]
+    #[Route('/welcome', name: 'geonames_welcome')]
+    public function welcome(RouterInterface $router){
+
+        $geonamesPackage = new Package(new EmptyVersionStrategy());
+
+        $geonamesRouteCollection = $router->getRouteCollection();
+        $allRoutes = $geonamesRouteCollection->all();
+        
+        return $this->render(
+            'Geonames/geonameswelcome.html.twig', [
+                'allRoutes' => $allRoutes,
+                'geonameshomebackgroundjpg' => $geonamesPackage->getUrl('geonames_home_background.jpg'),
+            ]
+        );
+    }
+
+    #[Route('/search/{geoquery}-{featurecode}', name: 'geonames')]
     public function geonamesSearchJSON(EntityManagerInterface $geonamesEntityManager, $geoquery, $featurecode): Response
     {
         //________________________Geonames global search (https://www.geonames.org/export/geonames-search.html)
         $geonamesUrl = 'http://api.geonames.org/searchJSON?maxRows=10&q=' . $geoquery . '&username=' . $this->token . '&featureCode=' . $featurecode . '&style=FULL';
 
         $geonamesClient = HttpClient::create();
-        $geonamesResponse = $geonamesClient->request('GET', $geonamesUrl, ['timeout' => 30]);
+        $geonamesResponse = $geonamesClient->request('GET', $geonamesUrl);
         $geonamesContent = $geonamesResponse->getContent();
         $geonamesContentJSON = json_decode($geonamesContent,true);
         //$geonamesJSONfilesys = new Filesystem();
@@ -77,20 +96,13 @@ class GeonamesController extends AbstractController
         }
         $geonamesEntityManager->flush();
 
-        return new Response(
-            // dd('<html><body><h1>Geonames</h1><h2>'
-            // . $this->sentence .
-            // '</h2>
-            // <section>'
-            // . $geonamesContent .
-            // '</section></body></html>')
-        );
+        return new Response();
     }
 
     // ----------------------------------------------------------------
     //GLOBAL GET http://api.geonames.org/getJSON?geonameId=3035033&username=mathieugtr
     // ----------------------------------------------------------------
-    #[Route('/geonames/globalgetjson/{geonamesId}', name: 'geonames_globalgetjson')]
+    #[Route('/globalgetjson/{geonamesId}', name: 'geonames_globalgetjson')]
     function geonamesGlobalGetJSON(EntityManagerInterface $geonamesEntityManager,int $geonamesId) {
         $geonamesUrl = 'http://api.geonames.org/getJSON?geonameId=' . $geonamesId . '&username=' . $this->token.'&lang=fr';
 
@@ -137,24 +149,23 @@ class GeonamesController extends AbstractController
             }
     }
 
-    #[Route('/geonames/nearbypostalcode/{countrycode}-{postalcode}', name: 'geonames_nearbypostalcode')]
+    #[Route('/nearbypostalcode/{countrycode}-{postalcode}', name: 'geonames_nearbypostalcode')]
     public function geonamesFindNearbyPostalCodes(EntityManagerInterface $geonamesEntityManager, string $countrycode, int $postalcode): Response
     {
         //________________________Geonames findNearbyPostalCodes search (https://www.geonames.org/export/web-services.html#findNearbyPostalCodes)
-        //________________________Example https://127.0.0.1:8000/geonames/nearbypostalcode/FR-73000
+        //________________________Example https://127.0.0.1:8000/nearbypostalcode/FR-73000
         $geonamesUrl = 'http://api.geonames.org/findNearbyPostalCodesJSON?formatted=true&postalcode='.$postalcode.'&country='.$countrycode.'&radius=10&username='.$this->token.'&style=full';
 
         $geonamesClient = HttpClient::create();
         $geonamesResponse = $geonamesClient->request('GET', $geonamesUrl, ['timeout' => 30]);
         $geonamesContent = $geonamesResponse->getContent();
-        //$geonamesContentJSON = json_decode($geonamesContent,true);
 
         return new Response(
             $geonamesContent
         );
     }
 
-    #[Route('/geonames/postalcodesearch/{postalcode}', name: 'geonames_postalcodesearch')]
+    #[Route('/postalcodesearch/{postalcode}', name: 'geonames_postalcodesearch')]
     public function geonamesPostalCodeSearch(EntityManagerInterface $geonamesEntityManager, int $postalcode): Response
     {
         $geonamesUrl = 'http://api.geonames.org/postalCodeSearchJSON?formatted=true&postalcode=' . $postalcode . '&maxRows=2&username='.$this->token.'&style=full';
@@ -169,7 +180,7 @@ class GeonamesController extends AbstractController
         );
     }
 
-    #[Route('/geonames/geonamesid/{geonamesId}', name: 'geonames_id')]
+    #[Route('/geonamesid/{geonamesId}', name: 'geonames_id')]
     public function geonamesId(EntityManagerInterface $geonamesEntityManager, int $geonamesId): Response
     {
         $geonamesIdResponse = $geonamesEntityManager->getRepository(GeonamesAdministrativeDivision::class)
@@ -183,7 +194,7 @@ class GeonamesController extends AbstractController
     // ----------------------------------------------------------------
     //_______________________________________________________TODO
     // ----------------------------------------------------------------
-    #[Route('/geonames/latlng/{lat}-{lng}', name: 'geonames_latlng')]
+    #[Route('/latlng/{lat}-{lng}', name: 'geonames_latlng')]
     public function geonamesLatLng(EntityManagerInterface $geonamesEntityManager, int $lat, int $lng): Response
     {
         $geoNamesUrl = 'http://api.geonames.org/countrySubdivisionJSON?lat=' . $lat . '&lng=' . $lng . '&maxRows=10&radius=40&username='.$this->token;
@@ -200,10 +211,10 @@ class GeonamesController extends AbstractController
         );
     }
 
-    #[Route('/geonames/country/all', name: 'geonames_country_all')]
+    #[Route('/country/all', name: 'geonames_country_all')]
     public function geonamesGetAllCountries(EntityManagerInterface $geonamesEntityManager): Response
     {
-        $countriesListJSON = json_decode(file_get_contents(__DIR__.'/../../public/geonames_countrycodes_all.json'), true);
+        $countriesListJSON = json_decode(file_get_contents(__DIR__.'/../../public_countrycodes_all.json'), true);
         //dd($countriesListJSON);
         foreach ($countriesListJSON as $countryCode => $entries) {
             $geonamesCountryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
@@ -232,9 +243,7 @@ class GeonamesController extends AbstractController
                 ->setCountryName($geonamesContent['geonames'][0]['countryName'])
                 ->setContinentName($geonamesContent['geonames'][0]['continentName'])
                 ->setCurrencyCode($geonamesContent['geonames'][0]['currencyCode']);
-                //->setLat($geonamesContent['geonames'][0]['lat'])
-                //->setLng($geonamesContent['geonames'][0]['lng'])
-                //->setGeojson($geonamesContent['geonames'][0]['geojson']);
+
                 $geonamesEntityManager->persist($geonamesCountry);
                 $geonamesEntityManager->flush();
     
@@ -251,7 +260,7 @@ class GeonamesController extends AbstractController
     // ----------------------------------------------------------------
     //_______________________________________________________TODO
     // ----------------------------------------------------------------
-    #[Route('/geonames/country/{countryCode}', name: 'geonames_country')]
+    #[Route('/country/{countryCode}', name: 'geonames_country')]
     public function getCountry(EntityManagerInterface $geonamesEntityManager,string $countryCode): Response
     {
         $geonamesCountryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
@@ -280,9 +289,7 @@ class GeonamesController extends AbstractController
             ->setCountryName($geonamesContent['geonames'][0]['countryName'])
             ->setContinentName($geonamesContent['geonames'][0]['continentName'])
             ->setCurrencyCode($geonamesContent['geonames'][0]['currencyCode']);
-            //->setLat($geonamesContent['geonames'][0]['lat'])
-            //->setLng($geonamesContent['geonames'][0]['lng'])
-            //->setGeojson($geonamesContent['geonames'][0]['geojson']);
+
             $geonamesEntityManager->persist($geonamesCountry);
             $geonamesEntityManager->flush();
 
@@ -298,15 +305,4 @@ class GeonamesController extends AbstractController
             );
         }
     }
-
-    // #[Route('/geonames/subdivision/{lat}-{lng}', name: 'geonames_subdivision_lat')]
-    // public function getCountrySubdivision(EntityManagerInterface $geonamesEntityManager): Response
-    // {
-
-    //     return new Response(  
-    //         print_r("yab")
-    //     );
-    // }
-
-
 }

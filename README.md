@@ -69,5 +69,16 @@ Search for a country :
 ```php
 /geonames/country/{string $countryCode}
 ```
-
-
+Update country level (be sure you have 'geonames_country_level.json' in your 'base_data' folder) :
+```php
+/geonames/country/level/update
+```
+Information about all country-levels:
+```php
+/geonames/country/level/get
+```
+Information about a specific country :
+```php
+/geonames/country/level/get/{string $countryCode}
+```
+(countryCode being a 2-letter string)

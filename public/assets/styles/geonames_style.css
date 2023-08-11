@@ -1,0 +1,38 @@
+*{
+    margin:0;
+    padding:0;
+    color:azure;
+}
+a{
+    color:azure;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+body{
+    background-image : url('/assets/images/geonames_home_background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display:flex;
+    flex-flow: column wrap;
+    align-items: center;
+    row-gap: 1em;
+    justify-items: space-around;
+}
+
+header {
+    margin-top: 1em;
+    padding:1em;
+    border-radius: 1em;
+    background:rgba(0, 0, 0, .4);
+
+}
+section {
+    padding:1em;
+    border-radius: 1em;
+    background:rgba(0, 0, 0, .4);
+
+}

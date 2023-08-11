@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+{% block title %}Hello Geonames !{% endblock %}
+{% block body %}
+<header id="geonames_header" role="header">
+    <h1>🌎 Hello Geonames ! 🌍</h1>
+</header>
+
+<section class="geonames_content">
+    <ul>
+        {% for route in allRoutes %}
+            {% if not (route.path starts with '/_') and not (route.path == '/') and not (route.path == '/geonames/welcome')%}
+                <li><a href="{{route.path}}" target="_blank">{{route.path}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
