@@ -1,7 +1,7 @@
 <?php
 require (__DIR__ . '/config/init.php');
 
-use GuzzleHttp;
+use Symfony\Component\HttpClient\HttpClient;
 
 //______________________________Variables
 $geonames_username = 'mathieugtr';
@@ -16,13 +16,17 @@ $geonames_url_cont = 'http://api.geonames.org/searchJSON?maxRows=' . $maxrows . 
 
 //______________________________Geonames Request
 
-$client = new GuzzleHttp\Client();
-$res = $client->request('GET', $geonames_url_adm1);
+$Client = HttpClient::create();
+$Response = $Client->request('GET', $geonames_url_adm1, ['timeout' => 30]);
+$Content = $Response->getContent();
+
+
+$res = $Client->request('GET', $geonames_url_adm1);
 echo '<h1>Geonames Update :</h1>';
 echo 'fetching ' . $geonames_url_adm1 . ' ...<br/>';
 
 //______________________________Geonames Response
-$responseArray = json_decode($res->getBody(), true);
+$responseArray = json_decode($Content, true);
 $geonames_data = $responseArray['geonames'];
 
 $geonamesIdsDone = 0;
