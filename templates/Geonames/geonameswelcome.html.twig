@@ -8,7 +8,7 @@
 <section class="geonames_content">
     <ul>
         {% for route in allRoutes %}
-            {% if not (route.path starts with '/_') and not (route.path == '/') and not (route.path == '/geonames/welcome')%}
+            {% if not (route.path starts with '/_') and not (route.path == '/')%}
                 <li><a href="{{route.path}}" target="_blank">{{route.path}}</a></li>
             {% endif %}
         {% endfor %}
