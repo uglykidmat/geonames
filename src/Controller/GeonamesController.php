@@ -37,23 +37,23 @@ class GeonamesController extends AbstractController
     }
 
     #[Route('/search/{geoquery}-{featurecode}', name: 'search_geoquery_featurecode')]
-    public function SearchJSON(EntityManagerInterface $EntityManager, $geoquery, $featurecode): Response
+    public function searchJSON(EntityManagerInterface $entityManager, $geoquery, $featurecode): Response
     {
         //________________________Geonames global search (https://www.geonames.org/export/geonames-search.html)
-        $Url = 'http://api.geonames.org/searchJSON?maxRows=10&q=' . $geoquery . '&username=' . $this->token . '&featureCode=' . $featurecode . '&style=FULL';
+        $url = 'http://api.geonames.org/searchJSON?maxRows=10&q=' . $geoquery . '&username=' . $this->token . '&featureCode=' . $featurecode . '&style=FULL';
 
-        $Client = HttpClient::create();
-        $Response = $Client->request('GET', $Url);
-        $Content = $Response->getContent();
-        $ContentJSON = json_decode($Content,true);
+        $client = HttpClient::create();
+        $response = $client->request('GET', $url);
+        $content = $response->getContent();
+        $contentJSON = json_decode($content,true);
         //$geonamesJSONfilesys = new Filesystem();
-        //$geonamesJSONfilesys->dumpFile('geonames.json', $Content);
+        //$geonamesJSONfilesys->dumpFile('geonames.json', $content);
 
-        foreach ($ContentJSON["geonames"] as $column => $value) {
-            if (!$EntityManager->getRepository(GeonamesAdministrativeDivision::class)
+        foreach ($contentJSON["geonames"] as $column => $value) {
+            if (!$entityManager->getRepository(GeonamesAdministrativeDivision::class)
             ->findByGeonameId($value["geonameId"])) {
-                $SubDivision = new GeonamesAdministrativeDivision();
-                $SubDivision
+                $subDivision = new GeonamesAdministrativeDivision();
+                $subDivision
                 ->setGeonameId($value["geonameId"])
                 ->setName($value["name"])
                 ->setAsciiName($value["asciiName"] ?? null)
@@ -86,7 +86,7 @@ class GeonamesController extends AbstractController
                 ->setLng($value["lng"] ?? null)
                 ->setPopulation($value["population"] ?? null)
                 ->setFcode($value["fcode"] ?? null);
-                $EntityManager->persist($SubDivision);
+                $entityManager->persist($subDivision);
 
                 echo 'Persisted for <b>'.$value["geonameId"].'</b><br/>';
             }
@@ -94,7 +94,7 @@ class GeonamesController extends AbstractController
                 echo '<b>'.$value["geonameId"].'</b> found in database : '. $value["toponymName"] .' !<br/>';
             }
         }
-        $EntityManager->flush();
+        $entityManager->flush();
 
         return new Response();
     }
@@ -102,34 +102,34 @@ class GeonamesController extends AbstractController
     // ----------------------------------------------------------------
     //GLOBAL GET http://api.geonames.org/getJSON?geonameId=3035033&username=mathieugtr
     // ----------------------------------------------------------------
-    #[Route('/globalgetjson/{geonamesId}', name: 'globalgetjson')]
-    function GlobalGetJSON(EntityManagerInterface $EntityManager,int $geonamesId) {
-        $Url = 'http://api.geonames.org/getJSON?geonameId=' . $geonamesId . '&username=' . $this->token.'&lang=fr';
+    #[Route('/globalGetJSON/{geonamesId}', name: 'globalGetJSON')]
+    function globalGetJSON(EntityManagerInterface $entityManager,int $geonamesId) {
+        $url = 'http://api.geonames.org/getJSON?geonameId=' . $geonamesId . '&username=' . $this->token.'&lang=fr';
 
-        if (!$EntityManager->getRepository(GeonamesAdministrativeDivision::class)->findByGeonameId($geonamesId))
+        if (!$entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByGeonameId($geonamesId))
             {
-                $Client = HttpClient::create();
-                $Response = $Client->request('GET', $Url, ['timeout' => 30]);
-                $Content = $Response->getContent();
-                $ContentJSON = json_decode($Content,true);
+                $client = HttpClient::create();
+                $response = $client->request('GET', $url, ['timeout' => 30]);
+                $content = $response->getContent();
+                $contentJSON = json_decode($content,true);
 
-                $SubDivision = new GeonamesAdministrativeDivision();
+                $subDivision = new GeonamesAdministrativeDivision();
                 
-                $SubDivision
-                ->setName($ContentJSON["name"])
-                ->setGeonameId($ContentJSON["geonameId"])
-                ->setToponymName($ContentJSON["toponymName"])
-                ->setCountryCode($ContentJSON["countryCode"])
-                ->setAdminName1($ContentJSON["adminName1"])
-                ->setAdminCode1($ContentJSON["adminCode1"])
+                $subDivision
+                ->setName($contentJSON["name"])
+                ->setGeonameId($contentJSON["geonameId"])
+                ->setToponymName($contentJSON["toponymName"])
+                ->setCountryCode($contentJSON["countryCode"])
+                ->setAdminName1($contentJSON["adminName1"])
+                ->setAdminCode1($contentJSON["adminCode1"])
                 //->setAdminCodes1($value["adminCodes1"])
-                ->setLat($ContentJSON["lat"])
-                ->setLng($ContentJSON["lng"])
-                ->setPopulation($ContentJSON["population"])
-                ->setFcode($ContentJSON["fcode"]);
+                ->setLat($contentJSON["lat"])
+                ->setLng($contentJSON["lng"])
+                ->setPopulation($contentJSON["population"])
+                ->setFcode($contentJSON["fcode"]);
 
-                $EntityManager->persist($SubDivision);
-                $EntityManager->flush();
+                $entityManager->persist($subDivision);
+                $entityManager->flush();
                 
                 return new Response(
                     '<b>Insertion OK for ' . $geonamesId . '</b><br/><br/>
@@ -138,7 +138,7 @@ class GeonamesController extends AbstractController
             }
         else
             {
-                $geonameIdFound = $EntityManager->getRepository(GeonamesAdministrativeDivision::class)
+                $geonameIdFound = $entityManager->getRepository(GeonamesAdministrativeDivision::class)
                 ->findByGeonameId($geonamesId);
                 $geonameIdFound = $geonameIdFound[0]->getGeonameId();
 
@@ -150,40 +150,40 @@ class GeonamesController extends AbstractController
     }
 
     #[Route('/nearbypostalcode/{countrycode}-{postalcode}', name: 'nearbypostalcode')]
-    public function FindNearbyPostalCodes(EntityManagerInterface $EntityManager, string $countrycode, int $postalcode): Response
+    public function findNearbyPostalCodes(EntityManagerInterface $entityManager, string $countrycode, int $postalcode): Response
     {
         //________________________Geonames findNearbyPostalCodes search (https://www.geonames.org/export/web-services.html#findNearbyPostalCodes)
         //________________________Example https://127.0.0.1:8000/nearbypostalcode/FR-73000
-        $Url = 'http://api.geonames.org/findNearbyPostalCodesJSON?formatted=true&postalcode='.$postalcode.'&country='.$countrycode.'&radius=10&username='.$this->token.'&style=full';
+        $url = 'http://api.geonames.org/findNearbyPostalCodesJSON?formatted=true&postalcode='.$postalcode.'&country='.$countrycode.'&radius=10&username='.$this->token.'&style=full';
 
-        $Client = HttpClient::create();
-        $Response = $Client->request('GET', $Url, ['timeout' => 30]);
-        $Content = $Response->getContent();
+        $client = HttpClient::create();
+        $response = $client->request('GET', $url, ['timeout' => 30]);
+        $content = $response->getContent();
 
         return new Response(
-            $Content
+            $content
         );
     }
 
     #[Route('/postalcodesearch/{postalcode}', name: 'postalcodesearch')]
-    public function PostalCodeSearch(EntityManagerInterface $EntityManager, int $postalcode): Response
+    public function PostalCodeSearch(EntityManagerInterface $entityManager, int $postalcode): Response
     {
-        $Url = 'http://api.geonames.org/postalCodeSearchJSON?formatted=true&postalcode=' . $postalcode . '&maxRows=2&username='.$this->token.'&style=full';
+        $url = 'http://api.geonames.org/postalCodesearchJSON?formatted=true&postalcode=' . $postalcode . '&maxRows=2&username='.$this->token.'&style=full';
 
         // TODO
-        // if (!$EntityManager->getRepository(GeonamesAdministrativeDivision::class)
+        // if (!$entityManager->getRepository(GeonamesAdministrativeDivision::class)
         //         ->findByPostalCode($postalcode)) {
         //         }
 
         return new Response(
-            //$Content
+            //$content
         );
     }
 
     #[Route('/geonamesid/{geonamesId}', name: 'geonames_id')]
-    public function geonamesId(EntityManagerInterface $EntityManager, int $geonamesId): Response
+    public function geonamesId(EntityManagerInterface $entityManager, int $geonamesId): Response
     {
-        $geonamesIdResponse = $EntityManager->getRepository(GeonamesAdministrativeDivision::class)
+        $geonamesIdResponse = $entityManager->getRepository(GeonamesAdministrativeDivision::class)
                 ->findByGeonameId($geonamesId);
 
         return new Response(
@@ -194,58 +194,58 @@ class GeonamesController extends AbstractController
     // ----------------------------------------------------------------
     //_______________________________________________________TODO
     // ----------------------------------------------------------------
-    #[Route('/latlng/{lat}-{lng}', name: 'latlng')]
-    public function LatLng(EntityManagerInterface $EntityManager, int $lat, int $lng): Response
+    #[Route('/latLng/{lat}-{lng}', name: 'latLng')]
+    public function latLng(EntityManagerInterface $entityManager, int $lat, int $lng): Response
     {
-        $Url = 'http://api.geonames.org/countrySubdivisionJSON?lat=' . $lat . '&lng=' . $lng . '&maxRows=10&radius=40&username='.$this->token;
+        $url = 'http://api.geonames.org/countrySubdivisionJSON?lat=' . $lat . '&lng=' . $lng . '&maxRows=10&radius=40&username='.$this->token;
 
-        $Client = HttpClient::create();
-        $Response = $Client->request('GET', $Url, ['timeout' => 30]);
-        $Content = json_decode($Response->getContent(), true);
+        $client = HttpClient::create();
+        $response = $client->request('GET', $url, ['timeout' => 30]);
+        $content = json_decode($response->getContent(), true);
 
-        // $databaseResponse = $EntityManager->getRepository(GeonamesAdministrativeDivision::class)
-        // ->findByLatLng($lat,$lng);
+        // $databaseResponse = $entityManager->getRepository(GeonamesAdministrativeDivision::class)
+        // ->findBylatLng($lat,$lng);
 
         return new Response(
-            dd($Content)
+            dd($content)
         );
     }
 
     #[Route('/country/all', name: 'country_all')]
-    public function GetAllCountries(EntityManagerInterface $EntityManager): Response
+    public function getAllCountries(EntityManagerInterface $entityManager): Response
     {
         $countriesListJSON = json_decode(file_get_contents(__DIR__.'/../../public_countrycodes_all.json'), true);
         //dd($countriesListJSON);
         foreach ($countriesListJSON as $countryCode => $entries) {
-            $CountryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
+            $countryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
         
-            if(!$EntityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode))
+            if(!$entityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode))
             {            
-                $Client = HttpClient::create();
-                $Response = $Client->request('GET', $CountryURL, ['timeout' => 30]);
-                $Content = json_decode($Response->getContent(), true);
-                $Country = new GeonamesCountry();
-                $Country
-                ->setContinent($Content['geonames'][0]['continent'])
-                ->setCapital($Content['geonames'][0]['capital'])
-                ->setLanguages($Content['geonames'][0]['languages'])
-                ->setGeonameId($Content['geonames'][0]['geonameId'])
-                ->setSouth($Content['geonames'][0]['south'])
-                ->setNorth($Content['geonames'][0]['north'])
-                ->setEast($Content['geonames'][0]['east'])
-                ->setWest($Content['geonames'][0]['west'])
-                ->setIsoAlpha3($Content['geonames'][0]['isoAlpha3'])
-                ->setFipsCode($Content['geonames'][0]['fipsCode'])
-                ->setPopulation($Content['geonames'][0]['population'])
-                ->setIsoNumeric($Content['geonames'][0]['isoNumeric'])
-                ->setAreaInSqKm($Content['geonames'][0]['areaInSqKm'])
-                ->setCountryCode($Content['geonames'][0]['countryCode'])
-                ->setCountryName($Content['geonames'][0]['countryName'])
-                ->setContinentName($Content['geonames'][0]['continentName'])
-                ->setCurrencyCode($Content['geonames'][0]['currencyCode']);
+                $client = HttpClient::create();
+                $response = $client->request('GET', $countryURL, ['timeout' => 30]);
+                $content = json_decode($response->getContent(), true);
+                $country = new GeonamesCountry();
+                $country
+                ->setContinent($content['geonames'][0]['continent'])
+                ->setCapital($content['geonames'][0]['capital'])
+                ->setLanguages($content['geonames'][0]['languages'])
+                ->setGeonameId($content['geonames'][0]['geonameId'])
+                ->setSouth($content['geonames'][0]['south'])
+                ->setNorth($content['geonames'][0]['north'])
+                ->setEast($content['geonames'][0]['east'])
+                ->setWest($content['geonames'][0]['west'])
+                ->setIsoAlpha3($content['geonames'][0]['isoAlpha3'])
+                ->setFipsCode($content['geonames'][0]['fipsCode'])
+                ->setPopulation($content['geonames'][0]['population'])
+                ->setIsoNumeric($content['geonames'][0]['isoNumeric'])
+                ->setAreaInSqKm($content['geonames'][0]['areaInSqKm'])
+                ->setCountryCode($content['geonames'][0]['countryCode'])
+                ->setCountryName($content['geonames'][0]['countryName'])
+                ->setContinentName($content['geonames'][0]['continentName'])
+                ->setCurrencyCode($content['geonames'][0]['currencyCode']);
 
-                $EntityManager->persist($Country);
-                $EntityManager->flush();
+                $entityManager->persist($country);
+                $entityManager->flush();
     
                 echo '<br/>New entry ! : '.$countryCode;         
             }
@@ -261,47 +261,47 @@ class GeonamesController extends AbstractController
     //_______________________________________________________TODO
     // ----------------------------------------------------------------
     #[Route('/country/{countryCode}', name: 'country')]
-    public function getCountry(EntityManagerInterface $EntityManager,string $countryCode): Response
+    public function getCountry(EntityManagerInterface $entityManager,string $countryCode): Response
     {
-        $CountryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
+        $countryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
         
-        if(!$EntityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode))
+        if(!$entityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode))
         {            
-            $Client = HttpClient::create();
-            $Response = $Client->request('GET', $CountryURL, ['timeout' => 30]);
-            $Content = json_decode($Response->getContent(), true);
-            $Country = new GeonamesCountry();
-            $Country
-            ->setContinent($Content['geonames'][0]['continent'])
-            ->setCapital($Content['geonames'][0]['capital'])
-            ->setLanguages($Content['geonames'][0]['languages'])
-            ->setGeonameId($Content['geonames'][0]['geonameId'])
-            ->setSouth($Content['geonames'][0]['south'])
-            ->setNorth($Content['geonames'][0]['north'])
-            ->setEast($Content['geonames'][0]['east'])
-            ->setWest($Content['geonames'][0]['west'])
-            ->setIsoAlpha3($Content['geonames'][0]['isoAlpha3'])
-            ->setFipsCode($Content['geonames'][0]['fipsCode'])
-            ->setPopulation($Content['geonames'][0]['population'])
-            ->setIsoNumeric($Content['geonames'][0]['isoNumeric'])
-            ->setAreaInSqKm($Content['geonames'][0]['areaInSqKm'])
-            ->setCountryCode($Content['geonames'][0]['countryCode'])
-            ->setCountryName($Content['geonames'][0]['countryName'])
-            ->setContinentName($Content['geonames'][0]['continentName'])
-            ->setCurrencyCode($Content['geonames'][0]['currencyCode']);
+            $client = HttpClient::create();
+            $response = $client->request('GET', $countryURL, ['timeout' => 30]);
+            $content = json_decode($response->getContent(), true);
+            $country = new GeonamesCountry();
+            $country
+            ->setContinent($content['geonames'][0]['continent'])
+            ->setCapital($content['geonames'][0]['capital'])
+            ->setLanguages($content['geonames'][0]['languages'])
+            ->setGeonameId($content['geonames'][0]['geonameId'])
+            ->setSouth($content['geonames'][0]['south'])
+            ->setNorth($content['geonames'][0]['north'])
+            ->setEast($content['geonames'][0]['east'])
+            ->setWest($content['geonames'][0]['west'])
+            ->setIsoAlpha3($content['geonames'][0]['isoAlpha3'])
+            ->setFipsCode($content['geonames'][0]['fipsCode'])
+            ->setPopulation($content['geonames'][0]['population'])
+            ->setIsoNumeric($content['geonames'][0]['isoNumeric'])
+            ->setAreaInSqKm($content['geonames'][0]['areaInSqKm'])
+            ->setCountryCode($content['geonames'][0]['countryCode'])
+            ->setCountryName($content['geonames'][0]['countryName'])
+            ->setContinentName($content['geonames'][0]['continentName'])
+            ->setCurrencyCode($content['geonames'][0]['currencyCode']);
 
-            $EntityManager->persist($Country);
-            $EntityManager->flush();
+            $entityManager->persist($country);
+            $entityManager->flush();
 
             return new Response(
-                "<br/>New entry ! -> " . print_r($Country)
+                "<br/>New entry ! -> " . print_r($country)
             );
         }
         
         else {
-            $Country = $EntityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode);
+            $country = $entityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode);
             return new Response(  
-                print_r($Country)
+                print_r($country)
             );
         }
     }

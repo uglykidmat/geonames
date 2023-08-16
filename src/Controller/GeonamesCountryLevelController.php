@@ -13,16 +13,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class GeonamesCountryLevelController extends AbstractController
 {
     #[Route('/update', name: 'country_level_update')]
-    public function update(EntityManagerInterface $CountryLevelEntityManager): Response
+    public function update(EntityManagerInterface $countryLevelEntityManager): Response
     {
         $response = '';
         $countryLevelJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_level.json'),true);
 
         foreach ($countryLevelJson as $countryLevelJsonIndex => $countryLevelJsonValue) {
-                if (!$CountryLevelEntityManager->getRepository(GeonamesCountryLevel::class)
+                if (!$countryLevelEntityManager->getRepository(GeonamesCountryLevel::class)
                 ->findByCountryCode($countryLevelJsonValue["countrycode"])) {
-                    $CountryLevel = new GeonamesCountryLevel();
-                    $CountryLevel
+                    $countryLevel = new GeonamesCountryLevel();
+                    $countryLevel
                     ->setCountryCode($countryLevelJsonValue["countrycode"])
                     ->setMaxLevel($countryLevelJsonValue["max_level"])
                     ->setUsedLevel($countryLevelJsonValue["used_level"])
@@ -33,7 +33,7 @@ class GeonamesCountryLevelController extends AbstractController
                     ->setADM5($countryLevelJsonValue["ADM5"])
                     ->setDone($countryLevelJsonValue["done"]);
                 
-                    $CountryLevelEntityManager->persist($CountryLevel);
+                    $countryLevelEntityManager->persist($countryLevel);
 
                     $response .= '<br/>Levels for country code <b>'.$countryLevelJsonValue["countrycode"].'</b> have been imported.<br />';
                 }
@@ -41,7 +41,7 @@ class GeonamesCountryLevelController extends AbstractController
                     $response .= '<br/>Levels for country code <b>'.$countryLevelJsonValue["countrycode"].'</b> already found in database';
                 }
         }
-        $CountryLevelEntityManager->flush();
+        $countryLevelEntityManager->flush();
 
         return new Response($response);
     }
@@ -49,10 +49,10 @@ class GeonamesCountryLevelController extends AbstractController
     #[Route('/get', name: 'country_level_get')]
     public function getonelevel(EntityManagerInterface $entityManager): JsonResponse
     {
-       $CountryLevels = $entityManager->getRepository(GeonamesCountryLevel::class)
+       $countryLevels = $entityManager->getRepository(GeonamesCountryLevel::class)
                ->findAll();
 
-       $result = array_map(static fn(GeonamesCountryLevel $value): array => $value->toArray(), $CountryLevels);
+       $result = array_map(static fn(GeonamesCountryLevel $value): array => $value->toArray(), $countryLevels);
 
         return new JsonResponse($result);
     }
@@ -60,9 +60,9 @@ class GeonamesCountryLevelController extends AbstractController
     #[Route('/get/{countrycode}', name: 'country_level_get_country_code')]
     public function get(EntityManagerInterface $entityManager, string $countrycode): JsonResponse
     {
-        $CountryLevel = $entityManager->getRepository(GeonamesCountryLevel::class)
+        $countryLevel = $entityManager->getRepository(GeonamesCountryLevel::class)
                 ->findOneByCountryCode($countrycode);
 
-        return new JsonResponse($CountryLevel->toArray());
+        return new JsonResponse($countryLevel->toArray());
     }
 }
