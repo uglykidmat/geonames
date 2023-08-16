@@ -9,39 +9,50 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-#[Route('/geonames/translation')]
+#[Route('/translation')]
 class GeonamesTranslationController extends AbstractController
 {
-    #[Route('/update', name: 'app_geonames_translation_update')]
-    public function update(EntityManagerInterface $geonamesTranslationEntityManager): Response
+    #[Route('/', name: 'translation_get', methods: ['GET', 'HEAD'])]
+    public function get(EntityManagerInterface $translationEntityManager): JsonResponse
     {
-        $geonamesTranslationResponse = '';
-        $geonamesTranslationJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_translation.json'),true);
+        $getResponse = $translationEntityManager->getRepository(GeonamesTranslation::class)->findAll();
 
-        foreach ($geonamesTranslationJson as $geonamesTranslationJsonKey => $geonamesTranslationJsonValue) {
-            if (!$geonamesTranslationEntityManager->getRepository(GeonamesTranslation::class)
-            ->findByCountryCode($geonamesTranslationJsonValue["countryCode"])){
-                $geonamesTranslation = new GeonamesTranslation();
-                $geonamesTranslation
-                ->setGeonameId($geonamesTranslationJsonValue["geonameId"])
-                ->setName($geonamesTranslationJsonValue["name"])
-                ->setCountryCode($geonamesTranslationJsonValue["countryCode"])
-                ->setFcode($geonamesTranslationJsonValue["fcode"])
-                ->setLocale($geonamesTranslationJsonValue["locale"]);
+        $result = array_map(static fn(GeonamesTranslation $value): array => $value->toArray(), $getResponse);
 
-                $geonamesTranslationEntityManager->persist($geonamesTranslation);
+        return new JsonResponse($result);
+
+    }
+
+    #[Route('/update', name: 'translation_update')]
+    public function update(EntityManagerInterface $translationEntityManager): Response
+    {
+        $translationResponse = '';
+        $translationJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_translation.json'),true);
+
+        foreach ($translationJson as $translationJsonKey => $translationJsonValue) {
+            if (!$translationEntityManager->getRepository(GeonamesTranslation::class)
+            ->findByCountryCode($translationJsonValue["countryCode"])){
+                $translation = new GeonamesTranslation();
+                $translation
+                ->setGeonameId($translationJsonValue["geonameId"])
+                ->setName($translationJsonValue["name"])
+                ->setCountryCode($translationJsonValue["countryCode"])
+                ->setFcode($translationJsonValue["fcode"])
+                ->setLocale($translationJsonValue["locale"]);
+
+                $translationEntityManager->persist($translation);
             }
             else {
-                //$geonamesTranslationResponse .= 'KO';
+                //$translationResponse .= 'KO';
             }
         }
 
-        $geonamesTranslationEntityManager->flush();
+        $translationEntityManager->flush();
 
-        return $this->render('geonames_translation/index.html.twig', [
+        return $this->render('translation/index.html.twig', [
             'controller_name' => 'GeonamesTranslationController',
-            'response' => $geonamesTranslationResponse,
-            'geonames_translation' => $geonamesTranslationJson
+            'response' => $translationResponse,
+            'translation' => $translationJson
         ]);
     }
 }

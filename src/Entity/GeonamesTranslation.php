@@ -92,4 +92,15 @@ class GeonamesTranslation
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            "geonameId"   => $this->geonameId,
+            "name"        => $this->name,
+            "countrycode" => $this->countryCode,
+            "fcode"       => $this->fcode,
+            "locale"      => $this->locale
+        ];
+    }
 }
