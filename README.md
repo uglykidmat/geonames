@@ -136,9 +136,8 @@ php vendor/bin/phpunit --testdox
 
 Update your translations base (be sure you have 'geonames_translation.json' in your 'base_data' folder) :
 ```php
-/geonames/translation/update
+/translation/update
 ``` 
-
 
 Translation API endpoint :
 ```php
