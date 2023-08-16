@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/translation')]
 class GeonamesTranslationController extends AbstractController
@@ -23,18 +24,14 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('/', name: 'translation_post', methods: ['POST'])]
-    public function post(EntityManagerInterface $translationEntityManager): JsonResponse
+    public function post(Request $request): JsonResponse
     {
-        // $getResponse = $translationEntityManager->getRepository(GeonamesTranslation::class)->findAll();
-        // $result = array_map(static fn(GeonamesTranslation $value): array => $value->toArray(), $getResponse);
+        //TODO - mettre des if $request etc
+        // https://medium.com/@peter.lafferty/converting-a-json-post-in-symfony-13a24c98fc0e
+        // json_last_error invalid json body etc
+        $content = json_decode($request->getContent());
 
-        //$data = file_get_contents($_FILES['importfile']);
-        //dd($data);
-        $result = new JsonResponse(['status' => 'POST endpoint reached']);
-        //$result->setContent(json_encode($result));
-        //$result->send();
-
-        return $result;
+        return new JsonResponse($content);
     }
 
     #[Route('/update', name: 'translation_update')]
