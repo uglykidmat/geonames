@@ -130,3 +130,12 @@ Running the tests :
 ```bash
 php vendor/bin/phpunit --testdox
 ```
+
+Translation API endpoint :
+```php
+/translation/
+``` 
+* GET : paginated list
+* POST : bulk creation
+* PATCH : bulk update
+* DELETE : bulk deletion

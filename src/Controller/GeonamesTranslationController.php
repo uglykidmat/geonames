@@ -18,9 +18,23 @@ class GeonamesTranslationController extends AbstractController
         $getResponse = $translationEntityManager->getRepository(GeonamesTranslation::class)->findAll();
 
         $result = array_map(static fn(GeonamesTranslation $value): array => $value->toArray(), $getResponse);
-
+        //TODO: return paginated filtered list
         return new JsonResponse($result);
+    }
 
+    #[Route('/', name: 'translation_post', methods: ['POST'])]
+    public function post(EntityManagerInterface $translationEntityManager): JsonResponse
+    {
+        // $getResponse = $translationEntityManager->getRepository(GeonamesTranslation::class)->findAll();
+        // $result = array_map(static fn(GeonamesTranslation $value): array => $value->toArray(), $getResponse);
+
+        //$data = file_get_contents($_FILES['importfile']);
+        //dd($data);
+        $result = new JsonResponse(['status' => 'POST endpoint reached']);
+        //$result->setContent(json_encode($result));
+        //$result->send();
+
+        return $result;
     }
 
     #[Route('/update', name: 'translation_update')]
