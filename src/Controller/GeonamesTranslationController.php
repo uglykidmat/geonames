@@ -114,6 +114,67 @@ class GeonamesTranslationController extends AbstractController
         return $postResponse;
     }
 
+    #[Route('/', name: 'translation_patch', methods: ['PATCH'])]
+    public function patch(Request $postRequest, EntityManagerInterface $translationEntityManager): JsonResponse
+    {
+        $postResponse = new JsonResponse();
+
+        //________________________________Media type check
+        if ($postRequest->getContentTypeFormat() != 'json' || !$postRequest->getContent()) {
+            $postResponse->setStatusCode(415);
+            $postResponse->setContent('{"Error" : "Unsupported Media Type, expected content-type application/JSON"}');
+
+            return $postResponse;
+        }
+
+        //________________________________JSON Syntax check
+        $patchContent = (array) @json_decode($postRequest->getContent());
+
+        if (!(json_last_error() === JSON_ERROR_NONE)){
+            $postResponse->setStatusCode(422);
+            $postResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
+
+            return $postResponse;
+        }
+
+        //________________________________GeonameId check in repository
+
+        $dbPatchDone = array();
+
+        foreach ($patchContent as $patchKey => $patchValue) {
+            $patchValue = (array)$patchValue;
+            if ($translationToPatch = $translationEntityManager->getRepository(GeonamesTranslation::class)
+            ->findByGeonameId($patchValue["geonameId"])){
+                $translationToPatch = $translationToPatch[0];
+                // dd($translationToPatch);
+                if(isset($patchValue["geonameId"]) && $patchValue["geonameId"] != "null"){
+                    $translationToPatch->setGeonameId($patchValue["geonameId"]);
+                }
+                if(isset($patchValue["name"]) && $patchValue["name"] != "null"){
+                    $translationToPatch->setName($patchValue["name"]);
+                }
+                if(isset($patchValue["countryCode"]) && $patchValue["countryCode"] != "null"){
+                    $translationToPatch->setCountryCode($patchValue["countryCode"]);
+                }
+                if(isset($patchValue["fcode"]) && $patchValue["fcode"] != "null"){
+                    $translationToPatch->setFcode($patchValue["fcode"]);
+                }
+                if(isset($patchValue["locale"]) && $patchValue["locale"] != "null"){
+                    $translationToPatch->setLocale($patchValue["locale"]);
+                }
+
+                $translationEntityManager->persist($translationToPatch);
+                $dbPatchDone[] = $patchValue["geonameId"];
+            }
+        }
+        $translationEntityManager->flush();
+
+        $postResponse->setStatusCode(200);
+        $postResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "'. implode(',',$dbPatchDone) .'"}');
+
+        return $postResponse;
+    }
+
     #[Route('/update', name: 'translation_update')]
     public function update(EntityManagerInterface $translationEntityManager): Response
     {
