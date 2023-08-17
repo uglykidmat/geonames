@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,14 +25,31 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('/', name: 'translation_post', methods: ['POST'])]
-    public function post(Request $request): JsonResponse
+    public function post(Request $postRequest): JsonResponse
     {
-        //TODO - mettre des if $request etc
-        // https://medium.com/@peter.lafferty/converting-a-json-post-in-symfony-13a24c98fc0e
-        // json_last_error invalid json body etc
-        $content = json_decode($request->getContent());
+        $postResponse = new JsonResponse();
 
-        return new JsonResponse($content);
+        if ($postRequest->getContentTypeFormat() != 'json' || !$postRequest->getContent()) {
+            $postResponse->setStatusCode(415);
+            $postResponse->setContent('{"Error" : "Unsupported Media Type"}');
+
+            return $postResponse;
+        }
+
+        @json_decode($postRequest->getContent());
+        $postRequesterr = json_last_error_msg();
+        //dd($postRequesterr);
+        if (!(json_last_error() === JSON_ERROR_NONE)){
+            $postResponse->setStatusCode(422);
+            $postResponse->setContent('{"Json error" : "' . $postRequesterr . '"}');
+
+            return $postResponse;
+        }
+
+        $postResponse->setStatusCode(200);
+        $postResponse->setJson("YAY !");
+        
+        return $postResponse;
     }
 
     #[Route('/update', name: 'translation_update')]
