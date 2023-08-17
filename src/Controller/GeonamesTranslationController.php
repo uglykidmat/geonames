@@ -99,7 +99,7 @@ class GeonamesTranslationController extends AbstractController
         }
         $translationEntityManager->flush();
 
-        $postResponse->setStatusCode(200);
+        $postResponse->setStatusCode(201);
 
         if (count($dbInsertionDone) == 0){
             $postResponse->setContent('{"POST" : "Success", "GeonameIds already found" : "'. implode(',',$dbInsertionFound) .'"}');
@@ -115,26 +115,26 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('/', name: 'translation_patch', methods: ['PATCH'])]
-    public function patch(Request $postRequest, EntityManagerInterface $translationEntityManager): JsonResponse
+    public function patch(Request $patchRequest, EntityManagerInterface $translationEntityManager): JsonResponse
     {
-        $postResponse = new JsonResponse();
+        $patchResponse = new JsonResponse();
 
         //________________________________Media type check
-        if ($postRequest->getContentTypeFormat() != 'json' || !$postRequest->getContent()) {
-            $postResponse->setStatusCode(415);
-            $postResponse->setContent('{"Error" : "Unsupported Media Type, expected content-type application/JSON"}');
+        if ($patchRequest->getContentTypeFormat() != 'json' || !$patchRequest->getContent()) {
+            $patchResponse->setStatusCode(415);
+            $patchResponse->setContent('{"Error" : "Unsupported Media Type, expected content-type application/JSON"}');
 
-            return $postResponse;
+            return $patchResponse;
         }
 
         //________________________________JSON Syntax check
-        $patchContent = (array) @json_decode($postRequest->getContent());
+        $patchContent = (array) @json_decode($patchRequest->getContent());
 
         if (!(json_last_error() === JSON_ERROR_NONE)){
-            $postResponse->setStatusCode(422);
-            $postResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
+            $patchResponse->setStatusCode(422);
+            $patchResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
 
-            return $postResponse;
+            return $patchResponse;
         }
 
         //________________________________GeonameId check in repository
@@ -169,10 +169,53 @@ class GeonamesTranslationController extends AbstractController
         }
         $translationEntityManager->flush();
 
-        $postResponse->setStatusCode(200);
-        $postResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "'. implode(',',$dbPatchDone) .'"}');
+        $patchResponse->setStatusCode(200);
+        $patchResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "'. implode(',',$dbPatchDone) .'"}');
 
-        return $postResponse;
+        return $patchResponse;
+    }
+
+    #[Route('/', name: 'translation_delete', methods: ['DELETE'])]
+    public function delete(Request $deleteRequest, EntityManagerInterface $translationEntityManager): JsonResponse
+    {
+        $deleteResponse = new JsonResponse();
+
+        //________________________________Media type check
+        if ($deleteRequest->getContentTypeFormat() != 'json' || !$deleteRequest->getContent()) {
+            $deleteResponse->setStatusCode(415);
+            $deleteResponse->setContent('{"Error" : "Unsupported Media Type, expected content-type application/JSON"}');
+
+            return $deleteResponse;
+        }
+
+        //________________________________JSON Syntax check
+        $deleteContent = (array) @json_decode($deleteRequest->getContent());
+
+        if (!(json_last_error() === JSON_ERROR_NONE)){
+            $deleteResponse->setStatusCode(422);
+            $deleteResponse->setContent('{"Json error" : "' . json_last_error_msg() . '"}');
+
+            return $deleteResponse;
+        }
+
+        //________________________________GeonameId check in repository
+        $dbDeleteDone = array();
+        foreach ($deleteContent as $deleteKey => $deleteValue) {
+            $deleteValue = (array)$deleteValue;
+            if ($translationToDelete = $translationEntityManager->getRepository(GeonamesTranslation::class)
+            ->findByGeonameId($deleteValue["geonameId"])){
+                $translationToDelete = $translationToDelete[0];
+                $translationEntityManager->remove($translationToDelete);
+
+                $dbDeleteDone[] = $deleteValue["geonameId"];
+            }
+        }
+        $translationEntityManager->flush();
+
+        $deleteResponse->setStatusCode(200);
+        $deleteResponse->setContent('{"DELETE" : "Success", "GeonameIds deleted" : "'. implode(',',$dbDeleteDone) .'"}');
+
+        return $deleteResponse;
     }
 
     #[Route('/update', name: 'translation_update')]
