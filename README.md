@@ -81,3 +81,17 @@ Information about a specific country (countryCode being a 2-letter string) :
 ```php
 /country/level/get/{string $countryCode}
 ```
+
+### API Search
+
+To get information from the Geonames API, the endpoints will be under /geonamesapi/ : 
+
+```php
+/geonamesapi/postalcodesearch/{string postalcode}
+```
+returns a list of (10 by default) postal codes and places for the placename/postalcode query
+
+```php
+/geonamesapi/postalcodelookup/{string postalcode}-{string countrycode}
+```
+returns a list of (10 by default) places for the given postalcode in JSON format, sorted by postalcode,placename
