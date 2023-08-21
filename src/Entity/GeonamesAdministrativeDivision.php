@@ -528,5 +528,5 @@ class GeonamesAdministrativeDivision
 
         return $this;
     }
-
+    
 }

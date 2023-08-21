@@ -2,14 +2,18 @@
 // src/Service/GeonameAPIService.php
 namespace App\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\GeonamesAdministrativeDivision;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class GeonamesAPIService
 {
-    public function __construct(private HttpClientInterface $httpClientInterface, private string $token, private string $urlBase)
+    public function __construct(private HttpClientInterface $httpClientInterface, private string $token, private string $urlBase, private EntityManagerInterface $entityManager)
     {
-
+        $this->entityManager = $entityManager;
+        $entityManager->getRepository(GeonamesAdministrativeDivision::class);
     }
 
     public function postalCodeSearchJSON(string $postalCode): array
@@ -21,7 +25,7 @@ class GeonamesAPIService
             . '&maxRows=10&username=' . $this->token
             . '&style=full');
         
-        $this->responseCheck($postalCodeSearchResponse);
+        $this->responseCheck($postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
     }
@@ -36,19 +40,40 @@ class GeonamesAPIService
             . '&country=' . $countrycode
             . '&style=full');
 
-        $this->responseCheck($postalCodeSearchResponse);
+        $this->responseCheck($postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
     }
 
-    private function responseCheck(object $postalCodeSearchResponse): void
+    private function responseCheck(object $searchResponse, string $searchType): void
     {    
-
-        if($postalCodeSearchResponse->getStatusCode() != 200) {
+        if($searchResponse->getStatusCode() != 200) {
             throw new Exception('Unavailable Webservice or malformed API url');
         }
-        if ($postalCodeSearchResponse->toArray()['postalcodes'] == []){
-            throw new Exception('Empty content');
+
+        switch ($searchType) {
+            case "postalcode":
+                if ($searchResponse->toArray()['postalcodes'] == []){
+                    throw new Exception('Empty content');
+                }
+            
+            case "latlng":
+                if($searchResponse->toArray()['geonames'] == []) {
+                    throw new Exception('Empty content');
+                }
         }
+    }
+
+    public function latLngSearch(float $lat, float $lng): Response
+    {
+        $latlngSearchResponse = $this->httpClientInterface->request(
+            'GET',
+            $this->urlBase
+            . 'findNearbyJSON?formatted=true&lat=' .$lat
+            . ' &lng='. $lng
+            . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username= ' . $this->token
+            . ' &style=full');
+
+            return new Response($latlngSearchResponse->getContent());
     }
 }
