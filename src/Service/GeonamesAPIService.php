@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\GeonamesDBCachingService;
 use App\Entity\GeonamesAdministrativeDivision;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -14,9 +15,10 @@ class GeonamesAPIService
         private HttpClientInterface $httpClientInterface,
         private string $token,
         private string $urlBase,
-        private EntityManagerInterface $entityManager)
+        private EntityManagerInterface $entityManager,
+        private GeonamesDBCachingService $dbCachingService)
     {
-        $this->entityManager = $entityManager;
+        //$this->entityManager = $entityManager;
         $entityManager->getRepository(GeonamesAdministrativeDivision::class);
     }
 
@@ -76,8 +78,15 @@ class GeonamesAPIService
             . ' &lng=' . $lng
             . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username= ' . $this->token
             . ' &style=full');
+  
+            //dd($countrySubDivisionSearchResponse->getContent());
+            $latlngSearchResponseContent = new Response (
+            $latlngSearchResponse->getContent(),
+            Response::HTTP_OK
+        );
+        $this->dbCachingService->saveSubdivisionToDatabase($latlngSearchResponseContent);
 
-            return new Response($latlngSearchResponse->getContent());
+        return new Response($latlngSearchResponse->getContent());
     }
 
     public function countrySubDivisionSearch(float $lat, float $lng): Response {
