@@ -64,16 +64,27 @@ class GeonamesAPIService
         }
     }
 
-    public function latLngSearch(float $lat, float $lng): Response
-    {
+    public function latLngSearch(float $lat, float $lng): Response {
         $latlngSearchResponse = $this->httpClientInterface->request(
             'GET',
             $this->urlBase
-            . 'findNearbyJSON?formatted=true&lat=' .$lat
-            . ' &lng='. $lng
+            . 'findNearbyJSON?formatted=true&lat=' . $lat
+            . ' &lng=' . $lng
             . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username= ' . $this->token
             . ' &style=full');
 
             return new Response($latlngSearchResponse->getContent());
+    }
+
+    public function countrySubDivisionSearch(float $lat, float $lng): Response {
+        $countrySubDivisionSearchResponse = $this->httpClientInterface->request(
+            'GET',
+            $this->urlBase
+            . 'countrySubdivisionJSON?formatted=true&level=3&lat=' . $lat
+            . ' &lng=' . $lng
+            . '&username= ' . $this->token
+            . ' &style=full&maxRows=10&radius=40');
+
+        return new Response($countrySubDivisionSearchResponse->getContent());
     }
 }

@@ -32,4 +32,10 @@ class GeonamesAPIController extends AbstractController
     {
         return $service->latLngSearch($lat, $lng);
     }
+    
+    #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]
+    public function countrySubDivisionSearch(GeonamesAPIService $service, float $lat, float $lng): Response
+    {
+        return $service->countrySubDivisionSearch($lat, $lng);
+    }
 }
