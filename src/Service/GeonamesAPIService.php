@@ -10,7 +10,11 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class GeonamesAPIService
 {
-    public function __construct(private HttpClientInterface $httpClientInterface, private string $token, private string $urlBase, private EntityManagerInterface $entityManager)
+    public function __construct(
+        private HttpClientInterface $httpClientInterface,
+        private string $token,
+        private string $urlBase,
+        private EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
         $entityManager->getRepository(GeonamesAdministrativeDivision::class);
@@ -53,12 +57,12 @@ class GeonamesAPIService
 
         switch ($searchType) {
             case "postalcode":
-                if ($searchResponse->toArray()['postalcodes'] == []){
+                if (empty ($searchResponse->toArray()['postalcodes'])){
                     throw new Exception('Empty content');
                 }
             
             case "latlng":
-                if($searchResponse->toArray()['geonames'] == []) {
+                if (empty ($searchResponse->toArray()['geonames'])) {
                     throw new Exception('Empty content');
                 }
         }
