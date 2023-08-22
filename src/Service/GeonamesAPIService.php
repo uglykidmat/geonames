@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesDBCachingService;
+use Symfony\Component\HttpClient\HttpClient;
 use App\Entity\GeonamesAdministrativeDivision;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -71,22 +72,20 @@ class GeonamesAPIService
     }
 
     public function latLngSearch(float $lat, float $lng): Response {
-        $latlngSearchResponse = $this->httpClientInterface->request(
-            'GET',
-            $this->urlBase
-            . 'findNearbyJSON?formatted=true&lat=' . $lat
-            . ' &lng=' . $lng
-            . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username= ' . $this->token
-            . ' &style=full');
-  
-            //dd($countrySubDivisionSearchResponse->getContent());
-            $latlngSearchResponseContent = new Response (
-            $latlngSearchResponse->getContent(),
-            Response::HTTP_OK
-        );
+
+        $latlngSearchRequest = HttpClient::create();
+        $latlngSearchResponse = $latlngSearchRequest->request('GET',
+        $this->urlBase
+        . 'findNearbyJSON?formatted=true&lat=' . $lat
+        . '&lng=' . $lng
+        . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
+        . '&style=full')->getContent();
+
+        $latlngSearchResponseContent = json_decode($latlngSearchResponse);
+
         $this->dbCachingService->saveSubdivisionToDatabase($latlngSearchResponseContent);
 
-        return new Response($latlngSearchResponse->getContent());
+        return new Response(json_encode($latlngSearchResponseContent));
     }
 
     public function countrySubDivisionSearch(float $lat, float $lng): Response {
@@ -94,9 +93,9 @@ class GeonamesAPIService
             'GET',
             $this->urlBase
             . 'countrySubdivisionJSON?formatted=true&level=3&lat=' . $lat
-            . ' &lng=' . $lng
-            . '&username= ' . $this->token
-            . ' &style=full&maxRows=10&radius=40');
+            . '&lng=' . $lng
+            . '&username=' . $this->token
+            . '&style=full&maxRows=10&radius=40');
 
         return new Response($countrySubDivisionSearchResponse->getContent());
     }

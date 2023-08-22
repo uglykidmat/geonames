@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
-use Symfony\Component\HttpFoundation\Response;
+use stdClass;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeonamesDBCachingService
@@ -15,51 +15,50 @@ class GeonamesDBCachingService
     {
     }
 
-    public function saveSubdivisionToDatabase(Response $subdivision): void {
-        $subDivisionContent = json_decode($subdivision->getContent());
+    public function saveSubdivisionToDatabase(stdClass $subdivision): void {
 
         $this->entityManager->getRepository(GeonamesAdministrativeDivision::class);
 
-        foreach ($subDivisionContent->geonames[0] as $subDivisionContentKey => $subDivisionContentValue) {
+        //foreach ($subDivisionContent->geonames[0] as $subDivisionContentKey => $subDivisionContentValue) {
             $newSubDivision = new GeonamesAdministrativeDivision();
             $newSubDivision
-            ->setGeonameId($subDivisionContent->geonames[0]->geonameId)
-            ->setName($subDivisionContent->geonames[0]->name)
-            ->setAsciiName($subDivisionContent->geonames[0]->asciiName)
-            ->setToponymName($subDivisionContent->geonames[0]->toponymName)
-            ->setContinentCode($subDivisionContent->geonames[0]->continentCode)
-            //->setCc2($subDivisionContent->geonames[0]->geonameId)
-            ->setCountryCode($subDivisionContent->geonames[0]->countryCode)
-            ->setCountryId($subDivisionContent->geonames[0]->countryId)
-            ->setAdminName1($subDivisionContent->geonames[0]->adminName1)
-            ->setAdminName2($subDivisionContent->geonames[0]->adminName2)
-            ->setAdminName3($subDivisionContent->geonames[0]->adminName3)
-            ->setAdminName4($subDivisionContent->geonames[0]->adminName4)
-            ->setAdminName5($subDivisionContent->geonames[0]->adminName5)
-            ->setAdminId1($subDivisionContent->geonames[0]->adminId1)
-            ->setAdminId2($subDivisionContent->geonames[0]->adminId2)
-            ->setAdminId3($subDivisionContent->geonames[0]->adminId3)
-            ->setAdminId4($subDivisionContent->geonames[0]->adminId4)
-            ->setAdminId5($subDivisionContent->geonames[0]->adminId5)
-            ->setAdminCode1($subDivisionContent->geonames[0]->adminCode1)
-            ->setAdminCode2($subDivisionContent->geonames[0]->adminCode2)
-            ->setAdminCode3($subDivisionContent->geonames[0]->adminCode3)
-            ->setAdminCode4($subDivisionContent->geonames[0]->adminCode4)
-            //->setAdminCode5($subDivisionContent->geonames[0]->geonameId);
-            ->setLat($subDivisionContent->geonames[0]->lat)
-            ->setLng($subDivisionContent->geonames[0]->lng)
-            ->setPopulation($subDivisionContent->geonames[0]->population)
-            ->setTimezoneGmtOffset($subDivisionContent->geonames[0]->timezone->gmtOffset)
-            ->setTimezoneTimeZoneId($subDivisionContent->geonames[0]->timezone->timeZoneId)
-            ->setTimezoneDstOffset($subDivisionContent->geonames[0]->timezone->dstOffset)
-            //->setAdminTypeName($subDivisionContent->geonames[0]->adminCode4)
-            ->setFcode($subDivisionContent->geonames[0]->fcode)
-            ->setFcl($subDivisionContent->geonames[0]->fcl)
-            ->setSrtm3($subDivisionContent->geonames[0]->srtm3)
-            ->setAstergdem($subDivisionContent->geonames[0]->astergdem);
+            ->setGeonameId($subdivision->geonames[0]->geonameId)
+            ->setName($subdivision->geonames[0]->name)
+            ->setAsciiName($subdivision->geonames[0]->asciiName)
+            ->setToponymName($subdivision->geonames[0]->toponymName)
+            ->setContinentCode($subdivision->geonames[0]->continentCode)
+            //->setCc2($subdivision->geonames[0]->geonameId)
+            ->setCountryCode($subdivision->geonames[0]->countryCode)
+            ->setCountryId($subdivision->geonames[0]->countryId)
+            ->setAdminName1($subdivision->geonames[0]->adminName1)
+            ->setAdminName2($subdivision->geonames[0]->adminName2)
+            ->setAdminName3($subdivision->geonames[0]->adminName3)
+            ->setAdminName4($subdivision->geonames[0]->adminName4)
+            ->setAdminName5($subdivision->geonames[0]->adminName5)
+            ->setAdminId1($subdivision->geonames[0]->adminId1)
+            ->setAdminId2($subdivision->geonames[0]->adminId2)
+            ->setAdminId3($subdivision->geonames[0]->adminId3)
+            ->setAdminId4($subdivision->geonames[0]->adminId4)
+            ->setAdminId5($subdivision->geonames[0]->adminId5)
+            ->setAdminCode1($subdivision->geonames[0]->adminCode1)
+            ->setAdminCode2($subdivision->geonames[0]->adminCode2)
+            ->setAdminCode3($subdivision->geonames[0]->adminCode3)
+            ->setAdminCode4($subdivision->geonames[0]->adminCode4)
+            //->setAdminCode5($subdivision->geonames[0]->geonameId);
+            ->setLat($subdivision->geonames[0]->lat)
+            ->setLng($subdivision->geonames[0]->lng)
+            ->setPopulation($subdivision->geonames[0]->population)
+            ->setTimezoneGmtOffset($subdivision->geonames[0]->timezone->gmtOffset)
+            ->setTimezoneTimeZoneId($subdivision->geonames[0]->timezone->timeZoneId)
+            ->setTimezoneDstOffset($subdivision->geonames[0]->timezone->dstOffset)
+            //->setAdminTypeName($subdivision->geonames[0]->adminCode4)
+            ->setFcode($subdivision->geonames[0]->fcode)
+            ->setFcl($subdivision->geonames[0]->fcl)
+            ->setSrtm3($subdivision->geonames[0]->srtm3)
+            ->setAstergdem($subdivision->geonames[0]->astergdem);
 
             $this->entityManager->persist($newSubDivision);                  
             $this->entityManager->flush();
-        }
+       // }
     }
 }
