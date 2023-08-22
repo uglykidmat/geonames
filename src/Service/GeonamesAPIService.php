@@ -16,15 +16,14 @@ class GeonamesAPIService
         private string $token,
         private string $urlBase,
         private EntityManagerInterface $entityManager,
-        private GeonamesDBCachingService $dbCachingService)
-    {
+        private GeonamesDBCachingService $dbCachingService
+    ) {
         $this->httpClientInterface = $httpClientInterface->withOptions([
             'headers' => [
                 'Content-Type: application/json',
             ],
             'base_uri' => $urlBase
         ]);
-
     }
 
     public function postalCodeSearchJSON(string $postalCode): array
@@ -32,10 +31,11 @@ class GeonamesAPIService
         $postalCodeSearchResponse = $this->httpClientInterface->request(
             'GET',
             $this->urlBase
-            . 'postalCodeSearchJSON?formatted=true&postalcode=' . $postalCode
-            . '&maxRows=10&username=' . $this->token
-            . '&style=full');
-        
+                . 'postalCodeSearchJSON?formatted=true&postalcode=' . $postalCode
+                . '&maxRows=10&username=' . $this->token
+                . '&style=full'
+        );
+
         $this->responseCheck($postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
@@ -46,10 +46,11 @@ class GeonamesAPIService
         $postalCodeSearchResponse = $this->httpClientInterface->request(
             'GET',
             $this->urlBase
-            . 'postalCodeLookupJSON?formatted=true&postalcode=' .$postalCode
-            . '&maxRows=10&username=' . $this->token
-            . '&country=' . $countrycode
-            . '&style=full');
+                . 'postalCodeLookupJSON?formatted=true&postalcode=' . $postalCode
+                . '&maxRows=10&username=' . $this->token
+                . '&country=' . $countrycode
+                . '&style=full'
+        );
 
         $this->responseCheck($postalCodeSearchResponse, "postalcode");
 
@@ -57,43 +58,48 @@ class GeonamesAPIService
     }
 
     private function responseCheck(object $searchResponse, string $searchType): void
-    {    
-        if($searchResponse->getStatusCode() != 200) {
+    {
+        if ($searchResponse->getStatusCode() != 200) {
             throw new Exception('Unavailable Webservice or malformed API url');
         }
 
         switch ($searchType) {
             case "postalcode":
-                if (empty ($searchResponse->toArray()['postalcodes'])){
+                if (empty($searchResponse->toArray()['postalcodes'])) {
                     throw new Exception('Empty content');
                 }
-            
+
             case "latlng":
-                if (empty ($searchResponse->toArray()['geonames'])) {
+                if (empty($searchResponse->toArray()['geonames'])) {
                     throw new Exception('Empty content');
                 }
         }
     }
 
-    public function latLngSearch(float $lat, float $lng): ?stdClass {
-            $latlngSearchResponse = $this->httpClientInterface->request('GET',
+    public function latLngSearch(float $lat, float $lng): ?stdClass
+    {
+        $latlngSearchResponse = $this->httpClientInterface->request(
+            'GET',
             $this->urlBase
-            . 'findNearbyJSON?formatted=true&lat=' . $lat
-            . '&lng=' . $lng
-            . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
-            . '&style=full')->getContent();
+                . 'findNearbyJSON?formatted=true&lat=' . $lat
+                . '&lng=' . $lng
+                . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
+                . '&style=full'
+        )->getContent();
 
-            return json_decode($latlngSearchResponse, false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($latlngSearchResponse, false, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function countrySubDivisionSearch(float $lat, float $lng): Response {
+    public function countrySubDivisionSearch(float $lat, float $lng): Response
+    {
         $countrySubDivisionSearchResponse = $this->httpClientInterface->request(
             'GET',
             $this->urlBase
-            . 'countrySubdivisionJSON?formatted=true&level=3&lat=' . $lat
-            . '&lng=' . $lng
-            . '&username=' . $this->token
-            . '&style=full&maxRows=10&radius=40');
+                . 'countrySubdivisionJSON?formatted=true&level=3&lat=' . $lat
+                . '&lng=' . $lng
+                . '&username=' . $this->token
+                . '&style=full&maxRows=10&radius=40'
+        );
 
         return new Response($countrySubDivisionSearchResponse->getContent());
     }

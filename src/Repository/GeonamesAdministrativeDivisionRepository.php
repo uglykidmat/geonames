@@ -21,42 +21,37 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
         parent::__construct($registry, GeonamesAdministrativeDivision::class);
     }
 
-//    /**
-//     * @return GeonamesAdministrativeDivision[] Returns an array of GeonamesAdministrativeDivision objects
-//     */
-   public function findByGeonameId($value): array
-   {
-       return $this->createQueryBuilder('g')
-           ->andWhere('g.geonameId = :val')
-           ->setParameter('val', $value)
-           ->orderBy('g.id', 'ASC')
-           ->setMaxResults(10)
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+    //    /**
+    //     * @return GeonamesAdministrativeDivision[] Returns an array of GeonamesAdministrativeDivision objects
+    //     */
+    public function findByGeonameId($value): array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.geonameId = :val')
+            ->setParameter('val', $value)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 
-   public function findOneByGeonameId($value): ?GeonamesAdministrativeDivision
-   {
-       return $this->createQueryBuilder('g')
-           ->andWhere('g.geonameId = :val')
-           ->setParameter('val', $value)
-           ->getQuery()
-           ->getOneOrNullResult()
-       ;
-   }
+    public function findOneByGeonameId($value): ?GeonamesAdministrativeDivision
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.geonameId = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-   public function findByLatLng($lat,$lng): ?GeonamesAdministrativeDivision
-   {
-       return $this->createQueryBuilder('g')
-           ->andWhere('g.lat = :lat')
-           ->setParameter('lat', $lat)
-           ->andWhere('g.lng = :lng')
-           ->setParameter('lng', $lng)
-           ->getQuery()
-           ->getOneOrNullResult()
-        ;
-   }
-
-
+    public function findByLatLng($lat, $lng): ?array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.lat = :lat')
+            ->setParameter('lat', $lat)
+            ->andWhere('g.lng = :lng')
+            ->setParameter('lng', $lng)
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

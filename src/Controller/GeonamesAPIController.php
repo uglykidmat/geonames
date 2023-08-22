@@ -18,14 +18,13 @@ class GeonamesAPIController extends AbstractController
     {
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json');
-
     }
 
     #[Route('/postalcodesearch/{postalcode}', name: 'api_postalcodesearch')]
     public function postalCodeSearch(
         GeonamesAPIService $service,
-        string $postalcode): JsonResponse
-    {        
+        string $postalcode
+    ): JsonResponse {
         $response = new JsonResponse($service->postalCodeSearchJSON($postalcode));
 
         return $response;
@@ -35,12 +34,14 @@ class GeonamesAPIController extends AbstractController
     public function postalCodeLookup(
         GeonamesAPIService $service,
         string $postalcode,
-        string $countrycode): JsonResponse
-    {        
+        string $countrycode
+    ): JsonResponse {
         $response = new JsonResponse(
             $service->postalCodeLookupJSON(
                 $postalcode,
-                $countrycode));
+                $countrycode
+            )
+        );
 
         return $response;
     }
@@ -50,19 +51,26 @@ class GeonamesAPIController extends AbstractController
         GeonamesDBCachingService $dbcachingservice,
         GeonamesAPIService $apiservice,
         float $lat,
-        float $lng): JsonResponse
-    {
-        $geonames = $apiservice->latLngSearch($lat, $lng);$dbcachingservice->saveSubdivisionToDatabase($geonames);
-        
-        return new JsonResponse($geonames);
+        float $lng
+    ): JsonResponse {
+        if (!$dbcachingservice->searchSubdivisionInDatabase($lat, $lng)) {
+            $geonames = $apiservice->latLngSearch($lat, $lng);
+            $dbcachingservice->saveSubdivisionToDatabase($geonames);
+
+            return new JsonResponse($geonames);
+        }
+
+        return new JsonResponse(
+            $dbcachingservice->searchSubdivisionInDatabase($lat, $lng)
+        );
     }
-    
+
     #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]
     public function countrySubDivisionSearch(
         GeonamesAPIService $service,
         float $lat,
-        float $lng): Response
-    {
+        float $lng
+    ): Response {
         return $service->countrySubDivisionSearch($lat, $lng);
     }
 }
