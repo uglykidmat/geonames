@@ -2,10 +2,9 @@
 // src/Service/GeonameAPIService.php
 namespace App\Service;
 
+use stdClass;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesDBCachingService;
-use Symfony\Component\HttpClient\HttpClient;
-use App\Entity\GeonamesAdministrativeDivision;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -19,8 +18,13 @@ class GeonamesAPIService
         private EntityManagerInterface $entityManager,
         private GeonamesDBCachingService $dbCachingService)
     {
-        //$this->entityManager = $entityManager;
-        $entityManager->getRepository(GeonamesAdministrativeDivision::class);
+        $this->httpClientInterface = $httpClientInterface->withOptions([
+            'headers' => [
+                'Content-Type: application/json',
+            ],
+            'base_uri' => $urlBase
+        ]);
+
     }
 
     public function postalCodeSearchJSON(string $postalCode): array
@@ -71,21 +75,15 @@ class GeonamesAPIService
         }
     }
 
-    public function latLngSearch(float $lat, float $lng): Response {
+    public function latLngSearch(float $lat, float $lng): ?stdClass {
+            $latlngSearchResponse = $this->httpClientInterface->request('GET',
+            $this->urlBase
+            . 'findNearbyJSON?formatted=true&lat=' . $lat
+            . '&lng=' . $lng
+            . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
+            . '&style=full')->getContent();
 
-        $latlngSearchRequest = HttpClient::create();
-        $latlngSearchResponse = $latlngSearchRequest->request('GET',
-        $this->urlBase
-        . 'findNearbyJSON?formatted=true&lat=' . $lat
-        . '&lng=' . $lng
-        . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
-        . '&style=full')->getContent();
-
-        $latlngSearchResponseContent = json_decode($latlngSearchResponse);
-
-        $this->dbCachingService->saveSubdivisionToDatabase($latlngSearchResponseContent);
-
-        return new Response(json_encode($latlngSearchResponseContent));
+            return json_decode($latlngSearchResponse, false, 512, JSON_THROW_ON_ERROR);
     }
 
     public function countrySubDivisionSearch(float $lat, float $lng): Response {
