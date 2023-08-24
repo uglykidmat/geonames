@@ -53,19 +53,18 @@ class GeonamesAPIController extends AbstractController
         float $lat,
         float $lng
     ): JsonResponse {
-        $geonames = $apiservice->latLngSearch($lat, $lng);
+        $geonameIdFound = $apiservice->latLngSearch($lat, $lng);
 
-        if (!$dbcachingservice->searchSubdivisionInDatabase($geonames->geonameId)) {
-            $dbcachingservice->saveSubdivisionToDatabase($geonames);
+        if (!$dbcachingservice->searchSubdivisionInDatabase($geonameIdFound)) {
 
-            return new JsonResponse(
-                $dbcachingservice->searchSubdivisionInDatabase($geonames->geonameId)
-            );
-        } else {
-            return new JsonResponse(
-                $dbcachingservice->searchSubdivisionInDatabase($geonames->geonameId)
+            $dbcachingservice->saveSubdivisionToDatabase(
+                $apiservice->getJsonSearch($geonameIdFound)
             );
         }
+
+        return new JsonResponse(
+            $dbcachingservice->searchSubdivisionInDatabase($geonameIdFound)
+        );
     }
 
     #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]

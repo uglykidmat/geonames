@@ -76,7 +76,7 @@ class GeonamesAPIService
         }
     }
 
-    public function latLngSearch(float $lat, float $lng): ?stdClass
+    public function latLngSearch(float $lat, float $lng): ?int
     {
         $latlngSearchResponse = json_decode($this->httpClientInterface->request(
             'GET',
@@ -88,10 +88,16 @@ class GeonamesAPIService
         )->getContent());
 
         $geonameIdFound = $latlngSearchResponse->geonames[0]->geonameId;
+
+        return $geonameIdFound;
+    }
+
+    public function getJsonSearch(int $geonameId): ?stdClass
+    {
         $getJsonSearchResponse = json_decode($this->httpClientInterface->request(
             'GET',
             $this->urlBase
-                . 'getJSON?geonameId=' . $geonameIdFound
+                . 'getJSON?geonameId=' . $geonameId
                 . '&username=' . $this->token
                 . '&style=full'
         )->getContent());
