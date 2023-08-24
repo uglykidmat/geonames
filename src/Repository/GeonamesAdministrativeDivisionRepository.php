@@ -32,7 +32,7 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
             ->orderBy('g.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
     }
 
     public function findOneByGeonameId($value): ?GeonamesAdministrativeDivision

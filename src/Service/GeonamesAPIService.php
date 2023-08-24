@@ -78,16 +78,25 @@ class GeonamesAPIService
 
     public function latLngSearch(float $lat, float $lng): ?stdClass
     {
-        $latlngSearchResponse = $this->httpClientInterface->request(
+        $latlngSearchResponse = json_decode($this->httpClientInterface->request(
             'GET',
             $this->urlBase
                 . 'findNearbyJSON?formatted=true&lat=' . $lat
                 . '&lng=' . $lng
                 . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
                 . '&style=full'
-        )->getContent();
+        )->getContent());
 
-        return json_decode($latlngSearchResponse, false, 512, JSON_THROW_ON_ERROR);
+        $geonameIdFound = $latlngSearchResponse->geonames[0]->geonameId;
+        $getJsonSearchResponse = json_decode($this->httpClientInterface->request(
+            'GET',
+            $this->urlBase
+                . 'getJSON?geonameId=' . $geonameIdFound
+                . '&username=' . $this->token
+                . '&style=full'
+        )->getContent());
+
+        return $getJsonSearchResponse;
     }
 
     public function countrySubDivisionSearch(float $lat, float $lng): Response
