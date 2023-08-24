@@ -80,10 +80,10 @@ class GeonamesAdministrativeDivision
     #[ORM\Column(nullable: true)]
     private ?string $adminCode4 = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 15, nullable: true)]
     private ?string $lat = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 15, nullable: true)]
     private ?string $lng = null;
 
     #[ORM\Column(nullable: true)]
@@ -528,5 +528,4 @@ class GeonamesAdministrativeDivision
 
         return $this;
     }
-    
 }
