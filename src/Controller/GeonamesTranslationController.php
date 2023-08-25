@@ -138,7 +138,6 @@ class GeonamesTranslationController extends AbstractController
                 ->findByGeonameId($patchValue["geonameId"])
             ) {
                 $translationToPatch = $translationToPatch[0];
-                // dd($translationToPatch);
                 if (!empty($patchValue["geonameId"])) {
                     $translationToPatch->setGeonameId($patchValue["geonameId"]);
                 }
@@ -220,8 +219,7 @@ class GeonamesTranslationController extends AbstractController
         foreach ($translationJson as $translationJsonKey => $translationJsonValue) {
             if (!$translationEntityManager->getRepository(GeonamesTranslation::class)
                 ->findByCountryCode($translationJsonValue["countryCode"])) {
-                $translation = new GeonamesTranslation();
-                $translation
+                $translation = (new GeonamesTranslation())
                     ->setGeonameId($translationJsonValue["geonameId"])
                     ->setName($translationJsonValue["name"])
                     ->setCountryCode($translationJsonValue["countryCode"])
@@ -230,7 +228,7 @@ class GeonamesTranslationController extends AbstractController
 
                 $translationEntityManager->persist($translation);
             } else {
-                //$translationResponse .= 'KO';
+                $translationResponse .= 'KO ';
             }
         }
 
