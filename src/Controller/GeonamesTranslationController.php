@@ -52,16 +52,11 @@ class GeonamesTranslationController extends AbstractController
         foreach ($postContent as $postKey => $postValue) {
             $postValue = (array)$postValue;
             if (
-                !isset($postValue["geonameId"]) ||
-                !isset($postValue["name"]) ||
-                !isset($postValue["countryCode"]) ||
-                !isset($postValue["fcode"]) ||
-                !isset($postValue["locale"]) ||
-                ($postValue["geonameId"] == null) ||
-                ($postValue["name"] == null) ||
-                ($postValue["countryCode"] == null) ||
-                ($postValue["fcode"] == null) ||
-                ($postValue["locale"] == null) ||
+                !empty($postValue["geonameId"]) ||
+                !empty($postValue["name"]) ||
+                !empty($postValue["countryCode"]) ||
+                !empty($postValue["fcode"]) ||
+                !empty($postValue["locale"]) ||
                 $errorsInPostContent == true
             ) {
                 $errorsInPostContent = true;
@@ -83,8 +78,7 @@ class GeonamesTranslationController extends AbstractController
             ) {
                 $dbInsertionFound[] = $postValue["geonameId"];
             } else {
-                $postTranslation = new GeonamesTranslation();
-                $postTranslation
+                $postTranslation = (new GeonamesTranslation())
                     ->setGeonameId($postValue["geonameId"])
                     ->setName($postValue["name"])
                     ->setCountryCode($postValue["countryCode"])
@@ -145,19 +139,19 @@ class GeonamesTranslationController extends AbstractController
             ) {
                 $translationToPatch = $translationToPatch[0];
                 // dd($translationToPatch);
-                if (isset($patchValue["geonameId"]) && $patchValue["geonameId"] != "null") {
+                if (!empty($patchValue["geonameId"])) {
                     $translationToPatch->setGeonameId($patchValue["geonameId"]);
                 }
-                if (isset($patchValue["name"]) && $patchValue["name"] != "null") {
+                if (!empty($patchValue["name"])) {
                     $translationToPatch->setName($patchValue["name"]);
                 }
-                if (isset($patchValue["countryCode"]) && $patchValue["countryCode"] != "null") {
+                if (!empty($patchValue["countryCode"])) {
                     $translationToPatch->setCountryCode($patchValue["countryCode"]);
                 }
-                if (isset($patchValue["fcode"]) && $patchValue["fcode"] != "null") {
+                if (!empty($patchValue["fcode"])) {
                     $translationToPatch->setFcode($patchValue["fcode"]);
                 }
-                if (isset($patchValue["locale"]) && $patchValue["locale"] != "null") {
+                if (!empty($patchValue["locale"])) {
                     $translationToPatch->setLocale($patchValue["locale"]);
                 }
 
