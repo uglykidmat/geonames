@@ -71,11 +71,15 @@ class GeonamesTranslationController extends AbstractController
         $dbInsertionDone = array();
 
         //________________________________GeonameId check in repository
+
         foreach ($postContent as $postKey => $postValue) {
+
+            $geonamesTranslation = $translationEntityManager
+                ->getRepository(GeonamesTranslation::class)
+                ->findByGeonameId($postValue["geonameId"]);
+
             $postValue = (array)$postValue;
-            if ($translationEntityManager->getRepository(GeonamesTranslation::class)
-                ->findByGeonameId($postValue["geonameId"])
-            ) {
+            if ($geonamesTranslation) {
                 $dbInsertionFound[] = $postValue["geonameId"];
             } else {
                 $postTranslation = (new GeonamesTranslation())
@@ -133,10 +137,10 @@ class GeonamesTranslationController extends AbstractController
         $dbPatchDone = array();
 
         foreach ($patchContent as $patchKey => $patchValue) {
+            $translationToPatch = $translationEntityManager->getRepository(GeonamesTranslation::class)
+                ->findByGeonameId($patchValue["geonameId"]);
             $patchValue = (array)$patchValue;
-            if ($translationToPatch = $translationEntityManager->getRepository(GeonamesTranslation::class)
-                ->findByGeonameId($patchValue["geonameId"])
-            ) {
+            if ($translationToPatch) {
                 $translationToPatch = $translationToPatch[0];
                 if (!empty($patchValue["geonameId"])) {
                     $translationToPatch->setGeonameId($patchValue["geonameId"]);
