@@ -85,7 +85,7 @@ class GeonamesAPIService
             $this->urlBase
                 . 'findNearbyJSON?formatted=true&lat=' . $lat
                 . '&lng=' . $lng
-                . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
+                . '&username=' . $this->token
                 . '&style=full&maxRows=5'
         )->getContent());
 
