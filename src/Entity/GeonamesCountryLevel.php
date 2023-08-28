@@ -13,6 +13,7 @@ class GeonamesCountryLevel
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToMany(targetEntity: GeonamesAdministrativeDivision::class, mappedBy: 'countryCode')]
     #[ORM\Column(length: 10)]
     private ?string $countryCode = null;
 
