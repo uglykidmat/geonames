@@ -4,7 +4,6 @@ namespace App\Service;
 
 use stdClass;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\GeonamesDBCachingService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -15,8 +14,7 @@ class GeonamesAPIService
         private HttpClientInterface $httpClientInterface,
         private string $token,
         private string $urlBase,
-        private EntityManagerInterface $entityManager,
-        private GeonamesDBCachingService $dbCachingService
+        private EntityManagerInterface $entityManager
     ) {
         $this->httpClientInterface = $httpClientInterface->withOptions([
             'headers' => [

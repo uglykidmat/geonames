@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\GeonamesSearchService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,13 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class GeonamesSearchController extends AbstractController
 {
     #[Route('/geonames/search', name: 'geonames_search', methods: ['POST'])]
-    public function geonamesSearch(): Response
+    public function geonamesSearch(GeonamesSearchService $searchService): Response
     {
-        $request = Request::createFromGlobals();
-        $requestContent = $request->getContent();
-        dd(json_decode($requestContent));
+        $request = json_decode(Request::createFromGlobals()->getContent(), true);
+        $parsing = $searchService->parseRequest($request);
 
-        $response = new Response();
+        $response = new Response(json_encode($parsing));
 
         return $response;
     }
