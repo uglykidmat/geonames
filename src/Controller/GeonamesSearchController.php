@@ -14,10 +14,8 @@ class GeonamesSearchController extends AbstractController
     public function geonamesSearch(GeonamesSearchService $searchService): Response
     {
         $request = json_decode(Request::createFromGlobals()->getContent(), true);
-        $parsing = $searchService->parseRequest($request);
+        $parsedRequest = $searchService->parseRequest($request);
 
-        $response = new Response(json_encode($parsing));
-
-        return $response;
+        return new Response(json_encode($parsedRequest));
     }
 }

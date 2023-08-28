@@ -16,19 +16,26 @@ class GeonamesSearchService
     {
         $requestedLatlng = false;
         $requestedPostalcode = false;
-        $geonameIdsFound = [];
+        $geonamesIdsFound = [];
+        $requestResults = [];
 
         foreach ($request as $requestEntry) {
 
             if (array_key_exists('lat', $requestEntry) && array_key_exists('lng', $requestEntry)) {
-                $geonameIdsFound[] = $this->apiService->latLngSearch($requestEntry['lat'], $requestEntry['lng']);
 
-                // $this->dbCachingService->searchSubdivisionInDatabase()
+                $geonamesIdFound = $this->apiService->latLngSearch($requestEntry['lat'], $requestEntry['lng']);
+
+                $geonamesIdsFound[] = $geonamesIdFound;
+
+                if (!$this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
+                    $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
+                    $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                }
             } else {
-                $geonameIdsFound[] = "Not found";
+                $geonamesIdsFound[] = "Not found by lat-lng coordinates";
             }
         }
 
-        return $geonameIdsFound;
+        return $geonamesIdsFound;
     }
 }
