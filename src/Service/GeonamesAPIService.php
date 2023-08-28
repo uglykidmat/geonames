@@ -65,14 +65,18 @@ class GeonamesAPIService
 
         switch ($searchType) {
             case "postalcode":
-                if (empty($searchResponse->toArray()['postalcodes'])) {
+                $searchResponse = array_change_key_case($searchResponse->toArray(), CASE_LOWER);
+                if (empty($searchResponse['postalcodes'])) {
+
                     throw new Exception('Empty content');
                 }
+                break;
 
             case "latlng":
                 if (empty($searchResponse->toArray()['geonames'])) {
                     throw new Exception('Empty content');
                 }
+                break;
         }
     }
 
