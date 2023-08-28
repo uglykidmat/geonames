@@ -84,7 +84,7 @@ class GeonamesAPIService
                 . 'findNearbyJSON?formatted=true&lat=' . $lat
                 . '&lng=' . $lng
                 . '&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC&username=' . $this->token
-                . '&style=full'
+                . '&style=full&maxRows=5'
         )->getContent());
 
         $geonameIdFound = $latlngSearchResponse->geonames[0]->geonameId;

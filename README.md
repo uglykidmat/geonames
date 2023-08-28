@@ -95,3 +95,12 @@ returns a list of (10 by default) postal codes and places for the placename/post
 /geonamesapi/postalcodelookup/{string postalcode}-{string countrycode}
 ```
 returns a list of (10 by default) places for the given postalcode in JSON format, sorted by postalcode,placename
+
+
+### Commands
+
+Terminal commands : 
+```bash
+php bin/console Latlngsearch <lat> <lng>
+```
+returns a json string of the Geonames location closest the latitude and longitude provided.
