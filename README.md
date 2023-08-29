@@ -7,7 +7,7 @@
 Download/Installation
 
 ```bash
-  git clone https://github.com/GTRDevTeam_rd
+  git clone https://github.com/GTRDevTeam/geonames_rd.git
 ```
 ```bash
   composer install

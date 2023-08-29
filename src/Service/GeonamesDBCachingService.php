@@ -22,7 +22,7 @@ class GeonamesDBCachingService
             ->getRepository(GeonamesAdministrativeDivision::class)
             ->findByGeonameId($geonameId);
 
-        return $dbresponse;
+        return $dbresponse[0];
     }
 
     public function saveSubdivisionToDatabase(stdClass $subdivision): void

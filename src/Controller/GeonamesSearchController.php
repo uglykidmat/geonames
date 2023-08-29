@@ -13,9 +13,12 @@ class GeonamesSearchController extends AbstractController
     #[Route('/geonames/search', name: 'geonames_search', methods: ['POST'])]
     public function geonamesSearch(GeonamesSearchService $searchService): Response
     {
-        $request = json_decode(Request::createFromGlobals()->getContent(), true);
-        $parsedRequest = $searchService->parseRequest($request);
+        $response = new Response();
+        $request = Request::createFromGlobals()->getContent();
 
-        return new Response(json_encode($parsedRequest));
+        $parsedRequest = $searchService->bulkRequest($request);
+
+        $response->setContent($parsedRequest);
+        return $response;
     }
 }

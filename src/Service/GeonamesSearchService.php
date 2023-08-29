@@ -17,10 +17,9 @@ class GeonamesSearchService
     ) {
     }
 
-    public function bulkRequest(string $request)
+    public function bulkRequest(string $request): string
     {
         $geonamesIdsFound = [];
-        $requestResults = [];
 
         foreach (json_decode($request) as $requestEntry) {
             if (self::checkRequestContents($requestEntry) == "coordinates") {
@@ -30,12 +29,12 @@ class GeonamesSearchService
                     $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
 
                     $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
-
-                    $geonamesIdsFound[] = $geonamesIdToSave;
                 }
+
+                $geonamesIdsFound[] = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
             } else if (self::checkRequestContents($requestEntry) == "zipcode") {
                 $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON($requestEntry->zip_code, $requestEntry->country_code);
-                //$geonamesLevel = $this->gclRepository->findByCountryCode($requestEntry->country_code)[0]->getUsedLevel();
+
                 foreach ($geonamesZipCodeFound['postalcodes'] as $zipCodeFound) {
 
                     $geonamesIdFound = $this->apiService->latLngSearch($zipCodeFound['lat'], $zipCodeFound['lng']);
@@ -43,12 +42,13 @@ class GeonamesSearchService
                     if (!$this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
                         $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
                         $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
-
-                        $geonamesIdsFound[] = $geonamesIdToSave;
                     }
+                    $geonamesIdsFound[] = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
                 }
-            } else $geonamesIdsFound[] = "Not found by lat-lng coordinates, nor Zip Code";
+            } else $geonamesIdsFound[] = "Not found by lat-lng coordinates, nor ZipCode";
         }
+
+        $geonamesIdsFound = json_encode($geonamesIdsFound);
 
         return $geonamesIdsFound;
     }
