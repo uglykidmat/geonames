@@ -19,11 +19,15 @@ class GeonamesSearchService
 
     public function bulkRequest(string $request): string
     {
-        $geonamesIdsFound = [];
+        $geonamesBulkResponse = json_decode($request);
 
-        foreach (json_decode($request) as $requestEntry) {
-            if (self::checkRequestContents($requestEntry) == "coordinates") {
-                $geonamesIdFound = $this->apiService->latLngSearch($requestEntry->lat, $requestEntry->lng);
+        foreach ($geonamesBulkResponse as $geonamesBulkIndex => $geonamesBulkRow) {
+
+            if (self::checkRequestContents($geonamesBulkRow) == "coordinates") {
+                $geonamesIdFound = $this->apiService->latLngSearch(
+                    $geonamesBulkRow->lat,
+                    $geonamesBulkRow->lng
+                );
 
                 if (!$this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
                     $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
@@ -31,9 +35,16 @@ class GeonamesSearchService
                     $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
                 }
 
-                $geonamesIdsFound[] = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
-            } else if (self::checkRequestContents($requestEntry) == "zipcode") {
-                $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON($requestEntry->zip_code, $requestEntry->country_code);
+                $geonamesBulkResponse[$geonamesBulkIndex] = array_merge(
+                    (array)$geonamesBulkResponse[$geonamesBulkIndex],
+                    ['error' => 'false'],
+                    ['geonamesResponse' => $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)]
+                );
+            } else if (self::checkRequestContents($geonamesBulkRow) == "zipcode") {
+                $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
+                    $geonamesBulkRow->zip_code,
+                    $geonamesBulkRow->country_code
+                );
 
                 foreach ($geonamesZipCodeFound['postalcodes'] as $zipCodeFound) {
 
@@ -43,14 +54,21 @@ class GeonamesSearchService
                         $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
                         $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
                     }
-                    $geonamesIdsFound[] = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
+                    $geonamesBulkResponse[$geonamesBulkIndex] = array_merge(
+                        (array)$geonamesBulkResponse[$geonamesBulkIndex],
+                        ['error' => 'false'],
+                        ['geonamesResponse' => $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)]
+                    );
                 }
-            } else $geonamesIdsFound[] = "Not found by lat-lng coordinates, nor ZipCode";
+            } else {
+                $geonamesBulkResponse[$geonamesBulkIndex] = array_merge(
+                    (array)$geonamesBulkResponse[$geonamesBulkIndex],
+                    ['error' => 'true', 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
+                );
+            }
         }
 
-        $geonamesIdsFound = json_encode($geonamesIdsFound);
-
-        return $geonamesIdsFound;
+        return json_encode($geonamesBulkResponse);
     }
 
     private function checkRequestContents(stdClass $requestEntry): string
