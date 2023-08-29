@@ -16,11 +16,11 @@ class GeonamesDBCachingService
     ) {
     }
 
-    public function searchSubdivisionInDatabase(int $geonameId): array
+    public function searchSubdivisionInDatabase(int $geonameId): ?GeonamesAdministrativeDivision
     {
         $dbresponse = $this->entityManager
             ->getRepository(GeonamesAdministrativeDivision::class)
-            ->findByGeonameId($geonameId);
+            ->findOneByGeonameId($geonameId);
 
         return $dbresponse;
     }

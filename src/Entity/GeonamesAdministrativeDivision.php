@@ -374,6 +374,12 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
+    public function getAdminCodes(): array
+    {
+        $adminCodes = array($this->adminCode1, $this->adminCode2, $this->adminCode3, $this->adminCode4);
+        return $adminCodes;
+    }
+
     public function getLat(): ?string
     {
         return $this->lat;
