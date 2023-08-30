@@ -18,8 +18,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Geonames Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Geonames Controllers Test Suite">
+            <directory>tests/ControllersTests</directory>
+        </testsuite>
+        <testsuite name="Geonames Services Test Suite">
+            <directory>tests/ServicesTests</directory>
         </testsuite>
     </testsuites>
 
