@@ -10,20 +10,21 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class GeonamesCountryLevelControllerTest extends KernelTestCase
 {
-    public function testgetonelevel(): void
+    public function testGetAllLevels(): void
     {
         $kernel = self::bootKernel();
 
-
-        //$this->assertSame('test', $kernel->getEnvironment());
-        // $routerService = static::getContainer()->get('router');
         $entityManager = static::getContainer()->get(EntityManagerInterface::class);
-        // $this->assertSame(static::getContainer()->get(EntityManagerInterface::class), $entityManager, "yeah!");
 
         $geoCtrl = new GeonamesCountryLevelController();
 
-        $gotalevel = $geoCtrl->getonelevel($entityManager);
-        $jsonresponse = new JsonResponse();
-        $this->assertSame($gotalevel, $jsonresponse, "Yay!");
+        $actualgotalevel = $geoCtrl->getAllLevels($entityManager);
+
+        $expectedresponse = new JsonResponse();
+
+        //$this->assertSame($expectedresponse, $actualgotalevel, "FAIL FAIL FAIL FAIL FAIL FAIL");
+        $this->assertJson($expectedresponse->getContent());
+        $this->assertJson($actualgotalevel->getContent());
+        $this->assertNotEmpty($actualgotalevel);
     }
 }

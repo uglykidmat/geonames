@@ -16,13 +16,13 @@ class GeonamesCountryLevelController extends AbstractController
     public function update(EntityManagerInterface $countryLevelEntityManager): Response
     {
         $response = '';
-        $countryLevelJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_level.json'),true);
+        $countryLevelJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_level.json'), true);
 
         foreach ($countryLevelJson as $countryLevelJsonIndex => $countryLevelJsonValue) {
-                if (!$countryLevelEntityManager->getRepository(GeonamesCountryLevel::class)
+            if (!$countryLevelEntityManager->getRepository(GeonamesCountryLevel::class)
                 ->findByCountryCode($countryLevelJsonValue["countrycode"])) {
-                    $countryLevel = new GeonamesCountryLevel();
-                    $countryLevel
+                $countryLevel = new GeonamesCountryLevel();
+                $countryLevel
                     ->setCountryCode($countryLevelJsonValue["countrycode"])
                     ->setMaxLevel($countryLevelJsonValue["max_level"])
                     ->setUsedLevel($countryLevelJsonValue["used_level"])
@@ -32,14 +32,13 @@ class GeonamesCountryLevelController extends AbstractController
                     ->setADM4($countryLevelJsonValue["ADM4"])
                     ->setADM5($countryLevelJsonValue["ADM5"])
                     ->setDone($countryLevelJsonValue["done"]);
-                
-                    $countryLevelEntityManager->persist($countryLevel);
 
-                    $response .= '<br/>Levels for country code <b>'.$countryLevelJsonValue["countrycode"].'</b> have been imported.<br />';
-                }
-                else {
-                    $response .= '<br/>Levels for country code <b>'.$countryLevelJsonValue["countrycode"].'</b> already found in database';
-                }
+                $countryLevelEntityManager->persist($countryLevel);
+
+                $response .= '<br/>Levels for country code <b>' . $countryLevelJsonValue["countrycode"] . '</b> have been imported.<br />';
+            } else {
+                $response .= '<br/>Levels for country code <b>' . $countryLevelJsonValue["countrycode"] . '</b> already found in database';
+            }
         }
         $countryLevelEntityManager->flush();
 
@@ -47,21 +46,24 @@ class GeonamesCountryLevelController extends AbstractController
     }
 
     #[Route('/get', name: 'country_level_get')]
-    public function getonelevel(EntityManagerInterface $entityManager): JsonResponse
+    public function getAllLevels(EntityManagerInterface $entityManager): JsonResponse
     {
-       $countryLevels = $entityManager->getRepository(GeonamesCountryLevel::class)
-               ->findAll();
+        $response = new JsonResponse();
+        $countryLevels = $entityManager->getRepository(GeonamesCountryLevel::class)
+            ->findAll();
 
-       $result = array_map(static fn(GeonamesCountryLevel $value): array => $value->toArray(), $countryLevels);
+        $result = array_map(static fn (GeonamesCountryLevel $value): array => $value->toArray(), $countryLevels);
 
-        return new JsonResponse($result);
+        $response->setContent(json_encode($result));
+
+        return $response;
     }
 
     #[Route('/get/{countrycode}', name: 'country_level_get_country_code')]
     public function get(EntityManagerInterface $entityManager, string $countrycode): JsonResponse
     {
         $countryLevel = $entityManager->getRepository(GeonamesCountryLevel::class)
-                ->findOneByCountryCode($countrycode);
+            ->findOneByCountryCode($countrycode);
 
         return new JsonResponse($countryLevel->toArray());
     }

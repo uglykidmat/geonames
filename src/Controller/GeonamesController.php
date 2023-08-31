@@ -11,6 +11,7 @@ use App\Entity\GeonamesAdministrativeDivision;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 
@@ -41,13 +42,20 @@ class GeonamesController extends AbstractController
     #[Route('/search/{geoquery}-{featurecode}', name: 'search_geoquery_featurecode')]
     public function searchJSON(EntityManagerInterface $entityManager, $geoquery, $featurecode): Response
     {
+        $searchResponse = new Response();
         //________________________Geonames global search (https://www.geonames.org/export/geonames-search.html)
-        $url = 'http://api.geonames.org/searchJSON?maxRows=10&q=' . $geoquery . '&username=' . $this->token . '&featureCode=' . $featurecode . '&style=FULL';
+        $url = 'http://api.geonames.org/searchJSON?formatted=true&maxRows=2&lang=fr&q=' . $geoquery
+
+            . '&username=' . $this->token
+            . '&featureCode=' . $featurecode
+            . '&style=FULL';
 
         $client = HttpClient::create();
         $response = $client->request('GET', $url);
         $content = $response->getContent();
+
         $contentJSON = json_decode($content, true);
+        //dd($contentJSON);
         //$geonamesJSONfilesys = new Filesystem();
         //$geonamesJSONfilesys->dumpFile('geonames.json', $content);
 
@@ -63,22 +71,17 @@ class GeonamesController extends AbstractController
                     ->setCountryCode($value["countryCode"] ?? null)
                     ->setCountryId($value["countryId"])
                     ->setContinentCode($value["continentCode"] ?? null)
-
                     ->setTimezoneGmtOffset($value["timezone"]["gmtOffset"] ?? null)
                     ->setTimezoneTimeZoneId($value["timezone"]["timeZoneId"] ?? null)
                     ->setTimezoneDstOffset($value["timezone"]["dstOffset"] ?? null)
-
                     ->setFcl($value["fcl"])
                     ->setSrtm3($value["srtm3"] ?? null)
                     ->setAstergdem($value["astergdem"] ?? null)
-
                     ->setAdminId1($value["adminId1"] ?? null)
                     ->setAdminId2($value["adminId2"] ?? null)
                     ->setAdminId3($value["adminId3"] ?? null)
                     ->setAdminId4($value["adminId4"] ?? null)
-
                     ->setAdminName1($value["adminName1"] ?? null)
-
                     ->setAdminCode1($value["adminCode1"] ?? null)
                     ->setAdminCode2($value["adminCode2"] ?? null)
                     ->setAdminCode3($value["adminCode3"] ?? null)
@@ -96,8 +99,11 @@ class GeonamesController extends AbstractController
             }
         }
         $entityManager->flush();
+        $content = json_encode(json_decode($content), JSON_UNESCAPED_UNICODE);
 
-        return new Response();
+        $searchResponse->setContent($content);
+
+        return $searchResponse;
     }
 
     // ----------------------------------------------------------------
@@ -185,9 +191,7 @@ class GeonamesController extends AbstractController
         $geonamesIdResponse = $entityManager->getRepository(GeonamesAdministrativeDivision::class)
             ->findByGeonameId($geonamesId);
 
-        return new Response(
-            dd($geonamesIdResponse)
-        );
+        return new Response();
     }
 
     // ----------------------------------------------------------------
@@ -211,7 +215,7 @@ class GeonamesController extends AbstractController
     public function getAllCountries(EntityManagerInterface $entityManager): Response
     {
         $countriesListJSON = json_decode(file_get_contents(__DIR__ . '/../../public_countrycodes_all.json'), true);
-        //dd($countriesListJSON);
+
         foreach ($countriesListJSON as $countryCode => $entries) {
             $countryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
 
@@ -255,9 +259,11 @@ class GeonamesController extends AbstractController
     //_______________________________________________________TODO
     // ----------------------------------------------------------------
     #[Route('/country/{countryCode}', name: 'country')]
-    public function getCountry(EntityManagerInterface $entityManager, string $countryCode): Response
+    public function getCountry(EntityManagerInterface $entityManager, string $countryCode): JsonResponse
     {
         $countryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
+
+        $countryResponse = new JsonResponse();
 
         if (!$entityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode)) {
             $client = HttpClient::create();
@@ -286,14 +292,14 @@ class GeonamesController extends AbstractController
             $entityManager->persist($country);
             $entityManager->flush();
 
-            return new Response(
-                "<br/>New entry ! -> " . print_r($country)
-            );
+            $countryResponse->setContent(json_encode($country));
+            return $countryResponse;
         } else {
-            $country = $entityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode);
-            return new Response(
-                print_r($country)
-            );
+            $country = $entityManager->getRepository(GeonamesCountry::class)->findOneByCountryCode($countryCode);
+
+            $countryResponse->setContent(json_encode($country->getGeonameId()));
+
+            return $countryResponse;
         }
     }
 }

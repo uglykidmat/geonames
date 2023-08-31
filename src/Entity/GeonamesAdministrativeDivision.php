@@ -380,7 +380,7 @@ class GeonamesAdministrativeDivision
         return $adminCodes;
     }
 
-    public function getLat(): ?string
+    public function getLat(): ?float
     {
         return $this->lat;
     }
@@ -392,7 +392,7 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getLng(): ?string
+    public function getLng(): ?float
     {
         return $this->lng;
     }

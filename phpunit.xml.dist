@@ -24,6 +24,9 @@
         <testsuite name="Geonames Services Test Suite">
             <directory>tests/ServicesTests</directory>
         </testsuite>
+        <testsuite name="Geonames Entities Test Suite">
+            <directory>tests/EntitiesTests</directory>
+        </testsuite>
     </testsuites>
 
     <coverage includeUncoveredFiles="true"
