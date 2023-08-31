@@ -12,12 +12,12 @@ use App\Interface\GeonameAPIServiceInterface;
 class GeonamesAPIService implements GeonameAPIServiceInterface
 {
     public function __construct(
-        public HttpClientInterface $httpClientInterface,
+        public HttpClientInterface $client,
         private string $token,
         private string $urlBase,
         private EntityManagerInterface $entityManager
     ) {
-        $this->httpClientInterface = $httpClientInterface->withOptions([
+        $this->client = $client->withOptions([
             'headers' => [
                 'Content-Type: application/json',
             ],
@@ -27,7 +27,7 @@ class GeonamesAPIService implements GeonameAPIServiceInterface
 
     public function postalCodeSearchJSON(string $postalCode): array
     {
-        $postalCodeSearchResponse = $this->httpClientInterface->request(
+        $postalCodeSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
                 . 'postalCodeSearchJSON?formatted=true&postalcode=' . $postalCode
@@ -42,7 +42,7 @@ class GeonamesAPIService implements GeonameAPIServiceInterface
 
     public function postalCodeLookupJSON(string $postalCode, string $countrycode): array
     {
-        $postalCodeSearchResponse = $this->httpClientInterface->request(
+        $postalCodeSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
                 . 'postalCodeLookupJSON?formatted=true&postalcode=' . $postalCode
@@ -81,7 +81,7 @@ class GeonamesAPIService implements GeonameAPIServiceInterface
 
     public function latLngSearch(float $lat, float $lng): ?int
     {
-        $latlngSearchResponse = json_decode($this->httpClientInterface->request(
+        $latlngSearchResponse = json_decode($this->client->request(
             'GET',
             $this->urlBase
                 . 'findNearbyJSON?formatted=true&lat=' . $lat
@@ -90,14 +90,12 @@ class GeonamesAPIService implements GeonameAPIServiceInterface
                 . '&style=full&maxRows=5'
         )->getContent());
 
-        $geonameIdFound = $latlngSearchResponse->geonames[0]->geonameId;
-
-        return $geonameIdFound;
+        return $latlngSearchResponse->geonames[0]->geonameId;
     }
 
     public function getJsonSearch(int $geonameId): ?stdClass
     {
-        $getJsonSearchResponse = json_decode($this->httpClientInterface->request(
+        $getJsonSearchResponse = json_decode($this->client->request(
             'GET',
             $this->urlBase
                 . 'getJSON?geonameId=' . $geonameId
@@ -110,7 +108,7 @@ class GeonamesAPIService implements GeonameAPIServiceInterface
 
     public function countrySubDivisionSearch(float $lat, float $lng): Response
     {
-        $countrySubDivisionSearchResponse = $this->httpClientInterface->request(
+        $countrySubDivisionSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
                 . 'countrySubdivisionJSON?formatted=true&level=3&lat=' . $lat
