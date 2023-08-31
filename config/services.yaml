@@ -29,6 +29,9 @@ services:
     App\Service\GeonamesDBCachingService:
         autowire: true
 
+    App\Interface:
+        autowire: true
+
     tests\ServicesTests:
         autowire: true
     # add more service definitions when explicit configuration is needed

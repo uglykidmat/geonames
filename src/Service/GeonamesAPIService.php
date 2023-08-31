@@ -7,11 +7,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use App\Interface\GeonameAPIServiceInterface;
 
-class GeonamesAPIService
+class GeonamesAPIService implements GeonameAPIServiceInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClientInterface,
+        public HttpClientInterface $httpClientInterface,
         private string $token,
         private string $urlBase,
         private EntityManagerInterface $entityManager
