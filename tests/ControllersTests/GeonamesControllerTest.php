@@ -43,6 +43,5 @@ class GeonamesControllerTest extends KernelTestCase
         $this->assertJson($gotasearch->getContent());
         $this->assertIsObject(json_decode($gotasearch->getContent()));
         $this->assertNotEmpty($gotasearch->getContent());
-        //$this->assertSame($expectedResponse->getContent(), $gotasearch->getContent(), "Not the same content !");
     }
 }

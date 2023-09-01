@@ -17,7 +17,6 @@ class GeonamesSearchController extends AbstractController
         $response = new Response();
         $request = Request::createFromGlobals()->getContent();
 
-
         if (empty($request)) {
             throw new BadRequestHttpException('empty json request');
         }

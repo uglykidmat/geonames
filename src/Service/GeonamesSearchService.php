@@ -18,7 +18,7 @@ class GeonamesSearchService
     ) {
     }
 
-    public function bulkRequest(string $request): string
+    public function bulkRequest(?string $request): string
     {
         $geonamesBulkResponse = json_decode($request);
 

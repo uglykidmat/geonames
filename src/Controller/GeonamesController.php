@@ -91,13 +91,11 @@ class GeonamesController extends AbstractController
                     ->setLng($value["lng"] ?? null)
                     ->setPopulation($value["population"] ?? null)
                     ->setFcode($value["fcode"] ?? null);
-                $entityManager->persist($subDivision);
 
-                echo 'Persisted for <b>' . $value["geonameId"] . '</b><br/>';
-            } else {
-                echo '<b>' . $value["geonameId"] . '</b> found in database : ' . $value["toponymName"] . ' !<br/>';
+                $entityManager->persist($subDivision);
             }
         }
+
         $entityManager->flush();
         $content = json_encode(json_decode($content), JSON_UNESCAPED_UNICODE);
 

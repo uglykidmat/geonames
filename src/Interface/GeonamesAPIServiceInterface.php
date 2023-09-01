@@ -1,11 +1,11 @@
 <?php
-// src/Interface/GeonameAPIServiceInterface.php
+// src/Interface/GeonamesAPIServiceInterface.php
 namespace App\Interface;
 
 use stdClass;
 use Symfony\Component\HttpFoundation\Response;
 
-interface GeonameAPIServiceInterface
+interface GeonamesAPIServiceInterface
 {
     public function postalCodeSearchJSON(string $postalCode): array;
 
