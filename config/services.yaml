@@ -34,5 +34,11 @@ services:
 
     tests\ServicesTests:
         autowire: true
+
+    tests\ControllersTests:
+        autowire: true
+
+    tests\EntitiesTests:
+        autowire: true
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -2,11 +2,11 @@
 // src/Service/GeonamesSearchService.php
 namespace App\Service;
 
-use App\Entity\GeonamesAdministrativeDivision;
 use stdClass;
 use App\Service\GeonamesAPIService;
-use App\Repository\GeonamesAdministrativeDivisionRepository;
+use App\Entity\GeonamesAdministrativeDivision;
 use App\Repository\GeonamesCountryLevelRepository;
+use App\Repository\GeonamesAdministrativeDivisionRepository;
 
 class GeonamesSearchService
 {

@@ -12,18 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class GeonamesSearchController extends AbstractController
 {
     #[Route('/geonames/search', name: 'geonames_search', methods: ['POST'])]
-    public function geonamesSearch(GeonamesSearchService $searchService): Response
+    public function geonamesSearch(Request $request, GeonamesSearchService $searchService): Response
     {
         $response = new Response();
-        $request = Request::createFromGlobals()->getContent();
+        $jsonPayloadString = $request->getContent();
 
-        if (empty($request)) {
-            throw new BadRequestHttpException('empty json request');
+        if (empty($jsonPayloadString)) {
+            throw new BadRequestHttpException('Empty JISONE request');
         }
 
-        $parsedRequest = $searchService->bulkRequest($request);
-
+        $parsedRequest = $searchService->bulkRequest($jsonPayloadString);
+        $response->headers->set('Content-Type', 'application/json');
         $response->setContent($parsedRequest);
+
         return $response;
     }
 }
