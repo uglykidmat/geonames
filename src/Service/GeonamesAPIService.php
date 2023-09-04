@@ -27,6 +27,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
     public function postalCodeSearchJSON(string $postalCode): array
     {
+
         $postalCodeSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
@@ -58,7 +59,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
     private function responseCheck(object $searchResponse, string $searchType): void
     {
-        if ($searchResponse->getStatusCode() != 200) {
+        if ($searchResponse->getStatusCode() >= 400) {
+            // dd(print_r($searchResponse));
             throw new Exception('Unavailable Webservice or malformed API url');
         }
 
