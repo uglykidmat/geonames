@@ -99,15 +99,17 @@ class GeonamesSearchService
 
     private function checkRequestContents(stdClass $requestEntry): string
     {
-        if (isset($requestEntry->lat)) {
-            if (isset($requestEntry->lng)) {
+        if (!empty($requestEntry->lat) && ($requestEntry->lat != '""')) {
+            if (!empty($requestEntry->lng) && ($requestEntry->lng != '""')) {
                 return "coordinates";
             }
-        } else if (isset($requestEntry->country_code)) {
-            if (isset($requestEntry->zip_code)) {
+        } else if (!empty($requestEntry->country_code) && ($requestEntry->country_code != '""')) {
+            if (!empty($requestEntry->zip_code) && ($requestEntry->zip_code != '""')) {
                 return "zipcode";
             }
-        } else return "Missing fields";
+        }
+        return "Missing fields";
+        //return "Missing fields or null values. Check your request content.";
     }
 
     private function adminCodesMapper(GeonamesAdministrativeDivision $IdFoundInDb, int $usedLevel): array
