@@ -4,7 +4,9 @@ namespace App\Service;
 
 use stdClass;
 use App\Service\GeonamesAPIService;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
+use App\Entity\GeonamesCountryLevel;
 use App\Repository\GeonamesCountryLevelRepository;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
 
@@ -14,13 +16,15 @@ class GeonamesSearchService
         private GeonamesAPIService $apiService,
         private GeonamesDBCachingService $dbCachingService,
         private GeonamesAdministrativeDivisionRepository $gRepository,
-        private GeonamesCountryLevelRepository $gclRepository
+        private EntityManagerInterface $entityManager
     ) {
     }
 
     public function bulkRequest(?string $request): string
     {
         $geonamesBulkResponse = json_decode($request);
+
+        $gclRepository = $this->entityManager->getRepository(GeonamesCountryLevel::class);
 
         foreach ($geonamesBulkResponse as $geonamesBulkIndex => $geonamesBulkRow) {
 
@@ -38,7 +42,7 @@ class GeonamesSearchService
 
                 $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
 
-                $UsedLevel = $this->gclRepository->findOneByCountryCode(
+                $UsedLevel = $gclRepository->findOneByCountryCode(
                     $IdFoundInDb->getCountryCode()
                 )->getUsedLevel();
 
@@ -68,7 +72,7 @@ class GeonamesSearchService
                 }
                 $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
 
-                $UsedLevel = $this->gclRepository->findOneByCountryCode(
+                $UsedLevel = $gclRepository->findOneByCountryCode(
                     $IdFoundInDb->getCountryCode()
                 )->getUsedLevel();
 
