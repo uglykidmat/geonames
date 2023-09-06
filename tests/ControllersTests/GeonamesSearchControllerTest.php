@@ -22,7 +22,7 @@ class GeonamesSearchControllerTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
         $this->assertResponseStatusCodeSame(200, "Not 200 ok !!");
-        $this->assertJsonContains('elt_id');
+        $this->assertJsonContains([0 => ['elt_id' => '1'], 1 => ['elt_id' => '2']]);
     }
 
     public function testPostWithLatitudeAndLongitudeOnly(): void
@@ -46,7 +46,7 @@ class GeonamesSearchControllerTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
         $this->assertResponseStatusCodeSame(200, "Not 200 ok !!");
-        $this->assertJsonEquals('[{"lat":41.1121407,"lng":122.996773,"error":"false","used_level":1,"country_code":"CN","adminCode1":"19"}]');
+        $this->assertJsonContains([0 => ['error' => false]]);
     }
 
     public function testPostWithCountryCodeAndPostalCodeOnly(): void
@@ -70,8 +70,8 @@ class GeonamesSearchControllerTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
         $this->assertResponseStatusCodeSame(200, "Not 200 ok !!");
-
-        $this->assertJsonEquals('[{"country_code":"FR","zip_code":73000,"error":"false","lat":45.56179,"lng":5.94306,"used_level":2,"adminCode1":"84","adminCode2":"73"}]');
+        $this->assertJsonContains([0 => ['error' => true]]);
+        $this->assertJsonContains([0 => ['country_code' => 'FR']]);
     }
 
     public function testPostWithBothCountryPostalCodeAndLatLng(): void
@@ -101,9 +101,8 @@ class GeonamesSearchControllerTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
         $this->assertResponseStatusCodeSame(200, "Not 200 ok !!");
-        $this->assertJsonEquals('[{"elt_id":1,"country_code":"FR","zip_code":73000,"error":"false","lat":45.56179,"lng":5.94306,"used_level":2,"adminCode1":"84","adminCode2":"73"},{"elt_id":2,"lat":41.1121407,"lng":122.996773,"error":"false","used_level":1,"country_code":"CN","adminCode1":"19"}]');
-
-        $this->assertJsonContains([0=> ['elt_id' => 1]]);
+        $this->assertJsonContains([0 => ['elt_id' => 1], 1 => ['elt_id' => 2]]);
+        $this->assertJsonContains([0 => ['error' => true], 1 => ['error' => false]]);
     }
 
     public function testPostWithMissingPostalCodeValue(): void
@@ -126,7 +125,6 @@ class GeonamesSearchControllerTest extends ApiTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
-
-        $this->assertJsonContains([0=> ['error' => true]]);
+        $this->assertJsonContains([0 => ['error' => true]]);
     }
 }

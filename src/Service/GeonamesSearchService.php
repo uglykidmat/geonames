@@ -50,7 +50,7 @@ class GeonamesSearchService
 
                 $geonamesBulkResponse[$geonamesBulkIndex] = [
                     ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => 'false'],
+                    ...['error' => false],
                     ...['used_level' => $UsedLevel],
                     ...['country_code' => $IdFoundInDb->getCountryCode()],
                     ...$adminCodesArray
@@ -80,7 +80,7 @@ class GeonamesSearchService
 
                 $geonamesBulkResponse[$geonamesBulkIndex] = [
                     ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => 'false'],
+                    ...['error' => false],
                     ...['lat' => $IdFoundInDb->getLat(), 'lng' => $IdFoundInDb->getLng()],
                     ...['used_level' => $UsedLevel],
                     ...['country_code' => $IdFoundInDb->getCountryCode()],
@@ -89,7 +89,7 @@ class GeonamesSearchService
             } else {
                 $geonamesBulkResponse[$geonamesBulkIndex] = [
                     ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => 'true', 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
+                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
                 ];
             }
         }
@@ -99,17 +99,23 @@ class GeonamesSearchService
 
     private function checkRequestContents(stdClass $requestEntry): string
     {
-        if (!empty($requestEntry->lat) && ($requestEntry->lat != '""')) {
-            if (!empty($requestEntry->lng) && ($requestEntry->lng != '""')) {
-                return "coordinates";
-            }
-        } else if (!empty($requestEntry->country_code) && ($requestEntry->country_code != '""')) {
-            if (!empty($requestEntry->zip_code) && ($requestEntry->zip_code != '""')) {
-                return "zipcode";
-            }
+        if (
+            !empty($requestEntry->lat)
+            && is_numeric($requestEntry->lat)
+            && !empty($requestEntry->lat)
+            && is_numeric($requestEntry->lat)
+        ) {
+            return "coordinates";
+        } else if (
+            !empty($requestEntry->country_code)
+            && is_string($requestEntry->country_code)
+            && !empty($requestEntry->zip_code)
+            && is_string($requestEntry->zip_code)
+        ) {
+            return "zipcode";
         }
+
         return "Missing fields";
-        //return "Missing fields or null values. Check your request content.";
     }
 
     private function adminCodesMapper(GeonamesAdministrativeDivision $IdFoundInDb, int $usedLevel): array
