@@ -28,6 +28,8 @@ services:
 
     App\Service\GeonamesDBCachingService:
         autowire: true
+        arguments:
+            $redisDsn: '%env(REDIS_HOST)%'
 
     App\Interface:
         autowire: true
