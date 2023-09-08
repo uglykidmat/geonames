@@ -25,7 +25,6 @@ class GeonamesSearchService
     public function bulkRequest(?string $request): string
     {
         $geonamesBulkResponse = json_decode($request);
-
         $gclRepository = $this->entityManager->getRepository(GeonamesCountryLevel::class);
 
         foreach ($geonamesBulkResponse as $geonamesBulkIndex => $geonamesBulkRow) {
@@ -44,6 +43,9 @@ class GeonamesSearchService
 
                 $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
 
+                if ($IdFoundInDb->getCountryCode() === null) {
+                    dd($geonamesIdFound);
+                }
                 $UsedLevel = $gclRepository->findOneByCountryCode(
                     $IdFoundInDb->getCountryCode()
                 )->getUsedLevel();

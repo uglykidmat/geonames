@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Interface\GeonamesAPIServiceInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GeonamesAPIService implements GeonamesAPIServiceInterface
 {
@@ -15,7 +16,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         public HttpClientInterface $client,
         private string $token,
         private string $urlBase,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private string $redisDsn
     ) {
         $this->client = $client->withOptions([
             'headers' => [
@@ -27,7 +29,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
     public function postalCodeSearchJSON(string $postalCode): array
     {
-
         $postalCodeSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
@@ -60,7 +61,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
     private function responseCheck(object $searchResponse, string $searchType): void
     {
         if ($searchResponse->getStatusCode() >= 400) {
-            // dd(print_r($searchResponse));
             throw new Exception('Unavailable Webservice or malformed API url');
         }
 
@@ -89,10 +89,19 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                 . 'findNearbyJSON?formatted=true&lat=' . $lat
                 . '&lng=' . $lng
                 . '&username=' . $this->token
-                . '&style=full&maxRows=5'
+                . '&style=full&maxRows=1&featureCode=ADM1&featureCode=PPL'
         )->getContent());
 
-        return $latlngSearchResponse->geonames[0]->geonameId;
+        $geonames = $latlngSearchResponse->geonames;
+
+        if (!empty($geonames) && is_array($geonames)) {
+            $firstGeoname = reset($geonames);
+
+            $geonameId = $firstGeoname->geonameId;
+            return $geonameId;
+        } else {
+            throw new Exception('Empty content from Geonames');
+        }
     }
 
     public function getJsonSearch(int $geonameId): ?stdClass

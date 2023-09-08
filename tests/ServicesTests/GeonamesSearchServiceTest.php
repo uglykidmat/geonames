@@ -2,20 +2,11 @@
 
 namespace App\tests\ServicesTests;
 
-use stdClass;
 use App\Controller\GeonamesController;
 use App\Service\GeonamesSearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-
-define("INPUTSTRING", '[{
-    "elt_id": "1",
-    "country_code": "FR",
-    "zip_code": "73000",
-    "lat": 41.112140699999998,
-    "lng": 122.996773
-    }]');
+use Symfony\Component\HttpClient\HttpClient;
 
 class GeonamesSearchServiceTest extends WebTestCase
 {
@@ -32,16 +23,17 @@ class GeonamesSearchServiceTest extends WebTestCase
         return json_decode($input, true);
     }
 
-    public function objectEncoder(string $input): stdClass
+    public function objectEncoder(string $input): object
     {
-        return json_decode($input);
+        return (object)json_decode($input);
     }
 
     public function testShouldRequest()
     {
         $client = static::createClient();
-        $request = $client->xmlHttpRequest('POST', '/geonames/search', self::arrayEncoder(self::$inputstring));
-        //dd(gettype($request));
+
+        $client->request('POST', '/geonames/search', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([self::objectEncoder(self::$inputstring)]));
+
         $this->assertResponseIsSuccessful("Success ?");
         $this->assertResponseHasHeader('Content-Type', 'application/json');
     }
@@ -50,29 +42,26 @@ class GeonamesSearchServiceTest extends WebTestCase
     {
         $inputArray = self::arrayEncoder(self::$inputstring);
         $inputArray = $inputArray[0];
-        $clienthttp = new HttpClientInterface();
-        $clienthttp->request('POST', '/geonames/search', self::arrayEncoder(self::$inputstring));
-        //dd($clienthttp);
+        $clienthttp = HttpClient::create();
+        $baseUrl = 'http://localhost:8000';
+        $request = $clienthttp->request('POST',  $baseUrl . '/geonames/search', [
+            'json' => self::arrayEncoder(self::$inputstring),
+        ]);
 
-        $client = static::createClient();
-        $request = $client->xmlHttpRequest('POST', '/geonames/search', $inputArray);
+        $requestContent = json_decode($request->getContent());
 
+        $this->assertIsObject($requestContent[0]);
 
-        $this->assertIsObject($request);
-        $this->assertObjectHasProperty("lat", $request, "Missing latitude");
-        $this->assertObjectHasProperty("lng", $request, "Missing longitude");
-        $this->assertObjectHasProperty("country_code", $request, "Missing latitude");
+        $this->assertObjectHasProperty("lat", $requestContent[0], "Missing latitude");
+        $this->assertObjectHasProperty("lng", $requestContent[0], "Missing longitude");
+        $this->assertObjectHasProperty("country_code", $requestContent[0], "Missing Country Code");
     }
-
 
     public function testShouldBulkRequest(): void
     {
-
         self::bootKernel();
         $entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $geoCtrl = static::getContainer()->get(GeonamesController::class);
         $service = static::getContainer()->get(GeonamesSearchService::class);
-
-        //dd($service);
     }
 }
