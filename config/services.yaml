@@ -25,6 +25,7 @@ services:
         arguments:
             $token: '%env(GEONAMES_TOKEN)%'
             $urlBase: '%env(GEONAMES_BASE_URL)%'
+            $redisDsn: '%env(REDIS_HOST)%'
 
     App\Service\GeonamesDBCachingService:
         autowire: true
@@ -34,13 +35,5 @@ services:
     App\Interface:
         autowire: true
 
-    tests\ServicesTests:
-        autowire: true
-
-    tests\ControllersTests:
-        autowire: true
-
-    tests\EntitiesTests:
-        autowire: true
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

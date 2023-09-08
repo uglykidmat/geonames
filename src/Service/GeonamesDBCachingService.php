@@ -2,7 +2,7 @@
 // src/Service/GeonameAdapterService.php
 namespace App\Service;
 
-use Redis;
+use Predis;
 use stdClass;
 use App\Adapter\GeonamesAdapter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,29 +20,25 @@ class GeonamesDBCachingService
         private string $redisDsn
     ) {
         $this->cache = new RedisAdapter(
-            Redis::createConnection($this->redisDsn)
+            RedisAdapter::createConnection($redisDsn)
         );
     }
 
     public function searchSubdivisionInDatabase(int $geonameId): ?GeonamesAdministrativeDivision
     {
         $cacheKey = 'geonames_subdivision_' . $geonameId;
-        $cachedData = $this->cache->getItem($cacheKey);
 
         $cachedData = $this->cache->getItem($cacheKey);
 
         if (!$cachedData->isHit()) {
-            // Data is not in cache, fetch it from the database
             $dbResponse = $this->entityManager
                 ->getRepository(GeonamesAdministrativeDivision::class)
                 ->findOneByGeonameId($geonameId);
 
-            // Store the result in cache for future use
             $cachedData->set($dbResponse);
             $cachedData->expiresAfter(3600);
             $this->cache->save($cachedData);
         } else {
-            // Data is in cache, retrieve it
             $dbResponse = $cachedData->get();
         }
 
