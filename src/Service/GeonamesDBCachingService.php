@@ -7,50 +7,31 @@ use App\Adapter\GeonamesAdapter;
 use App\Service\GeonamesAPIService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeonamesDBCachingService
 {
-    private RedisAdapter $cache;
-
     public function __construct(
         private HttpClientInterface $httpClientInterface,
         private EntityManagerInterface $entityManager,
         private GeonamesAPIService $apiservice,
-        private string $redisDsn
     ) {
-        $this->cache = new RedisAdapter(
-            RedisAdapter::createConnection($redisDsn)
-        );
     }
 
     public function searchSubdivisionInDatabase(int $geonameId): ?GeonamesAdministrativeDivision
     {
-        $cacheKey = 'geonames_subdivision_' . $geonameId;
+        $dbResponse = $this->entityManager
+            ->getRepository(GeonamesAdministrativeDivision::class)
+            ->findOneByGeonameId($geonameId);
 
-        $cachedData = $this->cache->getItem($cacheKey);
-
-        if (!$cachedData->isHit()) {
+        if ($dbResponse === null) {
+            self::saveSubdivisionToDatabase(
+                $this->apiservice->getJsonSearch($geonameId)
+            );
 
             $dbResponse = $this->entityManager
                 ->getRepository(GeonamesAdministrativeDivision::class)
                 ->findOneByGeonameId($geonameId);
-
-            if ($dbResponse === null) {
-                self::saveSubdivisionToDatabase(
-                    $this->apiservice->getJsonSearch($geonameId)
-                );
-                $dbResponse = $this->entityManager
-                    ->getRepository(GeonamesAdministrativeDivision::class)
-                    ->findOneByGeonameId($geonameId);
-            }
-
-            $cachedData->set($dbResponse);
-            $cachedData->expiresAfter(3600);
-            $this->cache->save($cachedData);
-        } else {
-            $dbResponse = $cachedData->get();
         }
 
         return $dbResponse;
