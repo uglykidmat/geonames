@@ -3,23 +3,27 @@
 namespace App\Service;
 
 use stdClass;
-use App\Entity\GeonamesCountry;
 use App\Service\GeonamesAPIService;
 use App\Entity\GeonamesCountryLevel;
-use App\Service\GeonamesCountryService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
 
 class GeonamesSearchService
 {
+    private RedisAdapter $cache;
+
     public function __construct(
         private GeonamesAPIService $apiService,
         private GeonamesDBCachingService $dbCachingService,
         private GeonamesAdministrativeDivisionRepository $gRepository,
         private EntityManagerInterface $entityManager,
-        private GeonamesCountryService $countryService
+        private string $redisDsn
     ) {
+        $this->cache = new RedisAdapter(
+            RedisAdapter::createConnection($redisDsn)
+        );
     }
 
     public function bulkRequest(?string $request): string
@@ -35,27 +39,36 @@ class GeonamesSearchService
                     $geonamesBulkRow->lng
                 );
 
-                if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
-                    $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
+                $cacheKey = 'geonames_subdivision_' . $geonamesIdFound;
+                $cachedData = $this->cache->getItem($cacheKey);
 
-                    $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                if (!$cachedData->isHit()) {
+                    if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
+                        $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
+
+                        $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                    }
+
+                    $UsedLevel = $gclRepository->findOneByCountryCode(
+                        $IdFoundInDb->getCountryCode()
+                    )->getUsedLevel();
+
+                    $adminCodesArray = self::adminCodesMapper($IdFoundInDb, $UsedLevel);
+
+                    $geonamesBulkResponse[$geonamesBulkIndex] = [
+                        ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
+                        ...['error' => false],
+                        ...['used_level' => $UsedLevel],
+                        ...['country_code' => $IdFoundInDb->getCountryCode()],
+                        ...$adminCodesArray
+                    ];
+
+                    $cachedData->set($geonamesBulkResponse[$geonamesBulkIndex]);
+                    $cachedData->expiresAfter(3600);
+                    $this->cache->save($cachedData);
                 }
 
-                $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
-
-                $UsedLevel = $gclRepository->findOneByCountryCode(
-                    $IdFoundInDb->getCountryCode()
-                )->getUsedLevel();
-
-                $adminCodesArray = self::adminCodesMapper($IdFoundInDb, $UsedLevel);
-
-                $geonamesBulkResponse[$geonamesBulkIndex] = [
-                    ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => false],
-                    ...['used_level' => $UsedLevel],
-                    ...['country_code' => $IdFoundInDb->getCountryCode()],
-                    ...$adminCodesArray
-                ];
+                $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
             } else if (self::checkRequestContents($geonamesBulkRow) == "zipcode") {
                 $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
                     $geonamesBulkRow->zip_code,
@@ -67,30 +80,41 @@ class GeonamesSearchService
                     $geonamesZipCodeFound['postalcodes'][0]['lng']
                 );
 
-                if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
-                    $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
-                    $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                $cacheKey = 'geonames_subdivision_' . $geonamesIdFound;
+                $cachedData = $this->cache->getItem($cacheKey);
+
+                if (!$cachedData->isHit()) {
+
+                    if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
+                        $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
+                        $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                    }
+                    $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
+
+                    $UsedLevel = $gclRepository->findOneByCountryCode(
+                        $IdFoundInDb->getCountryCode()
+                    )->getUsedLevel();
+
+                    $adminCodesArray = self::adminCodesMapper($IdFoundInDb, $UsedLevel);
+
+                    $geonamesBulkResponse[$geonamesBulkIndex] = [
+                        ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
+                        ...['error' => false],
+                        ...['lat' => $IdFoundInDb->getLat(), 'lng' => $IdFoundInDb->getLng()],
+                        ...['used_level' => $UsedLevel],
+                        ...['country_code' => $IdFoundInDb->getCountryCode()],
+                        ...$adminCodesArray
+                    ];
+
+                    $cachedData->set($geonamesBulkResponse[$geonamesBulkIndex]);
+                    $cachedData->expiresAfter(3600);
+                    $this->cache->save($cachedData);
                 }
-                $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
-
-                $UsedLevel = $gclRepository->findOneByCountryCode(
-                    $IdFoundInDb->getCountryCode()
-                )->getUsedLevel();
-
-                $adminCodesArray = self::adminCodesMapper($IdFoundInDb, $UsedLevel);
-
-                $geonamesBulkResponse[$geonamesBulkIndex] = [
-                    ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => false],
-                    ...['lat' => $IdFoundInDb->getLat(), 'lng' => $IdFoundInDb->getLng()],
-                    ...['used_level' => $UsedLevel],
-                    ...['country_code' => $IdFoundInDb->getCountryCode()],
-                    ...$adminCodesArray
-                ];
+                $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
             } else {
                 $geonamesBulkResponse[$geonamesBulkIndex] = [
                     ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor Country-ZipCode']
+                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
                 ];
             }
         }
@@ -112,14 +136,11 @@ class GeonamesSearchService
             && is_string($requestEntry->country_code)
             && !empty($requestEntry->zip_code)
             && is_string($requestEntry->zip_code)
-            && $this->entityManager
-            ->getRepository(GeonamesCountry::class)
-            ->findByCountryCode($requestEntry->country_code)
         ) {
             return "zipcode";
         }
 
-        return "Missing or incorrect fields";
+        return "Missing fields";
     }
 
     private function adminCodesMapper(GeonamesAdministrativeDivision $IdFoundInDb, int $usedLevel): array
