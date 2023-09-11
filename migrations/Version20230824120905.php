@@ -20,8 +20,8 @@ final class Version20230824120905 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP SEQUENCE geonames_translation_id_seq CASCADE');
-        $this->addSql('DROP TABLE geonames_translation');
+        //$this->addSql('DROP SEQUENCE geonames_translation_id_seq CASCADE');
+        //$this->addSql('DROP TABLE geonames_translation');
         $this->addSql('ALTER TABLE geonames_administrative_division ALTER lat TYPE NUMERIC(20, 15)');
         $this->addSql('ALTER TABLE geonames_administrative_division ALTER lng TYPE NUMERIC(20, 15)');
     }
