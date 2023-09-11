@@ -43,9 +43,6 @@ class GeonamesSearchService
 
                 $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
 
-                if ($IdFoundInDb->getCountryCode() === null) {
-                    dd($geonamesIdFound);
-                }
                 $UsedLevel = $gclRepository->findOneByCountryCode(
                     $IdFoundInDb->getCountryCode()
                 )->getUsedLevel();
