@@ -7,13 +7,8 @@ use App\Service\GeonamesAPIService;
 use App\Entity\GeonamesCountryLevel;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
-
 
 class GeonamesSearchService
 {
@@ -36,15 +31,19 @@ class GeonamesSearchService
         foreach ($geonamesBulkResponse as $geonamesBulkIndex => $geonamesBulkRow) {
 
             if (self::checkRequestContents($geonamesBulkRow) == "coordinates") {
-                $geonamesIdFound = $this->apiService->latLngSearch(
-                    $geonamesBulkRow->lat,
-                    $geonamesBulkRow->lng
-                );
 
-                $cacheKey = 'geonames_subdivision_' . $geonamesIdFound;
+                $cacheKey = 'geonames_latlng_' .
+                    $geonamesBulkRow->lat .
+                    '-' .
+                    $geonamesBulkRow->lng;
+
                 $cachedData = $this->redisCache->getItem($cacheKey);
 
                 if (!$cachedData->isHit()) {
+                    $geonamesIdFound = $this->apiService->latLngSearch(
+                        $geonamesBulkRow->lat,
+                        $geonamesBulkRow->lng
+                    );
                     if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
                         $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
 
@@ -71,20 +70,24 @@ class GeonamesSearchService
                     $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
                 }
             } else if (self::checkRequestContents($geonamesBulkRow) == "zipcode") {
-                $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
-                    $geonamesBulkRow->zip_code,
-                    $geonamesBulkRow->country_code
-                );
 
-                $geonamesIdFound = $this->apiService->latLngSearch(
-                    $geonamesZipCodeFound['postalcodes'][0]['lat'],
-                    $geonamesZipCodeFound['postalcodes'][0]['lng']
-                );
+                $cacheKey = 'geonames_country-zipcode_' .
+                    $geonamesBulkRow->country_code .
+                    "-" .
+                    $geonamesBulkRow->zip_code;
 
-                $cacheKey = 'geonames_subdivision_' . $geonamesIdFound;
                 $cachedData = $this->redisCache->getItem($cacheKey);
 
                 if (!$cachedData->isHit()) {
+                    $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
+                        $geonamesBulkRow->zip_code,
+                        $geonamesBulkRow->country_code
+                    );
+
+                    $geonamesIdFound = $this->apiService->latLngSearch(
+                        $geonamesZipCodeFound['postalcodes'][0]['lat'],
+                        $geonamesZipCodeFound['postalcodes'][0]['lng']
+                    );
 
                     if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
                         $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
