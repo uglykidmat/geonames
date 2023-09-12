@@ -9,21 +9,23 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+
 
 class GeonamesSearchService
 {
-    private RedisAdapter $cache;
-
     public function __construct(
         private GeonamesAPIService $apiService,
         private GeonamesDBCachingService $dbCachingService,
         private GeonamesAdministrativeDivisionRepository $gRepository,
         private EntityManagerInterface $entityManager,
+        private CacheItemPoolInterface $redisCache,
         private string $redisDsn
     ) {
-        $this->cache = new RedisAdapter(
-            RedisAdapter::createConnection($redisDsn)
-        );
+        $this->redisCache = $redisCache;
     }
 
     public function bulkRequest(?string $request): string
@@ -40,7 +42,7 @@ class GeonamesSearchService
                 );
 
                 $cacheKey = 'geonames_subdivision_' . $geonamesIdFound;
-                $cachedData = $this->cache->getItem($cacheKey);
+                $cachedData = $this->redisCache->getItem($cacheKey);
 
                 if (!$cachedData->isHit()) {
                     if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
@@ -64,11 +66,10 @@ class GeonamesSearchService
                     ];
 
                     $cachedData->set($geonamesBulkResponse[$geonamesBulkIndex]);
-                    $cachedData->expiresAfter(3600);
-                    $this->cache->save($cachedData);
+                    $this->redisCache->save($cachedData);
+                } else {
+                    $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
                 }
-
-                $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
             } else if (self::checkRequestContents($geonamesBulkRow) == "zipcode") {
                 $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
                     $geonamesBulkRow->zip_code,
@@ -81,7 +82,7 @@ class GeonamesSearchService
                 );
 
                 $cacheKey = 'geonames_subdivision_' . $geonamesIdFound;
-                $cachedData = $this->cache->getItem($cacheKey);
+                $cachedData = $this->redisCache->getItem($cacheKey);
 
                 if (!$cachedData->isHit()) {
 
@@ -107,10 +108,10 @@ class GeonamesSearchService
                     ];
 
                     $cachedData->set($geonamesBulkResponse[$geonamesBulkIndex]);
-                    $cachedData->expiresAfter(3600);
-                    $this->cache->save($cachedData);
+                    $this->redisCache->save($cachedData);
+                } else {
+                    $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
                 }
-                $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
             } else {
                 $geonamesBulkResponse[$geonamesBulkIndex] = [
                     ...(array)$geonamesBulkResponse[$geonamesBulkIndex],

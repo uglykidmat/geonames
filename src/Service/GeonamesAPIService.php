@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Interface\GeonamesAPIServiceInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GeonamesAPIService implements GeonamesAPIServiceInterface
 {
@@ -16,8 +15,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         public HttpClientInterface $client,
         private string $token,
         private string $urlBase,
-        private EntityManagerInterface $entityManager,
-        private string $redisDsn
+        private EntityManagerInterface $entityManager
     ) {
         $this->client = $client->withOptions([
             'headers' => [
@@ -48,11 +46,10 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             'GET',
             $this->urlBase
                 . 'postalCodeLookupJSON?formatted=true&postalcode=' . $postalCode
-                . '&maxRows=10&username=' . $this->token
+                . '&maxRows=1&username=' . $this->token
                 . '&country=' . $countrycode
                 . '&style=full'
         );
-
         $this->responseCheck($postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
@@ -83,6 +80,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
     public function latLngSearch(float $lat, float $lng): ?int
     {
+
         $latlngSearchResponse = json_decode($this->client->request(
             'GET',
             $this->urlBase
@@ -92,10 +90,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                 . '&style=full&maxRows=1&featureCode=ADM1&featureCode=PPL'
         )->getContent());
 
-        $geonames = $latlngSearchResponse->geonames;
-
-        if (!empty($geonames) && is_array($geonames)) {
-            $firstGeoname = reset($geonames);
+        if (!empty($latlngSearchResponse->geonames) && is_array($latlngSearchResponse->geonames)) {
+            $firstGeoname = reset($latlngSearchResponse->geonames);
 
             $geonameId = $firstGeoname->geonameId;
             return $geonameId;

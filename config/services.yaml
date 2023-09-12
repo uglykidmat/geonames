@@ -25,7 +25,6 @@ services:
         arguments:
             $token: '%env(GEONAMES_TOKEN)%'
             $urlBase: '%env(GEONAMES_BASE_URL)%'
-            $redisDsn: '%env(REDIS_HOST)%'
 
     App\Service\GeonamesDBCachingService:
         autowire: true
