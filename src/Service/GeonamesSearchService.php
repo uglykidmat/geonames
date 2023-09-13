@@ -6,9 +6,9 @@ use stdClass;
 use App\Service\GeonamesAPIService;
 use App\Entity\GeonamesCountryLevel;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\GeonamesAdministrativeDivision;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
 use Psr\Cache\CacheItemPoolInterface;
+use App\Service\AdminCodesMapperService;
 
 class GeonamesSearchService
 {
@@ -18,6 +18,7 @@ class GeonamesSearchService
         private GeonamesAdministrativeDivisionRepository $gRepository,
         private EntityManagerInterface $entityManager,
         private CacheItemPoolInterface $redisCache,
+        private AdminCodesMapperService $adminCodesMapperService,
         private string $redisDsn
     ) {
         $this->redisCache = $redisCache;
@@ -25,84 +26,84 @@ class GeonamesSearchService
 
     public function bulkRequest(?string $request): string
     {
-        $geonamesBulkResponse = json_decode($request);
+        $bulkResponse = json_decode($request);
         $gclRepository = $this->entityManager->getRepository(GeonamesCountryLevel::class);
 
-        foreach ($geonamesBulkResponse as $geonamesBulkIndex => $geonamesBulkRow) {
+        foreach ($bulkResponse as $bulkIndex => $bulkRow) {
 
-            if (self::checkRequestContents($geonamesBulkRow) == "coordinates") {
+            if (self::checkRequestContents($bulkRow) == "coordinates") {
 
                 $cacheKey = 'geonames_latlng_' .
-                    $geonamesBulkRow->lat .
+                    $bulkRow->lat .
                     '-' .
-                    $geonamesBulkRow->lng;
+                    $bulkRow->lng;
 
                 $cachedData = $this->redisCache->getItem($cacheKey);
 
                 if (!$cachedData->isHit()) {
-                    $geonamesIdFound = $this->apiService->latLngSearch(
-                        $geonamesBulkRow->lat,
-                        $geonamesBulkRow->lng
+                    $geoIdFound = $this->apiService->latLngSearch(
+                        $bulkRow->lat,
+                        $bulkRow->lng
                     );
-                    if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
-                        $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
+                    if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geoIdFound)) {
+                        $idToSave = $this->apiService->getJsonSearch($geoIdFound);
 
-                        $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                        $this->dbCachingService->saveSubdivisionToDatabase($idToSave);
                     }
 
                     $UsedLevel = $gclRepository->findOneByCountryCode(
                         $IdFoundInDb->getCountryCode()
                     )->getUsedLevel();
 
-                    $adminCodesArray = self::adminCodesMapper($IdFoundInDb, $UsedLevel);
+                    $adminCodesArray = $this->adminCodesMapperService->codesMapper($IdFoundInDb, $UsedLevel);
 
-                    $geonamesBulkResponse[$geonamesBulkIndex] = [
-                        ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
+                    $bulkResponse[$bulkIndex] = [
+                        ...(array)$bulkResponse[$bulkIndex],
                         ...['error' => false],
                         ...['used_level' => $UsedLevel],
                         ...['country_code' => $IdFoundInDb->getCountryCode()],
                         ...$adminCodesArray
                     ];
 
-                    $cachedData->set($geonamesBulkResponse[$geonamesBulkIndex]);
+                    $cachedData->set($bulkResponse[$bulkIndex]);
                     $this->redisCache->save($cachedData);
                 } else {
-                    $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
+                    $bulkResponse[$bulkIndex] = $cachedData->get();
                 }
-            } else if (self::checkRequestContents($geonamesBulkRow) == "zipcode") {
+            } else if (self::checkRequestContents($bulkRow) == "zipcode") {
 
                 $cacheKey = 'geonames_country-zipcode_' .
-                    $geonamesBulkRow->country_code .
+                    $bulkRow->country_code .
                     "-" .
-                    $geonamesBulkRow->zip_code;
+                    $bulkRow->zip_code;
 
                 $cachedData = $this->redisCache->getItem($cacheKey);
 
                 if (!$cachedData->isHit()) {
                     $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
-                        $geonamesBulkRow->zip_code,
-                        $geonamesBulkRow->country_code
+                        $bulkRow->zip_code,
+                        $bulkRow->country_code
                     );
 
-                    $geonamesIdFound = $this->apiService->latLngSearch(
+                    $geoIdFound = $this->apiService->latLngSearch(
                         $geonamesZipCodeFound['postalcodes'][0]['lat'],
                         $geonamesZipCodeFound['postalcodes'][0]['lng']
                     );
 
-                    if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound)) {
-                        $geonamesIdToSave = $this->apiService->getJsonSearch($geonamesIdFound);
-                        $this->dbCachingService->saveSubdivisionToDatabase($geonamesIdToSave);
+                    if (!$IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geoIdFound)) {
+                        $idToSave = $this->apiService->getJsonSearch($geoIdFound);
+                        $this->dbCachingService->saveSubdivisionToDatabase($idToSave);
                     }
-                    $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geonamesIdFound);
+                    $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geoIdFound);
 
                     $UsedLevel = $gclRepository->findOneByCountryCode(
                         $IdFoundInDb->getCountryCode()
                     )->getUsedLevel();
 
-                    $adminCodesArray = self::adminCodesMapper($IdFoundInDb, $UsedLevel);
+                    $adminCodesArray = $this->adminCodesMapperService->codesMapper($IdFoundInDb, $UsedLevel);
 
-                    $geonamesBulkResponse[$geonamesBulkIndex] = [
-                        ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
+                    $bulkResponse[$bulkIndex] = [
+                        ...(array)$bulkResponse[$bulkIndex],
                         ...['error' => false],
                         ...['lat' => $IdFoundInDb->getLat(), 'lng' => $IdFoundInDb->getLng()],
                         ...['used_level' => $UsedLevel],
@@ -110,20 +111,20 @@ class GeonamesSearchService
                         ...$adminCodesArray
                     ];
 
-                    $cachedData->set($geonamesBulkResponse[$geonamesBulkIndex]);
+                    $cachedData->set($bulkResponse[$bulkIndex]);
                     $this->redisCache->save($cachedData);
                 } else {
-                    $geonamesBulkResponse[$geonamesBulkIndex] = $cachedData->get();
+                    $bulkResponse[$bulkIndex] = $cachedData->get();
                 }
             } else {
-                $geonamesBulkResponse[$geonamesBulkIndex] = [
-                    ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
+                $bulkResponse[$bulkIndex] = [
+                    ...(array)$bulkResponse[$bulkIndex],
                     ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
                 ];
             }
         }
 
-        return json_encode($geonamesBulkResponse);
+        return json_encode($bulkResponse);
     }
 
     private function checkRequestContents(stdClass $requestEntry): string
@@ -145,15 +146,5 @@ class GeonamesSearchService
         }
 
         return "Missing fields";
-    }
-
-    private function adminCodesMapper(GeonamesAdministrativeDivision $IdFoundInDb, int $usedLevel): array
-    {
-        $adminCodes = array_slice($IdFoundInDb->getAdminCodes(), 0, $usedLevel);
-        $adminKeys = ['adminCode1', 'adminCode2', 'adminCode3', 'adminCode4'];
-        $adminKeysArray = array_slice($adminKeys, 0, $usedLevel);
-        $adminCodesArray = array_combine($adminKeysArray, $adminCodes);
-
-        return $adminCodesArray;
     }
 }

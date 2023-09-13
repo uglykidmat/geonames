@@ -91,13 +91,9 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         )->getContent());
 
         if (!empty($latlngSearchResponse->geonames) && is_array($latlngSearchResponse->geonames)) {
-            $firstGeoname = reset($latlngSearchResponse->geonames);
-
-            $geonameId = $firstGeoname->geonameId;
-            return $geonameId;
-        } else {
-            throw new Exception('Empty content from Geonames');
+            return reset($latlngSearchResponse->geonames)->geonameId;
         }
+        throw new Exception('Empty content from Geonames');
     }
 
     public function getJsonSearch(int $geonameId): ?stdClass
