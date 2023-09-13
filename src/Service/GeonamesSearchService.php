@@ -3,11 +3,12 @@
 namespace App\Service;
 
 use stdClass;
+use App\Entity\GeonamesCountry;
 use App\Service\GeonamesAPIService;
+use App\Entity\GeonamesCountryLevel;
+use App\Service\GeonamesCountryService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
-use App\Entity\GeonamesCountryLevel;
-use App\Repository\GeonamesCountryLevelRepository;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
 
 class GeonamesSearchService
@@ -16,7 +17,8 @@ class GeonamesSearchService
         private GeonamesAPIService $apiService,
         private GeonamesDBCachingService $dbCachingService,
         private GeonamesAdministrativeDivisionRepository $gRepository,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private GeonamesCountryService $countryService
     ) {
     }
 
@@ -89,7 +91,7 @@ class GeonamesSearchService
             } else {
                 $geonamesBulkResponse[$geonamesBulkIndex] = [
                     ...(array)$geonamesBulkResponse[$geonamesBulkIndex],
-                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
+                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor Country-ZipCode']
                 ];
             }
         }
@@ -111,11 +113,14 @@ class GeonamesSearchService
             && is_string($requestEntry->country_code)
             && !empty($requestEntry->zip_code)
             && is_string($requestEntry->zip_code)
+            && $this->entityManager
+            ->getRepository(GeonamesCountry::class)
+            ->findByCountryCode($requestEntry->country_code)
         ) {
             return "zipcode";
         }
 
-        return "Missing fields";
+        return "Missing or incorrect fields";
     }
 
     private function adminCodesMapper(GeonamesAdministrativeDivision $IdFoundInDb, int $usedLevel): array
