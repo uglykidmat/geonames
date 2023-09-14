@@ -5,10 +5,10 @@ namespace App\Service;
 use stdClass;
 use App\Service\GeonamesAPIService;
 use App\Entity\GeonamesCountryLevel;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\GeonamesAdministrativeDivisionRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use App\Service\AdminCodesMapperService;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\GeonamesAdministrativeDivisionRepository;
 
 class GeonamesSearchService
 {
@@ -119,7 +119,7 @@ class GeonamesSearchService
             } else {
                 $bulkResponse[$bulkIndex] = [
                     ...(array)$bulkResponse[$bulkIndex],
-                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor ZipCode']
+                    ...['error' => true, 'message' => 'Not found by lat-lng coordinates, nor Country-ZipCode']
                 ];
             }
         }
@@ -141,10 +141,13 @@ class GeonamesSearchService
             && is_string($requestEntry->country_code)
             && !empty($requestEntry->zip_code)
             && is_string($requestEntry->zip_code)
+            && $this->entityManager
+            ->getRepository(GeonamesCountry::class)
+            ->findByCountryCode($requestEntry->country_code)
         ) {
             return "zipcode";
         }
 
-        return "Missing fields";
+        return "Missing or incorrect fields";
     }
 }
