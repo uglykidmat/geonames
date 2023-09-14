@@ -7,7 +7,7 @@
 Download/Installation
 
 ```bash
-  git clone https://github.com/GTRDevTeam/geonames_rd.git
+  git clone https://github.com/Gatoreviews/geonames.git
 ```
 ```bash
   composer install
@@ -28,12 +28,12 @@ Homepage :
 ```bash
   /
 ```
-## Usage/Examples (04/08/2023)
+## Usage/Examples (14/09/2023)
 The Geoname controller has a few functions :
 
 ### Subdivisions
 
-Global search within database : 
+Global search in Symfony database : 
 ```php
 /search/{string $geoquery}-{string $featureCode}
 ```
