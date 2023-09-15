@@ -40,5 +40,11 @@ services:
     App\Interface:
         autowire: true
 
+    App\Security\AccessTokenHandler:
+        autowire: true
+        arguments:
+            $token: '%env(CREDENTIALS_TOKEN)%'
+            $user: '%env(CREDENTIALS_USER)%'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
