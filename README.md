@@ -28,7 +28,7 @@ Homepage :
 ```bash
   /
 ```
-## Usage/Examples (14/09/2023)
+## Usage/Examples (15/09/2023)
 The Geoname controller has a few functions :
 
 ### POST endpoint
@@ -48,6 +48,7 @@ Handles POST requests : the content must be a JSON string following this structu
 ]
 ```
 The search will be on the coordinates, and use the postalcode/countrycode couple to find the subdivisions.
+This URL is protected by a token : 'geonamesToken', if not provided you will encounter a 401 error.
 
 ### Subdivisions
 
