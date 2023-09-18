@@ -10,6 +10,8 @@ security:
                     gtr: { password: 'c3c9677cf573800aa30a68795143082b68d7a8056ee0e816c512004f33ddafb5', roles: ['ROLE_USER']}
 
     firewalls:
+        test:
+            security: false
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
