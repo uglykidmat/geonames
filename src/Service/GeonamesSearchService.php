@@ -52,9 +52,9 @@ class GeonamesSearchService
                         $this->dbCachingService->saveSubdivisionToDatabase($idToSave);
                     }
 
-                    $UsedLevel = $gclRepository->findOneByCountryCode(
+                    $UsedLevel = ($gclRepository->findOneByCountryCode(
                         $IdFoundInDb->getCountryCode()
-                    )->getUsedLevel();
+                    ) ?? (new GeonamesCountryLevel()))->getUsedLevel();
 
                     $adminCodesArray = $this->adminCodesMapperService->codesMapper($IdFoundInDb, $UsedLevel);
 
@@ -97,9 +97,9 @@ class GeonamesSearchService
                     }
                     $IdFoundInDb = $this->dbCachingService->searchSubdivisionInDatabase($geoIdFound);
 
-                    $UsedLevel = $gclRepository->findOneByCountryCode(
+                    $UsedLevel = ($gclRepository->findOneByCountryCode(
                         $IdFoundInDb->getCountryCode()
-                    )->getUsedLevel();
+                    ) ?? (new GeonamesCountryLevel()))->getUsedLevel();
 
                     $adminCodesArray = $this->adminCodesMapperService->codesMapper($IdFoundInDb, $UsedLevel);
 

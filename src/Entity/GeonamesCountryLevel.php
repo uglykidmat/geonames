@@ -21,7 +21,7 @@ class GeonamesCountryLevel
     private ?int $maxLevel = null;
 
     #[ORM\Column]
-    private ?int $usedLevel = null;
+    private ?int $usedLevel = 1;
 
     #[ORM\Column]
     private ?int $ADM1 = null;

@@ -78,12 +78,12 @@ class GeonamesSearchControllerTest extends ApiTestCase
     {
         $jsonPayLoad = [
             [
-                "elt_id" => 1,
+                "elt_id" => '1',
                 "country_code" => "FR",
                 "zip_code" => 73000
             ],
             [
-                "elt_id" => 2,
+                "elt_id" => '2',
                 "lat" => 41.1121407,
                 "lng" => 122.996773
             ]
@@ -101,7 +101,7 @@ class GeonamesSearchControllerTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
         $this->assertResponseStatusCodeSame(200, "Not 200 ok !!");
-        $this->assertJsonContains([0 => ['elt_id' => 1], 1 => ['elt_id' => 2]]);
+        $this->assertJsonContains([0 => ['elt_id' => '1'], 1 => ['elt_id' => '2']]);
         $this->assertJsonContains([0 => ['error' => true], 1 => ['error' => false]]);
     }
 
