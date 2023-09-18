@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use stdClass;
+use App\Entity\GeonamesCountry;
 use App\Service\GeonamesAPIService;
 use App\Entity\GeonamesCountryLevel;
 use Psr\Cache\CacheItemPoolInterface;
