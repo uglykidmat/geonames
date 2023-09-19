@@ -3,27 +3,24 @@
 namespace App\Service;
 
 use App\Entity\GeonamesAdministrativeDivision;
+use App\Repository\GeonamesCountryLevelRepository;
 use stdClass;
 use App\Entity\GeonamesCountry;
-use App\Service\GeonamesAPIService;
 use App\Entity\GeonamesCountryLevel;
 use Psr\Cache\CacheItemPoolInterface;
-use App\Service\AdminCodesMapperService;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\GeonamesAdministrativeDivisionRepository;
 
 class GeonamesSearchService
 {
     public function __construct(
         private GeonamesAPIService $apiService,
         private GeonamesDBCachingService $dbCachingService,
-        private GeonamesAdministrativeDivisionRepository $gRepository,
+        private GeonamesCountryLevelRepository $geonameDivisionRepository,
         private EntityManagerInterface $entityManager,
         private CacheItemPoolInterface $redisCache,
         private AdminCodesMapperService $adminCodesMapperService,
         private string $redisDsn
     ) {
-        $this->gclRepository = $this->entityManager->getRepository(GeonamesCountryLevel::class);
     }
 
     public function bulkRequest(?string $request): string
@@ -32,56 +29,8 @@ class GeonamesSearchService
         $bulkRequest = json_decode($request);
 
         foreach ($bulkRequest as $bulkIndex => $bulkRow) {
+            $bulkResponse[$bulkIndex] = $this->requestOne($bulkRow);
 
-            // defaults output values
-            $bulkResponse[$bulkIndex] = [
-                ...(array)$bulkRow,
-                'error' => false,
-                'used_level' => 1,
-            ];
-
-            $requestType = self::checkRequestContents($bulkRow);
-            if (!$requestType) {
-                // set error for this row
-                $bulkResponse[$bulkIndex]['error'] = true;
-                $bulkResponse[$bulkIndex]['message'] = 'Not found by lat-lng coordinates, nor Country-ZipCode';
-                // return error & jump next row
-                continue;
-            }
-
-            // first get redis cache if exist
-            $cacheKey = $this->getCacheKey($requestType, $bulkRow);
-            if (($geodata = $this->hasCache($cacheKey))) {
-                // set response for this row
-                $bulkResponse[$bulkIndex] = [
-                    'elt_id' => $bulkRow->elt_id ?? $bulkIndex,
-                    ...$geodata,
-                ];
-                // return cache & jump next row
-                continue;
-            }
-
-            // get
-            switch ($requestType) {
-                case 'coordinates':
-                    $geodata = $this->getByCoodinates($bulkRow);
-                    break;
-                case 'zipcode':
-                    $geodata = $this->getByZipcode($bulkRow);
-                    break;
-                default:
-                    // this case should never append due to previous $requestType error check
-                    $geodata['error'] = true;
-            }
-
-            // set for next iteration
-            $this->setCache($cacheKey, $geodata);
-
-            // set response for this row
-            $bulkResponse[$bulkIndex] = [
-                'elt_id' => $bulkRow->elt_id ?? $bulkIndex,
-                ...$geodata,
-            ];
         }
 
         return json_encode($bulkResponse, JSON_THROW_ON_ERROR);
@@ -211,8 +160,61 @@ class GeonamesSearchService
 
     public function getLevel(GeonamesAdministrativeDivision|null $IdFoundInDb): ?int
     {
-        return ($this->gclRepository->findOneByCountryCode(
+        return ($this->geonameDivisionRepository->findOneByCountryCode(
             $IdFoundInDb->getCountryCode()
         ) ?? (new GeonamesCountryLevel()))->getUsedLevel();
+    }
+
+    public function requestOne(stdClass $requestedGeoDivision, int|string $bulkIndex = 1): array
+    {
+        // defaults output values
+        $bulkResponse = [
+            ...(array)$requestedGeoDivision,
+            'error' => false,
+            'used_level' => 1,
+        ];
+
+        $requestType = $this->checkRequestContents($requestedGeoDivision);
+        if (!$requestType) {
+            // set error for this row
+            $bulkResponse['error'] = true;
+            $bulkResponse['message'] = 'Not found by lat-lng coordinates, nor Country-ZipCode';
+            // return error & jump next row
+            return $bulkResponse;
+        }
+
+        // first get redis cache if exist
+        $cacheKey = $this->getCacheKey($requestType, $requestedGeoDivision);
+        if (($geodata = $this->hasCache($cacheKey))) {
+            // set response for this row
+            $bulkResponse = [
+                'elt_id' => $requestedGeoDivision->elt_id ?? $bulkIndex,
+                ...$geodata,
+            ];
+            // return cache & jump next row
+            return $bulkResponse;
+        }
+
+        // get
+        switch ($requestType) {
+            case 'coordinates':
+                $geodata = $this->getByCoodinates($requestedGeoDivision);
+                break;
+            case 'zipcode':
+                $geodata = $this->getByZipcode($requestedGeoDivision);
+                break;
+            default:
+                // this case should never append due to previous $requestType error check
+                $geodata['error'] = true;
+        }
+
+        // set for next iteration
+        $this->setCache($cacheKey, $geodata);
+
+        // set response for this row
+        return [
+            'elt_id' => $requestedGeoDivision->elt_id ?? $bulkIndex,
+            ...$geodata,
+        ];
     }
 }
