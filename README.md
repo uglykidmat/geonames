@@ -80,10 +80,16 @@ Search by Latitude and Longitude :
 ```
 ### Countries
 
-Add all country information
+Add all country information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
 ```php
 /country/all
 ```
+
+Also available as a command : 
+```bash
+php bin/console countryupdate
+```
+
 Search for a country :
 ```php
 /country/{string $countryCode}
