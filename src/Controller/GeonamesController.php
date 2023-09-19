@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Entity\GeonamesAdministrativeDivision;
+use App\Service\GeonamesCountryService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -210,52 +211,16 @@ class GeonamesController extends AbstractController
     }
 
     #[Route('/country/all', name: 'country_all')]
-    public function getAllCountries(EntityManagerInterface $entityManager): Response
+    public function getAllCountries(GeonamesCountryService $countryService): Response
     {
-        $countriesListJSON = json_decode(file_get_contents(__DIR__ . '/../../public_countrycodes_all.json'), true);
+        $countryService->purgeCountryList();
+        $countryService->getGeoCountryList();
 
-        foreach ($countriesListJSON as $countryCode => $entries) {
-            $countryURL = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=fr&country=' . $countryCode . '&username=' . $this->token . '&style=full';
-
-            if (!$entityManager->getRepository(GeonamesCountry::class)->findByCountryCode($countryCode)) {
-                $client = HttpClient::create();
-                $response = $client->request('GET', $countryURL, ['timeout' => 30]);
-                $content = json_decode($response->getContent(), true);
-                $country = new GeonamesCountry();
-                $country
-                    ->setContinent($content['geonames'][0]['continent'])
-                    ->setCapital($content['geonames'][0]['capital'])
-                    ->setLanguages($content['geonames'][0]['languages'])
-                    ->setGeonameId($content['geonames'][0]['geonameId'])
-                    ->setSouth($content['geonames'][0]['south'])
-                    ->setNorth($content['geonames'][0]['north'])
-                    ->setEast($content['geonames'][0]['east'])
-                    ->setWest($content['geonames'][0]['west'])
-                    ->setIsoAlpha3($content['geonames'][0]['isoAlpha3'])
-                    ->setFipsCode($content['geonames'][0]['fipsCode'])
-                    ->setPopulation($content['geonames'][0]['population'])
-                    ->setIsoNumeric($content['geonames'][0]['isoNumeric'])
-                    ->setAreaInSqKm($content['geonames'][0]['areaInSqKm'])
-                    ->setCountryCode($content['geonames'][0]['countryCode'])
-                    ->setCountryName($content['geonames'][0]['countryName'])
-                    ->setContinentName($content['geonames'][0]['continentName'])
-                    ->setCurrencyCode($content['geonames'][0]['currencyCode']);
-
-                $entityManager->persist($country);
-                $entityManager->flush();
-
-                echo '<br/>New entry ! : ' . $countryCode;
-            } else {
-                echo '<br/>Yay !' . $countryCode . ' already exists';
-            }
-        }
         return new Response(
-            "<br/>null. Ok."
+            "Ok."
         );
     }
-    // ----------------------------------------------------------------
-    //_______________________________________________________TODO
-    // ----------------------------------------------------------------
+
     #[Route('/country/{countryCode}', name: 'country')]
     public function getCountry(EntityManagerInterface $entityManager, string $countryCode): JsonResponse
     {
