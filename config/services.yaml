@@ -32,6 +32,9 @@ services:
     App\Service\AdminCodesMapperService:
         autowire: true
 
+    App\Service\GeonamesTranslationService:
+        autowire: true
+
     App\Service\GeonamesSearchService:
         autowire: true
         arguments:
