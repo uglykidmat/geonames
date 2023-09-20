@@ -80,9 +80,9 @@ Search by Latitude and Longitude :
 ```
 ### Countries
 
-Add all country information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
+Update all country information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
 ```php
-/country/all
+/country/update
 ```
 
 Also available as a command : 
