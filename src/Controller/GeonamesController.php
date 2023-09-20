@@ -210,24 +210,6 @@ class GeonamesController extends AbstractController
         return $latlngresponse;
     }
 
-    #[Route('/country/update', name: 'country_update')]
-    public function getAllCountries(GeonamesCountryService $countryService): JsonResponse
-    {
-        $updateResponse = new JsonResponse();
-        $updateOutput = [];
-        $updateOutput[] = $countryService->purgeCountryList()->getContent();
-        $updateOutput[] = $countryService->getGeoCountryList()->getContent();
-
-        $updateOutputText = [
-            'DB_PURGE' => 'SUCCESS',
-            'PURGED_COUNTRIES' => $updateOutput[0],
-            'DB_UPDATE' => 'SUCCESS',
-            'UPDATED_COUNTRIES' => $updateOutput[1]
-        ];
-
-        return $updateResponse->setContent(json_encode($updateOutputText));
-    }
-
     #[Route('/country/{countryCode}', name: 'country')]
     public function getCountry(EntityManagerInterface $entityManager, string $countryCode): JsonResponse
     {

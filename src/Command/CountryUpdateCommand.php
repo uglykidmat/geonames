@@ -27,12 +27,10 @@ class CountryUpdateCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Purge :');
         $io->text('Running...');
-        $this->service->purgeCountryList();
-        $io->text('Done !');
+        $io->text('Done for countries : ' . $this->service->purgeCountryList()->getContent());
         $io->title('Countries update :');
         $io->text('Running...');
-        $this->service->getGeoCountryList();
-        $io->text('Done !');
+        $io->text('Done for countries : ' . $this->service->getGeoCountryList()->getContent());
         $io->success('Success. Countries have been successfully updated.');
 
         return Command::SUCCESS;
