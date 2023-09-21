@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\GeonamesCountryLocaleService;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GeonamesCountryLocaleController extends AbstractController
 {
-    public function __construct(public GeonamesCountryLocaleService $localeService)
-    {
+    public function __construct(
+        private GeonamesCountryLocaleService $localeService,
+    ) {
     }
-
 
     #[Route('/countrynames/{locale}', name: 'countrynames', methods: ['GET', 'HEAD'])]
     public function getLangs(string $locale): JsonResponse

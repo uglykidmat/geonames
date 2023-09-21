@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\GeonamesCountryLocale;
+use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +13,9 @@ class GeonamesCountryLocaleService
 {
     public function __construct(
         public GeonamesAPIServiceInterface $apiservice,
-        public EntityManagerInterface $entityManager
+        public EntityManagerInterface $entityManager,
+        private CacheItemPoolInterface $redisCache,
+        private string $redisDsn,
     ) {
     }
 
@@ -90,17 +93,24 @@ class GeonamesCountryLocaleService
         $response = new JsonResponse();
         $content = [];
 
-        foreach ($this->entityManager->getRepository(GeonamesCountryLocale::class)
-            ->findBy(
-                array('locale' => $locale),
-                array('countryCode' => 'ASC')
-            ) as $countryLocale) {
-            $entry['countryCode'] = $countryLocale->getCountryCode();
+        $localesCacheKey = 'locales_' . $locale;
 
-            $entry['geonameId'] = $countryLocale->getGeonameId();
-            $entry['name'] = $countryLocale->getName();
-            $content[] = $entry;
-        }
+        $localesCachedData = $this->redisCache->getItem($localesCacheKey);
+        if ($localesCachedData->isHit()) {
+            return $response->setContent($localesCachedData->get());
+        } else
+            foreach ($this->entityManager->getRepository(GeonamesCountryLocale::class)
+                ->findBy(
+                    array('locale' => $locale),
+                    array('countryCode' => 'ASC')
+                ) as $countryLocale) {
+                $entry['countryCode'] = $countryLocale->getCountryCode();
+                $entry['geonameId'] = $countryLocale->getGeonameId();
+                $entry['name'] = $countryLocale->getName();
+                $content[] = $entry;
+            }
+        $localesCachedData->set(json_encode($content));
+        $this->redisCache->save($localesCachedData);
         return $response->setContent(json_encode($content));
     }
 }

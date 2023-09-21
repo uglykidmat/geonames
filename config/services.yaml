@@ -45,6 +45,10 @@ services:
         arguments:
             $redisDsn: '%env(REDIS_HOST)%'
 
+    App\Service\GeonamesCountryLocaleService:
+        arguments:
+            $redisDsn: '%env(REDIS_HOST)%'
+
     App\Interface:
         autowire: true
 
