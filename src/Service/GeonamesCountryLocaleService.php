@@ -6,6 +6,7 @@ use App\Entity\GeonamesCountryLocale;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GeonamesCountryLocaleService
 {
@@ -18,52 +19,40 @@ class GeonamesCountryLocaleService
     public function updateCountryBatch(int $file): string
     {
         $output = '';
-        switch ($file) {
-            case 1:
-                $idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_1.json'));
-                break;
-            case 2:
-                $idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_2.json'));
-                break;
-            case 3:
-                $idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_3.json'));
-                break;
-            case 4:
-                $idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_4.json'));
-                break;
-        }
+        if ($idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_' . $file . '.json'))) {
 
-        foreach ($idsList as $geonameId => $uselessvalue) {
+            foreach ($idsList as $geonameId => $uselessvalue) {
 
-            $countryResponse = $this->apiservice->getJsonSearch($geonameId);
-            $countryLangs = $countryResponse->alternateNames;
+                $countryResponse = $this->apiservice->getJsonSearch($geonameId);
+                $countryLangs = $countryResponse->alternateNames;
 
-            foreach ($countryLangs as $countryLang) {
-                if (isset($countryLang->lang)) {
-                    if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
-                        ->findOneBy(array(
-                            'geonameId' => $geonameId,
-                            'locale' => $countryLang->lang
-                        ))) {
-                        $newCountryLocale = new GeonamesCountryLocale();
-                        $newCountryLocale
-                            ->setGeonameId($geonameId)
-                            ->setCountryCode($countryResponse->countryCode)
-                            ->setName($countryLang->name)
-                            ->setLocale($countryLang->lang);
-                        $this->entityManager->persist($newCountryLocale);
-                        $output .= $newCountryLocale->getCountryCode() .
-                            '/' .
-                            $newCountryLocale->getLocale() . ',';
+                foreach ($countryLangs as $countryLang) {
+                    if (isset($countryLang->lang)) {
+                        if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
+                            ->findOneBy(array(
+                                'geonameId' => $geonameId,
+                                'locale' => $countryLang->lang
+                            ))) {
+                            $newCountryLocale = new GeonamesCountryLocale();
+                            $newCountryLocale
+                                ->setGeonameId($geonameId)
+                                ->setCountryCode($countryResponse->countryCode)
+                                ->setName($countryLang->name)
+                                ->setLocale($countryLang->lang);
+                            $this->entityManager->persist($newCountryLocale);
+                            $output .= $newCountryLocale->getCountryCode() .
+                                '/' .
+                                $newCountryLocale->getLocale() . ',';
+                        }
                     }
                 }
+                $this->entityManager->flush();
             }
-            $this->entityManager->flush();
-        }
-        if ($output == '') {
-            $output = "all elements in this file have already been imported";
-        }
-        return $output;
+            if ($output == '') {
+                $output = "all elements in this file have already been imported";
+            }
+            return $output;
+        } else throw new HttpException(400, 'Invalid request : file number ' . $file . ' does not exist');
     }
 
     public function updateCountrySingle(int $geonameId): string
