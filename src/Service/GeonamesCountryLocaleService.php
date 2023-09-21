@@ -85,6 +85,9 @@ class GeonamesCountryLocaleService
             }
         }
         $this->entityManager->flush();
+        if (empty($output)) {
+            (string)$output = 'The ID ' . $geonameId . ' has already been imported';
+        }
         return $output;
     }
 
