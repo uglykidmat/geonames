@@ -18,7 +18,7 @@ class GeonamesCountryLocaleService
 
     public function updateCountryBatch(int $file): string
     {
-        $output = '';
+        $output = [];
         if ($idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_' . $file . '.json'))) {
 
             foreach ($idsList as $geonameId => $uselessvalue) {
@@ -40,18 +40,18 @@ class GeonamesCountryLocaleService
                                 ->setName($countryLang->name)
                                 ->setLocale($countryLang->lang);
                             $this->entityManager->persist($newCountryLocale);
-                            $output .= $newCountryLocale->getCountryCode() .
-                                '/' .
-                                $newCountryLocale->getLocale() . ',';
+
+                            $output[] = [$newCountryLocale->getCountryCode() => $newCountryLocale->getLocale()];
                         }
                     }
                 }
+
                 $this->entityManager->flush();
             }
-            if ($output == '') {
-                $output = "all elements in this file have already been imported";
+            if (empty($output)) {
+                (string)$output = "all elements in this file have already been imported";
             }
-            return $output;
+            return json_encode($output);
         } else throw new HttpException(400, 'Invalid request : file number ' . $file . ' does not exist');
     }
 
