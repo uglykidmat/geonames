@@ -80,12 +80,28 @@ Search by Latitude and Longitude :
 ```
 ### Countries
 
-Update all country information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
+1. Update
+- basic information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
 ```bash
 php bin/console countryupdate
 ```
 
-Search for a country :
+2. Locales
+- entities' names translated into many language. The table "country_locale" must first be updated with geonames information :
+```bash
+php bin/console app:clu 1
+php bin/console app:clu 2
+php bin/console app:clu 3
+php bin/console app:clu 4
+```
+The Ids are split into different files since loading them all causes a timeout error. Importing a file results in about 9000 entries in the database.
+
+3. Translations list
+- Calling the endpoint `/countrynames/{locale}` (locale being a 2-letter code) will return a list of every country names in the selected locale.
+
+4. Other
+
+Search for some information on a country :
 ```php
 /country/{string $countryCode}
 ```
@@ -125,13 +141,10 @@ php bin/console Latlngsearch <lat> <lng>
 ```
 returns a json string of the Geonames location closest the latitude and longitude provided.
 
-### Commands
-
 Running the tests :
 ```bash
 php vendor/bin/phpunit --testdox
 ```
-(countryCode being a 2-letter string)
 
 ### Translations
 
