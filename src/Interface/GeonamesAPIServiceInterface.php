@@ -16,4 +16,6 @@ interface GeonamesAPIServiceInterface
     public function getJsonSearch(int $geonameId): ?stdClass;
 
     public function countrySubDivisionSearch(float $lat, float $lng): Response;
+
+    public function searchJSON(string $fCode, int $startRow, array $countries);
 }

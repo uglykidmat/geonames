@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GeonamesAPIService implements GeonamesAPIServiceInterface
 {
@@ -119,6 +120,35 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         return new Response($countrySubDivisionSearchResponse->getContent());
     }
 
+    public function searchJSON(string $fCode, int $startRow, array $countries): JsonResponse
+    {
+        $response = new JsonResponse();
+
+        $countriesUrl = '';
+        foreach ($countries as $country) {
+            $countriesUrl .= '&country=' . $country;
+        }
+
+        try {
+            $searchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'searchJSON?formatted=true&startRow=' . $startRow
+                    . '&maxRows=1000&username=' . $this->token
+                    . '&featureCode=' . $fCode
+                    . '&style=full'
+                    . $countriesUrl
+            );
+            //dd($countriesUrl);
+        } catch (\Exception $e) {
+            throw new BadRequestException('Invalid Geonames.org API token.');
+        }
+
+        $this->responseCheck($searchResponse, "search");
+        $response->setContent($searchResponse->getContent());
+        return $response;
+    }
+
     private function responseCheck(object $searchResponse, string $searchType): void
     {
         if ($searchResponse->getStatusCode() >= 400) {
@@ -138,6 +168,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                 if (empty($searchResponse->toArray()['geonames'])) {
                     throw new Exception('Empty content');
                 }
+                break;
+            case 'search':
                 break;
         }
     }

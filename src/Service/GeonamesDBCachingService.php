@@ -41,6 +41,6 @@ class GeonamesDBCachingService
     {
         $newSubDivision = GeonamesAdapter::AdaptObjToSubdiv($subdivision);
         $this->entityManager->persist($newSubDivision);
-        $this->entityManager->flush();
+        //$this->entityManager->flush();
     }
 }
