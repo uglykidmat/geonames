@@ -5,13 +5,29 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\AdministrativeDivisionsService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdministrativeDivisionsController extends AbstractController
 {
+    public function __construct(private AdministrativeDivisionsService $service)
+    {
+    }
+
+    #[Route('/administrativedivisions/import/{fcode}/{startrow}', name: 'administrative_divisions_import')]
+    public function adminDivsUpdate(string $fcode, int $startrow): JsonResponse
+    {
+        return $this->service->addAdminDivisions(
+            $fcode,
+            $startrow,
+            json_decode($this->service->getCountriesLevel($fcode)->getContent())
+        );
+    }
+
     #[Route('/administrativedivisions/update', name: 'administrative_divisions_update')]
     public function index(): Response
     {
-        require_once __DIR__.'/../../administrative_divisions/administrative_divisions_update.php';
+        require_once __DIR__ . '/../../administrative_divisions/administrative_divisions_update.php';
 
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
@@ -21,7 +37,7 @@ class AdministrativeDivisionsController extends AbstractController
     #[Route('/administrativedivisions/geojsonbackup', name: 'administrative_divisions_geojsonbackup')]
     public function geojsonbackup(): Response
     {
-        require_once __DIR__.'/../../administrative_divisions/geojson_backup_script.php';
+        require_once __DIR__ . '/../../administrative_divisions/geojson_backup_script.php';
 
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
@@ -31,17 +47,17 @@ class AdministrativeDivisionsController extends AbstractController
     #[Route('/administrativedivisions/zipcodes', name: 'administrative_divisions_zipcodes')]
     public function zipcodes(): Response
     {
-        require_once __DIR__.'/../../administrative_divisions/zipcodes/ZipCodes.php';
+        require_once __DIR__ . '/../../administrative_divisions/zipcodes/ZipCodes.php';
 
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
         ]);
     }
-    
+
     #[Route('/administrativedivisions/zipcodesexceptions', name: 'administrative_divisions_zipcodesexceptions')]
     public function zipcodesexceptions(): Response
     {
-        require_once __DIR__.'/../../administrative_divisions/zipcodes/ZipCodes_exceptions.php';
+        require_once __DIR__ . '/../../administrative_divisions/zipcodes/ZipCodes_exceptions.php';
 
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
@@ -51,7 +67,7 @@ class AdministrativeDivisionsController extends AbstractController
     #[Route('/administrativedivisions/txttojson', name: 'administrative_divisions_txttojson')]
     public function txttojson(): Response
     {
-        require_once __DIR__.'/../../administrative_divisions/zipcodes/txt_to_json.php';
+        require_once __DIR__ . '/../../administrative_divisions/zipcodes/txt_to_json.php';
 
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
@@ -61,11 +77,10 @@ class AdministrativeDivisionsController extends AbstractController
     #[Route('/administrativedivisions/jsonsortbyvalue', name: 'administrative_divisions_jsonsortbyvalue')]
     public function jsonsortbyvalue(): Response
     {
-        require_once __DIR__.'/../../administrative_divisions/zipcodes/json_sort_by_value.php';
+        require_once __DIR__ . '/../../administrative_divisions/zipcodes/json_sort_by_value.php';
 
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
         ]);
     }
-
 }
