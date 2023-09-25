@@ -44,6 +44,9 @@ Handles POST requests : the content must be a JSON string following this structu
     "zip_code": "30900",    #zipcode respecting the country's format
     "lat": 43.818134,       #latitude
     "lng": 4.347509         #longitude
+  },
+  {
+    ...
   }
 ]
 ```

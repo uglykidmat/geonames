@@ -144,7 +144,8 @@ class GeonamesController extends AbstractController
         } else {
             $geonameIdFound = $entityManager->getRepository(GeonamesAdministrativeDivision::class)
                 ->findByGeonameId($geonamesId);
-            $geonameIdFound = $geonameIdFound[0]->getGeonameId();
+
+            $geonameIdFound = $geonameIdFound[0]['geonameId'];
 
             return new Response(
                 '<html><body><h1>Geonames</h1>
