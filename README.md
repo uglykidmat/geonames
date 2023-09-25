@@ -51,6 +51,18 @@ The search will be on the coordinates, and use the postalcode/countrycode couple
 This URL is protected by a token, if not provided you will encounter a 401 error.
 
 ### Subdivisions
+Import/Update : 
+The command line arguments are featureCode ("ADM1","ADM2","ADM3") and "startRow" which sets the start of the geonames Response content. Example :
+```bash
+php bin/console app:adu ADM1 1
+```
+will yield the first level Administrative Divisions of countries which have a minimum used_level of 1, starting from row 1. Updates are done by batch of 1000 entries, so the next logical steps would be to run the same command with the second argument increased by 1000, like :
+`php bin/console app:adu ADM1 1000`
+
+To clean database entries, use `app:adp` followed by the featureCode.
+```bash
+php bin/console app:adp ADM1
+```
 
 Global search in Symfony database : 
 ```php
