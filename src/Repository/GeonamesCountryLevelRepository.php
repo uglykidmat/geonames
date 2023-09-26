@@ -45,7 +45,7 @@ class GeonamesCountryLevelRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function findUsedLevelMoreThan($value)
+    public function findUsedLevelMoreThan($value): array
     {
         return $this->createQueryBuilder('g')
             ->andWhere('g.usedLevel >= :val')

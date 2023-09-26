@@ -20,14 +20,8 @@ class AdministrativeDivisionsService
 
     public function purgeAdminDivisions(string $fcode): string
     {
-        $adminDivRepository = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class);
-
-        if ($adminDivsToDelete = $adminDivRepository->findByFcode($fcode)) {
-            foreach ($adminDivsToDelete as $adminDiv) {
-                $this->entityManager->remove($adminDiv);
-            }
+        if ($this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->removeByFcode($fcode)) {
             $this->entityManager->flush();
-
             return "Success";
         }
 

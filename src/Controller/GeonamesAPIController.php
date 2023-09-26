@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\GeonamesAPIService;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesDBCachingService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,8 +15,9 @@ class GeonamesAPIController extends AbstractController
 {
     private Response $response;
 
-    public function __construct()
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json');
     }
@@ -60,6 +62,7 @@ class GeonamesAPIController extends AbstractController
             $dbcachingservice->saveSubdivisionToDatabase(
                 $apiservice->getJsonSearch($geonameIdFound)
             );
+            $this->entityManager->flush();
         }
 
         return new JsonResponse(

@@ -30,7 +30,6 @@ class GeonamesSearchService
 
         foreach ($bulkRequest as $bulkIndex => $bulkRow) {
             $bulkResponse[$bulkIndex] = $this->requestOne($bulkRow);
-
         }
 
         return json_encode($bulkResponse, JSON_THROW_ON_ERROR);
@@ -154,6 +153,7 @@ class GeonamesSearchService
 
         $idToSave = $this->apiService->getJsonSearch($geoIdFound);
         $this->dbCachingService->saveSubdivisionToDatabase($idToSave);
+        $this->entityManager->flush();
 
         return $this->dbCachingService->searchSubdivisionInDatabase($geoIdFound);
     }

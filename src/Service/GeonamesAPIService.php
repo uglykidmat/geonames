@@ -139,7 +139,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     . '&style=full'
                     . $countriesUrl
             );
-            //dd($countriesUrl);
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
         }

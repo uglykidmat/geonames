@@ -54,4 +54,14 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
     }
+
+    public function removeByFcode($fcode)
+    {
+        return $this->createQueryBuilder('g')
+            ->delete()
+            ->where('g.fcode = :fcode')
+            ->setParameter('fcode', $fcode)
+            ->getQuery()
+            ->execute();
+    }
 }

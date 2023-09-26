@@ -28,6 +28,7 @@ class GeonamesDBCachingService
             self::saveSubdivisionToDatabase(
                 $this->apiservice->getJsonSearch($geonameId)
             );
+            $this->entityManager->flush();
 
             $dbResponse = $this->entityManager
                 ->getRepository(GeonamesAdministrativeDivision::class)
@@ -41,6 +42,5 @@ class GeonamesDBCachingService
     {
         $newSubDivision = GeonamesAdapter::AdaptObjToSubdiv($subdivision);
         $this->entityManager->persist($newSubDivision);
-        //$this->entityManager->flush();
     }
 }

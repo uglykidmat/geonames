@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\GeonamesCountry;
+use App\Adapter\GeonamesAdapter;
 use Symfony\Component\Asset\Package;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\GeonamesDBCachingService;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Entity\GeonamesAdministrativeDivision;
-use App\Service\GeonamesCountryService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,11 +17,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 
-
 class GeonamesController extends AbstractController
 {
     private $token = 'mathieugtr';
     public $sentence = 'Hello, I\'m the controller.';
+    public function __construct(
+        private GeonamesDBCachingService $dbservice,
+    ) {
+    }
 
     #[Route('/', name: 'welcome')]
     public function welcome(RouterInterface $router)
@@ -113,28 +117,15 @@ class GeonamesController extends AbstractController
     {
         $url = 'http://api.geonames.org/getJSON?geonameId=' . $geonamesId . '&username=' . $this->token . '&lang=fr';
 
-        if (!$entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByGeonameId($geonamesId)) {
+        if (!$entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($geonamesId)) {
             $client = HttpClient::create();
-            $response = $client->request('GET', $url, ['timeout' => 30]);
-            $content = $response->getContent();
-            $contentJSON = json_decode($content, true);
+            $content = $client->request('GET', $url, ['timeout' => 30])->getContent();
 
-            $subDivision = new GeonamesAdministrativeDivision();
+            $contentJSON = json_decode($content);
 
-            $subDivision
-                ->setName($contentJSON["name"])
-                ->setGeonameId($contentJSON["geonameId"])
-                ->setToponymName($contentJSON["toponymName"])
-                ->setCountryCode($contentJSON["countryCode"])
-                ->setAdminName1($contentJSON["adminName1"])
-                ->setAdminCode1($contentJSON["adminCode1"])
-                //->setAdminCodes1($value["adminCodes1"])
-                ->setLat($contentJSON["lat"])
-                ->setLng($contentJSON["lng"])
-                ->setPopulation($contentJSON["population"])
-                ->setFcode($contentJSON["fcode"]);
+            $newSubDivision = GeonamesAdapter::AdaptObjToSubdiv($contentJSON);
 
-            $entityManager->persist($subDivision);
+            $entityManager->persist($newSubDivision);
             $entityManager->flush();
 
             return new Response(
@@ -143,13 +134,10 @@ class GeonamesController extends AbstractController
             );
         } else {
             $geonameIdFound = $entityManager->getRepository(GeonamesAdministrativeDivision::class)
-                ->findByGeonameId($geonamesId);
-
-            $geonameIdFound = $geonameIdFound[0]['geonameId'];
-
+                ->findOneByGeonameId($geonamesId)->getGeonameId();
             return new Response(
                 '<html><body><h1>Geonames</h1>
-                    <p> GeonamesId ' . $geonamesId . ' found in database.</p><br/>'
+                    <p> GeonamesId ' . $geonameIdFound . ' found in database.</p><br/>'
             );
         }
     }
