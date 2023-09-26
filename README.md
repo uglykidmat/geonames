@@ -148,7 +148,7 @@ will return the information from every entry in the database.
 ```php
 /geojson/get/{int $geonameId}
 ```
-
+will return the information for a specific geonameID, if found in the database.
 
 ### API Search
 
