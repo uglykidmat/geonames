@@ -124,7 +124,7 @@ Update country level (be sure you have 'geonames_country_level.json' in your 'ba
 ```php
 /country/level/update
 ```
-Information about all country-levels:
+Information about all country-levels :
 ```php
 /country/level/get
 ```
@@ -132,6 +132,23 @@ Information about a specific country (countryCode being a 2-letter string) :
 ```php
 /country/level/get/{string $countryCode}
 ```
+
+### GeoJson information
+
+⚠️ Make sure the file 'geonames_geojson.json' is in the 'base_data' root folder
+```php
+/geojson/update
+```
+Will update the database entries (countries or administrative divisions) if their geonameID is found.
+
+```php
+/geojson/get
+```
+will return the information from every entry in the database.
+```php
+/geojson/get/{int $geonameId}
+```
+
 
 ### API Search
 
