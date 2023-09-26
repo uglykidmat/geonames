@@ -25,20 +25,20 @@ class GeojsonService
                     if ($country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($geojson->geonameId)) {
                         $country->setGeojson($geojson->geojson);
                         $this->entityManager->persist($country);
-                        $outputOK[] = [$geojson->geonameId => 'OK'];
-                    } else $outputKO[] = [$geojson->geonameId => 'KO'];
+                        $outputOK[] = $geojson->geonameId;
+                    } else $outputKO[] = $geojson->geonameId;
                 } else {
                     if ($adminDiv = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($geojson->geonameId)) {
                         $adminDiv->setGeojson($geojson->geojson);
                         $this->entityManager->persist($adminDiv);
-                        $outputOK[] = [$geojson->geonameId => 'OK'];
-                    } else $outputKO[] = [$geojson->geonameId => 'KO'];
+                        $outputOK[] = $geojson->geonameId;
+                    } else $outputKO[] = $geojson->geonameId;
                 }
             }
             $this->entityManager->flush();
         }
 
-        $response->setContent(json_encode(['GeonameIDs OK' => $outputOK, 'GeonameIDs KO' => $outputKO]));
+        $response->setContent(json_encode(['GeonameIDs OK' => implode(',', $outputOK), 'GeonameIDs KO' => implode(',', $outputKO)]));
         return $response;
     }
 
