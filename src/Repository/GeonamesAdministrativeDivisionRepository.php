@@ -64,4 +64,11 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+    public function findGeoJson(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.geojson IS NOT null')
+            ->getQuery()
+            ->getResult();
+    }
 }
