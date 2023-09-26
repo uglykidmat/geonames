@@ -38,7 +38,7 @@ class GeojsonService
             $this->entityManager->flush();
         }
 
-        $response->setContent(json_encode($outputKO));
+        $response->setContent(json_encode(['GeonameIDs OK' => $outputOK, 'GeonameIDs KO' => $outputKO]));
         return $response;
     }
 
