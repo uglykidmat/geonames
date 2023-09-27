@@ -37,11 +37,16 @@ class GeonamesSearchService
 
     private function checkRequestContents(stdClass $requestEntry): string
     {
+        if (!empty($requestEntry->latitude) && !empty($requestEntry->longitude)) {
+            $requestEntry->lat = $requestEntry->latitude;
+            $requestEntry->lng = $requestEntry->longitude;
+        }
+
         if (
             !empty($requestEntry->lat)
             && is_numeric($requestEntry->lat)
-            && !empty($requestEntry->lat)
-            && is_numeric($requestEntry->lat)
+            && !empty($requestEntry->lng)
+            && is_numeric($requestEntry->lng)
         ) {
             return "coordinates";
         } else if (

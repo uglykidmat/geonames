@@ -186,17 +186,16 @@ class GeonamesController extends AbstractController
     //_______________________________________________________TODO
     // ----------------------------------------------------------------
     #[Route('/latLng/{lat}-{lng}', name: 'latLng')]
-    public function latLng(EntityManagerInterface $entityManager, int $lat, int $lng): Response
+    public function latLng(int $lat, int $lng): JsonResponse
     {
-        $latlngresponse = new Response();
+        $latlngresponse = new JsonResponse();
         $url = 'http://api.geonames.org/countrySubdivisionJSON?lat=' . $lat . '&lng=' . $lng . '&maxRows=10&radius=40&username=' . $this->token;
 
         $client = HttpClient::create();
         $response = $client->request('GET', $url, ['timeout' => 30]);
         $content = json_decode($response->getContent(), true);
 
-        $latlngresponse->setContent($content);
-        return $latlngresponse;
+        return $latlngresponse->setContent(json_encode($content));
     }
 
     #[Route('/country/{countryCode}', name: 'country')]

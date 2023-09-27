@@ -74,7 +74,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     . 'findNearbyJSON?formatted=true&lat=' . $lat
                     . '&lng=' . $lng
                     . '&username=' . $this->token
-                    . '&style=full&maxRows=1&featureCode=ADM1&featureCode=PPL'
+                    . '&style=full&maxRows=1&featureCode=PPLC'
             )->getContent());
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
