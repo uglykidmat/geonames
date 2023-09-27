@@ -28,5 +28,7 @@ final class Version20230927110512 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA IF NOT EXISTS public');
+        $this->addSql("UPDATE geonames_country_level SET max_level = 0 WHERE country_code IN ('AQ','AW','BL','BV','CC','CK','CW','CX','FK','GG','GI','GL','GS','HM','IM','IO','JE','KI','KY','MF','MO','NF','NU','PN','SG','SS','SX','TC','TK','TV','VA','VG','XK')");
+        $this->addSql("UPDATE geonames_country_level SET used_level = 0 WHERE country_code IN ('AQ','AW','BL','BV','CC','CK','CW','CX','FK','GG','GI','GL','GS','HM','IM','IO','JE','KI','KY','MF','MO','NF','NU','PN','SG','SS','SX','TC','TK','TV','VA','VG','XK')");
     }
 }
