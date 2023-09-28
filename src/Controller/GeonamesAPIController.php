@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/geonamesapi', name: 'api_home')]
 class GeonamesAPIController extends AbstractController
@@ -17,6 +18,7 @@ class GeonamesAPIController extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private SerializerInterface $serializer
     ) {
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json');
@@ -55,6 +57,7 @@ class GeonamesAPIController extends AbstractController
         float $lat,
         float $lng
     ): JsonResponse {
+        $response = new JsonResponse();
         $geonameIdFound = $apiservice->latLngSearch($lat, $lng);
 
         if (!$dbcachingservice->searchSubdivisionInDatabase($geonameIdFound)) {
@@ -65,9 +68,9 @@ class GeonamesAPIController extends AbstractController
             $this->entityManager->flush();
         }
 
-        return new JsonResponse(
-            $dbcachingservice->searchSubdivisionInDatabase($geonameIdFound)
-        );
+        $latlng = $this->serializer->serialize($dbcachingservice->searchSubdivisionInDatabase($geonameIdFound), 'json');
+
+        return $response->setContent($latlng);
     }
 
     #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]
@@ -75,7 +78,10 @@ class GeonamesAPIController extends AbstractController
         GeonamesAPIService $service,
         float $lat,
         float $lng
-    ): Response {
-        return $service->countrySubDivisionSearch($lat, $lng);
+    ): JsonResponse {
+        $response = new JsonResponse();
+        $response->setContent($service->countrySubDivisionSearch($lat, $lng)->getContent());
+
+        return $response;
     }
 }

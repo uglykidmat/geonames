@@ -101,6 +101,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         }
 
         if (!empty($latlngSearchResponse->geonames) && is_array($latlngSearchResponse->geonames)) {
+
             return reset($latlngSearchResponse->geonames)->geonameId;
         }
         throw new HttpException(500, 'Empty response from Geonames Service.');
