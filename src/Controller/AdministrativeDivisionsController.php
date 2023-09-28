@@ -6,42 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\AdministrativeDivisionsService;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdministrativeDivisionsController extends AbstractController
 {
     public function __construct(private AdministrativeDivisionsService $service)
     {
-    }
-
-    #[Route('/administrativedivisions/import/{fcode}/{startrow}', name: 'administrative_divisions_import')]
-    public function adminDivsUpdate(string $fcode, int $startrow): JsonResponse
-    {
-        return $this->service->addAdminDivisions(
-            $fcode,
-            $startrow,
-            json_decode($this->service->getCountriesLevel($fcode)->getContent())
-        );
-    }
-
-    #[Route('/administrativedivisions/update', name: 'administrative_divisions_update')]
-    public function index(): Response
-    {
-        require_once __DIR__ . '/../../administrative_divisions/administrative_divisions_update.php';
-
-        return $this->render('administrative_divisions/index.html.twig', [
-            'controller_name' => 'AdministrativeDivisionsController',
-        ]);
-    }
-
-    #[Route('/administrativedivisions/geojsonbackup', name: 'administrative_divisions_geojsonbackup')]
-    public function geojsonbackup(): Response
-    {
-        require_once __DIR__ . '/../../administrative_divisions/geojson_backup_script.php';
-
-        return $this->render('administrative_divisions/index.html.twig', [
-            'controller_name' => 'AdministrativeDivisionsController',
-        ]);
     }
 
     #[Route('/administrativedivisions/zipcodes', name: 'administrative_divisions_zipcodes')]
