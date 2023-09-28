@@ -14,34 +14,29 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/geonamesapi', name: 'api_home')]
 class GeonamesAPIController extends AbstractController
 {
-    private Response $response;
-
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private SerializerInterface $serializer
+        private SerializerInterface $serializer,
+        private GeonamesAPIService $apiService,
     ) {
-        $this->response = new Response();
-        $this->response->headers->set('Content-Type', 'application/json');
     }
 
     #[Route('/postalcodesearch/{postalcode}', name: 'api_postalcodesearch')]
     public function postalCodeSearch(
-        GeonamesAPIService $service,
         string $postalcode
     ): JsonResponse {
-        $response = new JsonResponse($service->postalCodeSearchJSON($postalcode));
+        $response = new JsonResponse($this->apiService->postalCodeSearchJSON($postalcode));
 
         return $response;
     }
 
     #[Route('/postalcodelookup/{postalcode}-{countrycode}', name: 'api_postalcodelookup')]
     public function postalCodeLookup(
-        GeonamesAPIService $service,
         string $postalcode,
         string $countrycode
     ): JsonResponse {
         $response = new JsonResponse(
-            $service->postalCodeLookupJSON(
+            $this->apiService->postalCodeLookupJSON(
                 $postalcode,
                 $countrycode
             )
@@ -53,17 +48,16 @@ class GeonamesAPIController extends AbstractController
     #[Route('/latlng/{lat}-{lng}', name: 'api_latlng')]
     public function latLngSearch(
         GeonamesDBCachingService $dbcachingservice,
-        GeonamesAPIService $apiservice,
         float $lat,
         float $lng
     ): JsonResponse {
         $response = new JsonResponse();
-        $geonameIdFound = $apiservice->latLngSearch($lat, $lng);
+        $geonameIdFound = $this->apiService->latLngSearch($lat, $lng);
 
         if (!$dbcachingservice->searchSubdivisionInDatabase($geonameIdFound)) {
 
             $dbcachingservice->saveSubdivisionToDatabase(
-                $apiservice->getJsonSearch($geonameIdFound)
+                $this->apiService->getJsonSearch($geonameIdFound)
             );
             $this->entityManager->flush();
         }
@@ -75,12 +69,11 @@ class GeonamesAPIController extends AbstractController
 
     #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]
     public function countrySubDivisionSearch(
-        GeonamesAPIService $service,
         float $lat,
         float $lng
     ): JsonResponse {
         $response = new JsonResponse();
-        $response->setContent($service->countrySubDivisionSearch($lat, $lng)->getContent());
+        $response->setContent($this->apiService->countrySubDivisionSearch($lat, $lng)->getContent());
 
         return $response;
     }
