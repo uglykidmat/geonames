@@ -46,32 +46,4 @@ class GeonamesSearchServiceTest extends TestCase
         self::assertSame('http://localhost:8000/geonames/search', $mockResponse->getRequestUrl());
         self::assertSame(200, $mockResponse->getStatusCode());
     }
-
-    /*
-    public function testShouldCheckRequestContents(): void
-    {
-        $inputArray = self::arrayEncoder(self::$inputstring);
-        $inputArray = $inputArray[0];
-        $clienthttp = HttpClient::create();
-        $baseUrl = 'http://localhost:8000';
-        $request = $clienthttp->request('POST',  $baseUrl . '/geonames/search', [
-            'json' => self::arrayEncoder(self::$inputstring),
-        ]);
-
-        $requestContent = json_decode($request->getContent());
-
-        $this->assertIsObject($requestContent[0]);
-
-        $this->assertObjectHasProperty("lat", $requestContent[0], "Missing latitude");
-        $this->assertObjectHasProperty("lng", $requestContent[0], "Missing longitude");
-        $this->assertObjectHasProperty("country_code", $requestContent[0], "Missing Country Code");
-    }
-    
-    public function testShouldBulkRequest(): void
-    {
-        self::bootKernel();
-        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
-        $geoCtrl = static::getContainer()->get(GeonamesController::class);
-        $service = static::getContainer()->get(GeonamesSearchService::class);
-    }*/
 }

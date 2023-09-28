@@ -26,6 +26,6 @@ class GeonamesCountryLocaleServiceTest extends KernelTestCase
         $update = $service->updateCountrySingle(895949);
 
         $this->assertNotEquals('Random-string', $update, 'Hummmm sorry sweaty...');
-        $this->assertSame('The·ID·895949·has·already·been·imported', $update);
+        $this->assertSame('The ID 895949 has already been imported', $update, 'Hummmm sorry sweaty...');
     }
 }
