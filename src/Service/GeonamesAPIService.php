@@ -34,9 +34,14 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $postalCodeSearchResponse = $this->client->request(
                 'GET',
                 $this->urlBase
-                    . 'postalCodeSearchJSON?formatted=true&postalcode=' . $postalCode
-                    . '&maxRows=10&username=' . $this->token
-                    . '&style=full'
+                    . 'postalCodeSearchJSON',
+                ['query' => [
+                    'formatted' => 'true',
+                    'postalcode' => $postalCode,
+                    'maxRows' => '10',
+                    'username' => $this->token,
+                    'style' => 'full',
+                ]]
             );
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
@@ -53,10 +58,15 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $postalCodeSearchResponse = $this->client->request(
                 'GET',
                 $this->urlBase
-                    . 'postalCodeLookupJSON?formatted=true&postalcode=' . $postalCode
-                    . '&maxRows=1&username=' . $this->token
-                    . '&country=' . $countrycode
-                    . '&style=full'
+                    . 'postalCodeLookupJSON',
+                ['query' => [
+                    'formatted' => 'true',
+                    'postalcode' => $postalCode,
+                    'maxRows' => '1',
+                    'username' => $this->token,
+                    'country' => $countrycode,
+                    'style' => 'full',
+                ]]
             );
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
@@ -72,10 +82,19 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $latlngSearchResponse = json_decode($this->client->request(
                 'GET',
                 $this->urlBase
-                    . 'findNearbyJSON?formatted=true&lat=' . $lat
-                    . '&lng=' . $lng
-                    . '&username=' . $this->token
-                    . '&style=full&maxRows=1&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC'
+                    . 'findNearbyJSON',
+                ['query' => [
+                    'formatted' => 'true',
+                    'lat' => $lat,
+                    'lng' => $lng,
+                    'username' => $this->token,
+                    'style' => 'full',
+                    'maxRows' => '1',
+                    'fclass' => 'P',
+                    'fcode' => 'PPLA',
+                    'fcode' => 'PPLC',
+                    'fcode' => 'PPL',
+                ],]
             )->getContent());
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
@@ -109,10 +128,17 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $countrySubDivisionSearchResponse = $this->client->request(
                 'GET',
                 $this->urlBase
-                    . 'countrySubdivisionJSON?formatted=true&level=3&lat=' . $lat
-                    . '&lng=' . $lng
-                    . '&username=' . $this->token
-                    . '&style=full&maxRows=10&radius=40'
+                    . 'countrySubdivisionJSON',
+                ['query' => [
+                    'style' => 'full',
+                    'maxRows' => '10',
+                    'radius' => '40',
+                    'level' => '3',
+                    'lat' => $lat,
+                    'lng' => $lng,
+                    'username' => $this->token,
+                    'formatted' => 'true',
+                ],]
             );
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
@@ -134,11 +160,15 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $searchResponse = $this->client->request(
                 'GET',
                 $this->urlBase
-                    . 'searchJSON?formatted=true&startRow=' . $startRow
-                    . '&maxRows=1000&username=' . $this->token
-                    . '&featureCode=' . $fCode
-                    . '&style=full'
-                    . $countriesUrl
+                    . 'searchJSON',
+                ['query' => [
+                    'style' => 'full',
+                    'maxRows' => '1000',
+                    'formatted' => 'true',
+                    'startRow' => $startRow,
+                    'username' => $this->token,
+                    'featureCode' => $fCode . $countriesUrl,
+                ],]
             );
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
