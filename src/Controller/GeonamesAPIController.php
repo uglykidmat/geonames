@@ -47,24 +47,24 @@ class GeonamesAPIController extends AbstractController
 
     #[Route('/latlng/{lat}-{lng}', name: 'api_latlng')]
     public function latLngSearch(
-        GeonamesDBCachingService $dbcachingservice,
+        GeonamesDBCachingService $cachingService,
         float $lat,
         float $lng
     ): JsonResponse {
         $response = new JsonResponse();
         $geonameIdFound = $this->apiService->latLngSearch($lat, $lng);
 
-        if (!$dbcachingservice->searchSubdivisionInDatabase($geonameIdFound)) {
+        if (!$cachingService->searchSubdivisionInDatabase($geonameIdFound)) {
 
-            $dbcachingservice->saveSubdivisionToDatabase(
+            $cachingService->saveSubdivisionToDatabase(
                 $this->apiService->getJsonSearch($geonameIdFound)
             );
             $this->entityManager->flush();
         }
 
-        $latlng = $this->serializer->serialize($dbcachingservice->searchSubdivisionInDatabase($geonameIdFound), 'json');
+        $coordinates = $this->serializer->serialize($cachingService->searchSubdivisionInDatabase($geonameIdFound), 'json');
 
-        return $response->setContent($latlng);
+        return $response->setContent($coordinates);
     }
 
     #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]
