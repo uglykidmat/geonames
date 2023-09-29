@@ -14,10 +14,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/translation')]
 class GeonamesTranslationController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private GeonamesTranslationService $translationService
+    ) {
+    }
+
     #[Route('/', name: 'translation_get', methods: ['GET', 'HEAD'])]
-    public function get(EntityManagerInterface $translationEntityManager): JsonResponse
+    public function get(): JsonResponse
     {
-        $getResponse = $translationEntityManager->getRepository(GeonamesTranslation::class)->findAll();
+        $getResponse = $this->entityManager->getRepository(GeonamesTranslation::class)->findAll();
 
         $result = array_map(static fn (GeonamesTranslation $value): array => $value->toArray(), $getResponse);
         //TODO: return rendered paginated filtered list
@@ -25,52 +31,55 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('/', name: 'translation_post', methods: ['POST'])]
-    public function post(Request $postRequest, EntityManagerInterface $translationEntityManager, GeonamesTranslationService $translationService): JsonResponse
-    {
+    public function post(
+        Request $postRequest,
+    ): JsonResponse {
         $postContent = json_decode($postRequest->getContent());
 
-        if ($translationService->checkRequest($postRequest)->getStatusCode() != 200) {
-            return $translationService->checkRequest($postRequest);
-        } else if ($translationService->checkRequestContent($postContent)->getStatusCode() != 200) {
-            return $translationService->checkRequestContent($postContent);
+        if ($this->translationService->checkRequest($postRequest)->getStatusCode() != 200) {
+            return $this->translationService->checkRequest($postRequest);
+        } else if ($this->translationService->checkRequestContent($postContent)->getStatusCode() != 200) {
+            return $this->translationService->checkRequestContent($postContent);
         } else
-            return $translationService->postTranslation($postContent, $translationEntityManager);
+            return $this->translationService->postTranslation($postContent, $this->entityManager);
     }
 
     #[Route('/', name: 'translation_patch', methods: ['PATCH'])]
-    public function patch(Request $patchRequest, EntityManagerInterface $translationEntityManager, GeonamesTranslationService $translationService): JsonResponse
-    {
+    public function patch(
+        Request $patchRequest,
+    ): JsonResponse {
         $patchContent = json_decode($patchRequest->getContent());
 
-        if ($translationService->checkRequest($patchRequest)->getStatusCode() != 200) {
-            return $translationService->checkRequest($patchRequest);
-        } else if ($translationService->checkRequestContent($patchContent)->getStatusCode() != 200) {
-            return $translationService->checkRequestContent($patchContent);
+        if ($this->translationService->checkRequest($patchRequest)->getStatusCode() != 200) {
+            return $this->translationService->checkRequest($patchRequest);
+        } else if ($this->translationService->checkRequestContent($patchContent)->getStatusCode() != 200) {
+            return $this->translationService->checkRequestContent($patchContent);
         } else
-            return $translationService->patchTranslation($patchContent, $translationEntityManager);
+            return $this->translationService->patchTranslation($patchContent, $this->entityManager);
     }
 
     #[Route('/', name: 'translation_delete', methods: ['DELETE'])]
-    public function delete(Request $deleteRequest, EntityManagerInterface $translationEntityManager, GeonamesTranslationService $translationService): JsonResponse
-    {
+    public function delete(
+        Request $deleteRequest,
+    ): JsonResponse {
         $deleteContent = json_decode($deleteRequest->getContent());
 
-        if ($translationService->checkRequest($deleteRequest)->getStatusCode() != 200) {
-            return $translationService->checkRequest($deleteRequest);
-        } else if ($translationService->checkRequestContent($deleteContent)->getStatusCode() != 200) {
-            return $translationService->checkRequestContent($deleteContent);
+        if ($this->translationService->checkRequest($deleteRequest)->getStatusCode() != 200) {
+            return $this->translationService->checkRequest($deleteRequest);
+        } else if ($this->translationService->checkRequestContent($deleteContent)->getStatusCode() != 200) {
+            return $this->translationService->checkRequestContent($deleteContent);
         } else
-            return $translationService->deleteTranslation($deleteContent, $translationEntityManager);
+            return $this->translationService->deleteTranslation($deleteContent, $this->entityManager);
     }
 
     #[Route('/update', name: 'translation_update')]
-    public function update(EntityManagerInterface $translationEntityManager): Response
+    public function update(): Response
     {
         $translationResponse = '';
         $translationJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_translation.json'), true);
 
         foreach ($translationJson as $translationJsonKey => $translationJsonValue) {
-            if (!$translationEntityManager->getRepository(GeonamesTranslation::class)
+            if (!$this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findByCountryCode($translationJsonValue["countryCode"])) {
                 $translation = (new GeonamesTranslation())
                     ->setGeonameId($translationJsonValue["geonameId"])
@@ -79,13 +88,13 @@ class GeonamesTranslationController extends AbstractController
                     ->setFcode($translationJsonValue["fcode"])
                     ->setLocale($translationJsonValue["locale"]);
 
-                $translationEntityManager->persist($translation);
+                $this->entityManager->persist($translation);
             } else {
                 $translationResponse .= 'KO ';
             }
         }
 
-        $translationEntityManager->flush();
+        $this->entityManager->flush();
 
         return $this->render('translation/index.html.twig', [
             'controller_name' => 'GeonamesTranslationController',
