@@ -1,4 +1,4 @@
-# Geonames v2.1.2
+# Geonames v2.1.3
 
 "Reverse/Geocoding Webservices" : this repository contains the Geonames Controller, built on a Symfony 6.3.1 skeleton.
 
@@ -28,7 +28,7 @@ Homepage :
 ```bash
   /
 ```
-## Usage/Examples (15/09/2023)
+## Usage/Examples
 The Geoname controller has a few functions :
 
 ### POST endpoint
@@ -69,29 +69,29 @@ php bin/console app:adp ADM1
 
 Global search in Symfony database : 
 ```php
-/search/{string $geoquery}-{string $featureCode}
+/search/{string geoquery}-{string featureCode}
 ```
-Search for a keyword $geoquery (eg. "New York", "Chambéry", etc) associated with a featureCode (ADM1,ADM1H,ADM2,ADM2,ADM3,ADM3,ADM4,ADM4,ADM5,ADM5,ADMD,ADMD,LTER,PC,PCLD,PCLF,PCLH,PCLI,PCLI,PCLS,PRSH,TERR,Z,ZNB). See https://www.geonames.org/export/codes.html for more information.
+Search for a keyword geoquery (eg. "New York", "Chambéry", etc) associated with a featureCode (ADM1,ADM1H,ADM2,ADM2,ADM3,ADM3,ADM4,ADM4,ADM5,ADM5,ADMD,ADMD,LTER,PC,PCLD,PCLF,PCLH,PCLI,PCLI,PCLS,PRSH,TERR,Z,ZNB). See https://www.geonames.org/export/codes.html for more information.
 
 Add a geonames entry to the local database :
 ```php
-/globalgetjson/{int $geonamesId}
+/globalgetjson/{int geonamesId}
 ```
 Information on a specific Geonames Id :
 ```php
-/geonamesid/{int $geonamesId}
+/geonamesid/{int geonamesId}
 ```
 Search by postal code :
 ```php
-/postalcodesearch/{int $postalcode}
+/postalcodesearch/{int postalcode}
 ```
 Search by nearby postal code :
 ```php
-/nearbypostalcode/{string $countrycode}-{int postalcode}
+/nearbypostalcode/{string countrycode}-{int postalcode}
 ```
 Search by Latitude and Longitude :
 ```php
-/latLng/{int $lat}-{int $lng}
+/latLng/{int lat}-{int lng}
 ```
 ### Countries
 
@@ -118,7 +118,7 @@ The Ids are split into different files since loading them all causes a timeout e
 
 Search for some information on a country :
 ```php
-/country/{string $countryCode}
+/country/{string countryCode}
 ```
 Update country level (be sure you have 'geonames_country_level.json' in your 'base_data' folder) :
 ```php
@@ -130,7 +130,7 @@ Information about all country-levels :
 ```
 Information about a specific country (countryCode being a 2-letter string) :
 ```php
-/country/level/get/{string $countryCode}
+/country/level/get/{string countryCode}
 ```
 
 ### GeoJson information
@@ -146,7 +146,7 @@ Will update the database entries (countries or administrative divisions) if thei
 ```
 will return the information from every entry in the database.
 ```php
-/geojson/get/{int $geonameId}
+/geojson/get/{int geonameId}
 ```
 will return the information for a specific geonameID, if found in the database.
 
