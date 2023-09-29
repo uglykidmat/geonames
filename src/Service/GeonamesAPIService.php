@@ -10,6 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GeonamesAPIService implements GeonamesAPIServiceInterface
 {
@@ -74,7 +75,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     . 'findNearbyJSON?formatted=true&lat=' . $lat
                     . '&lng=' . $lng
                     . '&username=' . $this->token
-                    . '&style=full&maxRows=1&featureCode=PPLC'
+                    . '&style=full&maxRows=1&fclass=P&fcode=PPLA&fcode=PPL&fcode=PPLC'
             )->getContent());
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
@@ -83,7 +84,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         if (!empty($latlngSearchResponse->geonames) && is_array($latlngSearchResponse->geonames)) {
             return reset($latlngSearchResponse->geonames)->geonameId;
         }
-        throw new Exception('Empty content from Geonames');
+        throw new HttpException(500, 'Empty response from Geonames Service.');
     }
 
     public function getJsonSearch(int $geonameId): ?stdClass
