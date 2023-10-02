@@ -112,6 +112,12 @@ php bin/console app:clu 5
 ```
 The Ids are split into different files since loading them all causes a timeout error. Importing a file results in about 9000 entries in the database.
 
+To update all the names ("locales") for a specific country, you need its geonamesId (find it here `https://www.geonames.org/countries/`, click on the desired country name, then on the name again, the ID will be in the URL). Then run : 
+```bash
+php bin/console app:clsu 3017382
+```
+to get all of France's names, for example.
+
 3. Translations list
 - Calling the endpoint `/countrynames/{locale}` (locale being a 2-letter code) will return a list of every country names in the selected locale.
 

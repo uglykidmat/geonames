@@ -63,6 +63,7 @@ class GeonamesCountryLocaleService
         $countryResponse = $this->apiservice->getJsonSearch($geonameId);
         $countryLangs = $countryResponse->alternateNames;
         $output = '';
+
         foreach ($countryLangs as $countryLang) {
             if (isset($countryLang->lang)) {
                 if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
@@ -75,7 +76,7 @@ class GeonamesCountryLocaleService
                         ->setGeonameId($geonameId)
                         ->setCountryCode($countryResponse->countryCode)
                         ->setName($countryLang->name)
-                        ->setLocale($countryLang->lang);
+                        ->setLocale(strtolower($countryLang->lang));
                     $this->entityManager->persist($newCountryLocale);
 
                     $output .= $newCountryLocale->getCountryCode() .
