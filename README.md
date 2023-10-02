@@ -1,4 +1,4 @@
-# Geonames v2.1.3
+# Geonames v2.1.4
 
 "Reverse/Geocoding Webservices" : this repository contains the Geonames Controller, built on a Symfony 6.3.1 skeleton.
 
@@ -102,12 +102,13 @@ php bin/console countryupdate
 ```
 
 2. Locales
-- entities' names translated into many language. The table "country_locale" must first be updated with geonames information :
+- Countries names translated into many language. The table "country_locale" must first be updated with geonames information :
 ```bash
 php bin/console app:clu 1
 php bin/console app:clu 2
 php bin/console app:clu 3
 php bin/console app:clu 4
+php bin/console app:clu 5
 ```
 The Ids are split into different files since loading them all causes a timeout error. Importing a file results in about 9000 entries in the database.
 
