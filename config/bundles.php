@@ -11,4 +11,5 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true, 'dev' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
+    ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
 ];
