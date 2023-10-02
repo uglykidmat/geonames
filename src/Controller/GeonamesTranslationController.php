@@ -6,7 +6,6 @@ use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesTranslationService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,36 +69,5 @@ class GeonamesTranslationController extends AbstractController
             return $this->translationService->checkRequestContent($deleteContent);
         } else
             return $this->translationService->deleteTranslation($deleteContent, $this->entityManager);
-    }
-
-    #[Route('/update', name: 'translation_update')]
-    public function update(): Response
-    {
-        $translationResponse = '';
-        $translationJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_translation.json'), true);
-
-        foreach ($translationJson as $translationJsonKey => $translationJsonValue) {
-            if (!$this->entityManager->getRepository(GeonamesTranslation::class)
-                ->findByCountryCode($translationJsonValue["countryCode"])) {
-                $translation = (new GeonamesTranslation())
-                    ->setGeonameId($translationJsonValue["geonameId"])
-                    ->setName($translationJsonValue["name"])
-                    ->setCountryCode($translationJsonValue["countryCode"])
-                    ->setFcode($translationJsonValue["fcode"])
-                    ->setLocale($translationJsonValue["locale"]);
-
-                $this->entityManager->persist($translation);
-            } else {
-                $translationResponse .= 'KO ';
-            }
-        }
-
-        $this->entityManager->flush();
-
-        return $this->render('translation/index.html.twig', [
-            'controller_name' => 'GeonamesTranslationController',
-            'response' => $translationResponse,
-            'translation' => $translationJson
-        ]);
     }
 }

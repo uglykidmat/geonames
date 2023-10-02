@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GeonamesTranslationService
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
+    }
+
     public function checkRequest(Request $postRequest): JsonResponse
     {
         $postResponse = new JsonResponse();
@@ -57,7 +62,7 @@ class GeonamesTranslationService
     {
     }
 
-    public function postTranslation(array $postContent, EntityManagerInterface $translationEntityManager): JsonResponse
+    public function postTranslation(array $postContent): JsonResponse
     {
         $postResponse = new JsonResponse();
 
@@ -65,7 +70,7 @@ class GeonamesTranslationService
         $dbInsertionDone = array();
 
         foreach ($postContent as $postValue) {
-            if ($translationEntityManager
+            if ($this->entityManager
                 ->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
                     'geonameId' => $postValue->geonameId,
@@ -80,10 +85,10 @@ class GeonamesTranslationService
                     ->setCountryCode($postValue->countryCode)
                     ->setFcode($postValue->fcode)
                     ->setLocale($postValue->locale);
-                $translationEntityManager->persist($postTranslation);
+                $this->entityManager->persist($postTranslation);
                 $dbInsertionDone[] = $postValue->geonameId;
             }
-            $translationEntityManager->flush();
+            $this->entityManager->flush();
         }
 
         if (count($dbInsertionDone) == 0) {
@@ -99,13 +104,13 @@ class GeonamesTranslationService
         return $postResponse;
     }
 
-    public function patchTranslation(array $patchContent, EntityManagerInterface $translationEntityManager): JsonResponse
+    public function patchTranslation(array $patchContent): JsonResponse
     {
         $patchResponse = new JsonResponse();
         $patchResponse->setContent("yob");
         $dbPatchDone = array();
         foreach ($patchContent as $patchValue) {
-            if ($translationToPatch = $translationEntityManager->getRepository(GeonamesTranslation::class)
+            if ($translationToPatch = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
                     'geonameId' => $patchValue->geonameId,
                     'locale' => $patchValue->locale
@@ -115,11 +120,11 @@ class GeonamesTranslationService
                     ->setName($patchValue->name)
                     ->setCountryCode($patchValue->countryCode)
                     ->setFcode($patchValue->fcode);
-                $translationEntityManager->persist($translationToPatch);
+                $this->entityManager->persist($translationToPatch);
                 $dbPatchDone[] = $patchValue->geonameId;
             }
         }
-        $translationEntityManager->flush();
+        $this->entityManager->flush();
 
         $patchResponse->setStatusCode(200);
         $patchResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "' . implode(',', $dbPatchDone) . '"}');
@@ -127,24 +132,24 @@ class GeonamesTranslationService
         return $patchResponse;
     }
 
-    public function deleteTranslation(array $deleteContent, EntityManagerInterface $translationEntityManager): JsonResponse
+    public function deleteTranslation(array $deleteContent): JsonResponse
     {
         $deleteResponse = new JsonResponse();
         $dbDeleteDone = array();
         foreach ($deleteContent as $deleteValue) {
 
-            if ($translationToDelete = $translationEntityManager->getRepository(GeonamesTranslation::class)
+            if ($translationToDelete = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
                     'geonameId' => $deleteValue->geonameId,
                     'locale' => $deleteValue->locale
                 ))
             ) {
-                $translationEntityManager->remove($translationToDelete);
+                $this->entityManager->remove($translationToDelete);
 
                 $dbDeleteDone[] = $deleteValue->geonameId;
             }
         }
-        $translationEntityManager->flush();
+        $this->entityManager->flush();
 
         $deleteResponse->setStatusCode(200);
         $deleteResponse->setContent('{"DELETE" : "Success", "GeonameIds deleted" : "' . implode(',', $dbDeleteDone) . '"}');

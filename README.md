@@ -180,12 +180,7 @@ php vendor/bin/phpunit --testdox
 
 ### Translations
 
-1. Update your translations base (be sure you have 'geonames_translation.json' in your 'base_data' folder) :
-```php
-/translation/update
-```
-
-2. Use different HTTP methods on the translation API endpoint :
+Use different HTTP methods on the translation API endpoint :
 ```php
 /translation/
 ```
@@ -213,3 +208,5 @@ The expected content should follow this syntax, `geonameId` and `locale` are req
 ```
 
 Calling POST with it will create new entries, PATCH will modify existing entries (if found), and DELETE will delete them.
+
+For an initial database hydration, just copy the JSON content from 'geonames_translation.json' in your 'base_data' folder, and use it as request on the POST endpoint.
