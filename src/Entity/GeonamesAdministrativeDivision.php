@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\GeonamesAdministrativeDivisionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\GeonamesAdministrativeDivisionRepository;
 
+#[ApiResource(order: ['geonameId' => 'ASC'])]
 #[ORM\Entity(repositoryClass: GeonamesAdministrativeDivisionRepository::class)]
 class GeonamesAdministrativeDivision
 {

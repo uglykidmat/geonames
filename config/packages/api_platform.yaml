@@ -1,6 +1,6 @@
 api_platform:
-    title: Hello API Platform
-    version: 1.0.0
+    title: Geonames
+    version: 2.1.4
     # Good defaults for REST APIs
     defaults:
         stateless: true

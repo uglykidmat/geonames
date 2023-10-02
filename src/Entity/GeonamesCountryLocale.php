@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\GeonamesCountryLocaleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\GeonamesCountryLocaleRepository;
 
+#[ApiResource(order: ['geonameId' => 'ASC'])]
 #[ORM\Entity(repositoryClass: GeonamesCountryLocaleRepository::class)]
 class GeonamesCountryLocale
 {
