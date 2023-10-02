@@ -1,6 +1,5 @@
 [
     {
-        "id": "1",
         "geonameId": "858785",
         "name": "Województwo lubelskie",
         "countryCode": "PL",
@@ -8,7 +7,6 @@
         "locale": "pl"
     },
     {
-        "id": "2",
         "geonameId": "858786",
         "name": "Województwo małopolskie",
         "countryCode": "PL",
@@ -16,7 +14,6 @@
         "locale": "pl"
     },
     {
-        "id": "3",
         "geonameId": "858787",
         "name": "Województwo mazowieckie",
         "countryCode": "PL",
@@ -24,7 +21,6 @@
         "locale": "pl"
     },
     {
-        "id": "4",
         "geonameId": "858788",
         "name": "Województwo podkarpackie",
         "countryCode": "PL",
@@ -32,7 +28,6 @@
         "locale": "pl"
     },
     {
-        "id": "5",
         "geonameId": "858789",
         "name": "Województwo podlaskie",
         "countryCode": "PL",
@@ -40,7 +35,6 @@
         "locale": "pl"
     },
     {
-        "id": "6",
         "geonameId": "858790",
         "name": "Województwo świętokrzyskie",
         "countryCode": "PL",
@@ -48,7 +42,6 @@
         "locale": "pl"
     },
     {
-        "id": "7",
         "geonameId": "858791",
         "name": "Województwo warmińsko-mazurskie",
         "countryCode": "PL",
@@ -56,7 +49,6 @@
         "locale": "pl"
     },
     {
-        "id": "8",
         "geonameId": "3337492",
         "name": "Województwo dolnośląskie",
         "countryCode": "PL",
@@ -64,7 +56,6 @@
         "locale": "pl"
     },
     {
-        "id": "9",
         "geonameId": "3337493",
         "name": "Województwo łódzkie",
         "countryCode": "PL",
@@ -72,7 +63,6 @@
         "locale": "pl"
     },
     {
-        "id": "10",
         "geonameId": "3337494",
         "name": "Województwo lubuskie",
         "countryCode": "PL",
@@ -80,7 +70,6 @@
         "locale": "pl"
     },
     {
-        "id": "11",
         "geonameId": "3337495",
         "name": "Województwo opolskie",
         "countryCode": "PL",
@@ -88,7 +77,6 @@
         "locale": "pl"
     },
     {
-        "id": "12",
         "geonameId": "3337496",
         "name": "Województwo pomorskie",
         "countryCode": "PL",
@@ -96,7 +84,6 @@
         "locale": "pl"
     },
     {
-        "id": "13",
         "geonameId": "3337497",
         "name": "Województwo śląskie",
         "countryCode": "PL",
@@ -104,7 +91,6 @@
         "locale": "pl"
     },
     {
-        "id": "14",
         "geonameId": "3337498",
         "name": "Województwo wielkopolskie",
         "countryCode": "PL",
@@ -112,7 +98,6 @@
         "locale": "pl"
     },
     {
-        "id": "15",
         "geonameId": "3337499",
         "name": "Województwo zachodniopomorskie",
         "countryCode": "PL",
@@ -120,7 +105,6 @@
         "locale": "pl"
     },
     {
-        "id": "16",
         "geonameId": "3337500",
         "name": "Województwo kujawsko-pomorskie",
         "countryCode": "PL",
@@ -128,7 +112,6 @@
         "locale": "pl"
     },
     {
-        "id": "17",
         "geonameId": "3079850",
         "name": "Powiat będziński",
         "countryCode": "PL",
@@ -136,7 +119,6 @@
         "locale": "pl"
     },
     {
-        "id": "18",
         "geonameId": "6619358",
         "name": "Powiat olsztyński",
         "countryCode": "PL",
@@ -144,7 +126,6 @@
         "locale": "pl"
     },
     {
-        "id": "19",
         "geonameId": "6690130",
         "name": "Powiat miechowski",
         "countryCode": "PL",
@@ -152,7 +133,6 @@
         "locale": "pl"
     },
     {
-        "id": "20",
         "geonameId": "6690149",
         "name": "Powiat bocheński",
         "countryCode": "PL",
@@ -160,7 +140,6 @@
         "locale": "pl"
     },
     {
-        "id": "21",
         "geonameId": "6690150",
         "name": "Powiat brzeski",
         "countryCode": "PL",
@@ -168,7 +147,6 @@
         "locale": "pl"
     },
     {
-        "id": "22",
         "geonameId": "6690151",
         "name": "Powiat chrzanowski",
         "countryCode": "PL",
@@ -176,7 +154,6 @@
         "locale": "pl"
     },
     {
-        "id": "23",
         "geonameId": "6690152",
         "name": "Powiat dąbrowski",
         "countryCode": "PL",
@@ -184,7 +161,6 @@
         "locale": "pl"
     },
     {
-        "id": "24",
         "geonameId": "6690153",
         "name": "Powiat gorlicki",
         "countryCode": "PL",
@@ -192,7 +168,6 @@
         "locale": "pl"
     },
     {
-        "id": "25",
         "geonameId": "6690154",
         "name": "Powiat m.Kraków",
         "countryCode": "PL",
@@ -200,7 +175,6 @@
         "locale": "pl"
     },
     {
-        "id": "26",
         "geonameId": "6690155",
         "name": "Powiat limanowski",
         "countryCode": "PL",
@@ -208,7 +182,6 @@
         "locale": "pl"
     },
     {
-        "id": "27",
         "geonameId": "6690156",
         "name": "Powiat myślenicki",
         "countryCode": "PL",
@@ -216,7 +189,6 @@
         "locale": "pl"
     },
     {
-        "id": "28",
         "geonameId": "6690157",
         "name": "Powiat nowosądecki",
         "countryCode": "PL",
@@ -224,7 +196,6 @@
         "locale": "pl"
     },
     {
-        "id": "29",
         "geonameId": "6690158",
         "name": "Powiat nowotarski",
         "countryCode": "PL",
@@ -232,7 +203,6 @@
         "locale": "pl"
     },
     {
-        "id": "30",
         "geonameId": "6690159",
         "name": "Powiat olkuski",
         "countryCode": "PL",
@@ -240,7 +210,6 @@
         "locale": "pl"
     },
     {
-        "id": "31",
         "geonameId": "6690160",
         "name": "Powiat oświęcimski",
         "countryCode": "PL",
@@ -248,7 +217,6 @@
         "locale": "pl"
     },
     {
-        "id": "32",
         "geonameId": "6690161",
         "name": "Powiat proszowicki",
         "countryCode": "PL",
@@ -256,7 +224,6 @@
         "locale": "pl"
     },
     {
-        "id": "33",
         "geonameId": "6690162",
         "name": "Powiat suski",
         "countryCode": "PL",
@@ -264,7 +231,6 @@
         "locale": "pl"
     },
     {
-        "id": "34",
         "geonameId": "6690163",
         "name": "Powiat m.Tarnów",
         "countryCode": "PL",
@@ -272,7 +238,6 @@
         "locale": "pl"
     },
     {
-        "id": "35",
         "geonameId": "6690164",
         "name": "Powiat tatrzański",
         "countryCode": "PL",
@@ -280,7 +245,6 @@
         "locale": "pl"
     },
     {
-        "id": "36",
         "geonameId": "6690165",
         "name": "Powiat wadowicki",
         "countryCode": "PL",
@@ -288,7 +252,6 @@
         "locale": "pl"
     },
     {
-        "id": "37",
         "geonameId": "6690166",
         "name": "Powiat wielicki",
         "countryCode": "PL",
@@ -296,7 +259,6 @@
         "locale": "pl"
     },
     {
-        "id": "38",
         "geonameId": "6695624",
         "name": "Powiat m.st.Warszawa",
         "countryCode": "PL",
@@ -304,7 +266,6 @@
         "locale": "pl"
     },
     {
-        "id": "39",
         "geonameId": "6697536",
         "name": "Powiat łódzki wschodni",
         "countryCode": "PL",
@@ -312,7 +273,6 @@
         "locale": "pl"
     },
     {
-        "id": "40",
         "geonameId": "6941021",
         "name": "Powiat łowicki",
         "countryCode": "PL",
@@ -320,7 +280,6 @@
         "locale": "pl"
     },
     {
-        "id": "41",
         "geonameId": "7530726",
         "name": "Powiat bialski",
         "countryCode": "PL",
@@ -328,7 +287,6 @@
         "locale": "pl"
     },
     {
-        "id": "42",
         "geonameId": "7530729",
         "name": "Powiat chełmski",
         "countryCode": "PL",
@@ -336,7 +294,6 @@
         "locale": "pl"
     },
     {
-        "id": "43",
         "geonameId": "7530730",
         "name": "Powiat zamojski",
         "countryCode": "PL",
@@ -344,7 +301,6 @@
         "locale": "pl"
     },
     {
-        "id": "44",
         "geonameId": "7530731",
         "name": "Powiat żarski",
         "countryCode": "PL",
@@ -352,7 +308,6 @@
         "locale": "pl"
     },
     {
-        "id": "45",
         "geonameId": "7530732",
         "name": "Powiat brzeski",
         "countryCode": "PL",
@@ -360,7 +315,6 @@
         "locale": "pl"
     },
     {
-        "id": "46",
         "geonameId": "7530733",
         "name": "Powiat namysłowski",
         "countryCode": "PL",
@@ -368,7 +322,6 @@
         "locale": "pl"
     },
     {
-        "id": "47",
         "geonameId": "7530734",
         "name": "Powiat nyski",
         "countryCode": "PL",
@@ -376,7 +329,6 @@
         "locale": "pl"
     },
     {
-        "id": "48",
         "geonameId": "7530735",
         "name": "Powiat kępiński",
         "countryCode": "PL",
@@ -384,7 +336,6 @@
         "locale": "pl"
     },
     {
-        "id": "49",
         "geonameId": "7530736",
         "name": "Powiat biłgorajski",
         "countryCode": "PL",
@@ -392,7 +343,6 @@
         "locale": "pl"
     },
     {
-        "id": "50",
         "geonameId": "7530737",
         "name": "Powiat chełmski",
         "countryCode": "PL",
@@ -400,7 +350,6 @@
         "locale": "pl"
     },
     {
-        "id": "51",
         "geonameId": "7530738",
         "name": "Powiat hrubieszowski",
         "countryCode": "PL",
@@ -408,7 +357,6 @@
         "locale": "pl"
     },
     {
-        "id": "52",
         "geonameId": "7530739",
         "name": "Powiat janowski",
         "countryCode": "PL",
@@ -416,7 +364,6 @@
         "locale": "pl"
     },
     {
-        "id": "53",
         "geonameId": "7530740",
         "name": "Powiat krasnostawski",
         "countryCode": "PL",
@@ -424,7 +371,6 @@
         "locale": "pl"
     },
     {
-        "id": "54",
         "geonameId": "7530741",
         "name": "Powiat kraśnicki",
         "countryCode": "PL",
@@ -432,7 +378,6 @@
         "locale": "pl"
     },
     {
-        "id": "55",
         "geonameId": "7530742",
         "name": "Powiat lubartowski",
         "countryCode": "PL",
@@ -440,7 +385,6 @@
         "locale": "pl"
     },
     {
-        "id": "56",
         "geonameId": "7530743",
         "name": "Powiat lubelski",
         "countryCode": "PL",
@@ -448,7 +392,6 @@
         "locale": "pl"
     },
     {
-        "id": "57",
         "geonameId": "7530744",
         "name": "Powiat gorzowski",
         "countryCode": "PL",
@@ -456,7 +399,6 @@
         "locale": "pl"
     },
     {
-        "id": "58",
         "geonameId": "7530745",
         "name": "Powiat m.Piotrków Trybunalski",
         "countryCode": "PL",
@@ -464,7 +406,6 @@
         "locale": "pl"
     },
     {
-        "id": "59",
         "geonameId": "7530746",
         "name": "Powiat m.Dąbrowa Górnicza",
         "countryCode": "PL",
@@ -472,7 +413,6 @@
         "locale": "pl"
     },
     {
-        "id": "60",
         "geonameId": "7530747",
         "name": "Powiat kozienicki",
         "countryCode": "PL",
@@ -480,7 +420,6 @@
         "locale": "pl"
     },
     {
-        "id": "61",
         "geonameId": "7530748",
         "name": "Powiat przemyski",
         "countryCode": "PL",
@@ -488,7 +427,6 @@
         "locale": "pl"
     },
     {
-        "id": "62",
         "geonameId": "7530749",
         "name": "Powiat m.Świnoujście",
         "countryCode": "PL",
@@ -496,7 +434,6 @@
         "locale": "pl"
     },
     {
-        "id": "63",
         "geonameId": "7530750",
         "name": "Powiat węgrowski",
         "countryCode": "PL",
@@ -504,7 +441,6 @@
         "locale": "pl"
     },
     {
-        "id": "64",
         "geonameId": "7530751",
         "name": "Powiat wołomiński",
         "countryCode": "PL",
@@ -512,7 +448,6 @@
         "locale": "pl"
     },
     {
-        "id": "65",
         "geonameId": "7530752",
         "name": "Powiat wyszkowski",
         "countryCode": "PL",
@@ -520,7 +455,6 @@
         "locale": "pl"
     },
     {
-        "id": "66",
         "geonameId": "7530753",
         "name": "Powiat ostródzki",
         "countryCode": "PL",
@@ -528,7 +462,6 @@
         "locale": "pl"
     },
     {
-        "id": "67",
         "geonameId": "7530754",
         "name": "Powiat koszaliński",
         "countryCode": "PL",
@@ -536,7 +469,6 @@
         "locale": "pl"
     },
     {
-        "id": "68",
         "geonameId": "7530755",
         "name": "Powiat sławieński",
         "countryCode": "PL",
@@ -544,7 +476,6 @@
         "locale": "pl"
     },
     {
-        "id": "69",
         "geonameId": "7530756",
         "name": "Powiat szczecinecki",
         "countryCode": "PL",
@@ -552,7 +483,6 @@
         "locale": "pl"
     },
     {
-        "id": "70",
         "geonameId": "7530757",
         "name": "Powiat grójecki",
         "countryCode": "PL",
@@ -560,7 +490,6 @@
         "locale": "pl"
     },
     {
-        "id": "71",
         "geonameId": "7530758",
         "name": "Powiat przysuski",
         "countryCode": "PL",
@@ -568,7 +497,6 @@
         "locale": "pl"
     },
     {
-        "id": "72",
         "geonameId": "7530759",
         "name": "Powiat sochaczewski",
         "countryCode": "PL",
@@ -576,7 +504,6 @@
         "locale": "pl"
     },
     {
-        "id": "73",
         "geonameId": "7530760",
         "name": "Powiat żyrardowski",
         "countryCode": "PL",
@@ -584,7 +511,6 @@
         "locale": "pl"
     },
     {
-        "id": "74",
         "geonameId": "7530761",
         "name": "Powiat kluczborski",
         "countryCode": "PL",
@@ -592,7 +518,6 @@
         "locale": "pl"
     },
     {
-        "id": "75",
         "geonameId": "7530762",
         "name": "Powiat oleski",
         "countryCode": "PL",
@@ -600,7 +525,6 @@
         "locale": "pl"
     },
     {
-        "id": "76",
         "geonameId": "7530763",
         "name": "Powiat częstochowski",
         "countryCode": "PL",
@@ -608,7 +532,6 @@
         "locale": "pl"
     },
     {
-        "id": "77",
         "geonameId": "7530764",
         "name": "Powiat kłobucki",
         "countryCode": "PL",
@@ -616,7 +539,6 @@
         "locale": "pl"
     },
     {
-        "id": "78",
         "geonameId": "7530765",
         "name": "Powiat konecki",
         "countryCode": "PL",
@@ -624,7 +546,6 @@
         "locale": "pl"
     },
     {
-        "id": "79",
         "geonameId": "7530766",
         "name": "Powiat włoszczowski",
         "countryCode": "PL",
@@ -632,7 +553,6 @@
         "locale": "pl"
     },
     {
-        "id": "80",
         "geonameId": "7530767",
         "name": "Powiat kaliski",
         "countryCode": "PL",
@@ -640,7 +560,6 @@
         "locale": "pl"
     },
     {
-        "id": "81",
         "geonameId": "7530768",
         "name": "Powiat krakowski",
         "countryCode": "PL",
@@ -648,7 +567,6 @@
         "locale": "pl"
     },
     {
-        "id": "82",
         "geonameId": "7530769",
         "name": "Powiat dębicki",
         "countryCode": "PL",
@@ -656,7 +574,6 @@
         "locale": "pl"
     },
     {
-        "id": "83",
         "geonameId": "7530770",
         "name": "Powiat jasielski",
         "countryCode": "PL",
@@ -664,7 +581,6 @@
         "locale": "pl"
     },
     {
-        "id": "84",
         "geonameId": "7530771",
         "name": "Powiat mielecki",
         "countryCode": "PL",
@@ -672,7 +588,6 @@
         "locale": "pl"
     },
     {
-        "id": "85",
         "geonameId": "7530772",
         "name": "Powiat białostocki",
         "countryCode": "PL",
@@ -680,7 +595,6 @@
         "locale": "pl"
     },
     {
-        "id": "86",
         "geonameId": "7530773",
         "name": "Powiat łomżyński",
         "countryCode": "PL",
@@ -688,7 +602,6 @@
         "locale": "pl"
     },
     {
-        "id": "87",
         "geonameId": "7530774",
         "name": "Powiat kolbuszowski",
         "countryCode": "PL",
@@ -696,7 +609,6 @@
         "locale": "pl"
     },
     {
-        "id": "88",
         "geonameId": "7530775",
         "name": "Powiat krośnieński",
         "countryCode": "PL",
@@ -704,7 +616,6 @@
         "locale": "pl"
     },
     {
-        "id": "89",
         "geonameId": "7530776",
         "name": "Powiat leski",
         "countryCode": "PL",
@@ -712,7 +623,6 @@
         "locale": "pl"
     },
     {
-        "id": "90",
         "geonameId": "7530777",
         "name": "Powiat łańcucki",
         "countryCode": "PL",
@@ -720,7 +630,6 @@
         "locale": "pl"
     },
     {
-        "id": "91",
         "geonameId": "7530778",
         "name": "Powiat przemyski",
         "countryCode": "PL",
@@ -728,7 +637,6 @@
         "locale": "pl"
     },
     {
-        "id": "92",
         "geonameId": "7530779",
         "name": "Powiat ropczycko-sędziszowski",
         "countryCode": "PL",
@@ -736,7 +644,6 @@
         "locale": "pl"
     },
     {
-        "id": "93",
         "geonameId": "7530780",
         "name": "Powiat m.Rzeszów",
         "countryCode": "PL",
@@ -744,7 +651,6 @@
         "locale": "pl"
     },
     {
-        "id": "94",
         "geonameId": "7530781",
         "name": "Powiat sanocki",
         "countryCode": "PL",
@@ -752,7 +658,6 @@
         "locale": "pl"
     },
     {
-        "id": "95",
         "geonameId": "7530782",
         "name": "Powiat strzyżowski",
         "countryCode": "PL",
@@ -760,7 +665,6 @@
         "locale": "pl"
     },
     {
-        "id": "96",
         "geonameId": "7530783",
         "name": "Powiat braniewski",
         "countryCode": "PL",
@@ -768,7 +672,6 @@
         "locale": "pl"
     },
     {
-        "id": "97",
         "geonameId": "7530784",
         "name": "Powiat elbląski",
         "countryCode": "PL",
@@ -776,7 +679,6 @@
         "locale": "pl"
     },
     {
-        "id": "98",
         "geonameId": "7530785",
         "name": "Powiat kościerski",
         "countryCode": "PL",
@@ -784,7 +686,6 @@
         "locale": "pl"
     },
     {
-        "id": "99",
         "geonameId": "7530786",
         "name": "Powiat lęborski",
         "countryCode": "PL",
@@ -792,7 +693,6 @@
         "locale": "pl"
     },
     {
-        "id": "100",
         "geonameId": "7530787",
         "name": "Powiat malborski",
         "countryCode": "PL",
@@ -800,7 +700,6 @@
         "locale": "pl"
     },
     {
-        "id": "101",
         "geonameId": "7530788",
         "name": "Powiat pucki",
         "countryCode": "PL",
@@ -808,7 +707,6 @@
         "locale": "pl"
     },
     {
-        "id": "102",
         "geonameId": "7530789",
         "name": "Powiat kartuski",
         "countryCode": "PL",
@@ -816,7 +714,6 @@
         "locale": "pl"
     },
     {
-        "id": "103",
         "geonameId": "7530790",
         "name": "Powiat m.Rybnik",
         "countryCode": "PL",
@@ -824,7 +721,6 @@
         "locale": "pl"
     },
     {
-        "id": "104",
         "geonameId": "7530791",
         "name": "Powiat m.Bielsko-Biała",
         "countryCode": "PL",
@@ -832,7 +728,6 @@
         "locale": "pl"
     },
     {
-        "id": "105",
         "geonameId": "7530792",
         "name": "Powiat m.Katowice",
         "countryCode": "PL",
@@ -840,7 +735,6 @@
         "locale": "pl"
     },
     {
-        "id": "106",
         "geonameId": "7530793",
         "name": "Powiat stargardzki",
         "countryCode": "PL",
@@ -848,7 +742,6 @@
         "locale": "pl"
     },
     {
-        "id": "107",
         "geonameId": "7530794",
         "name": "Powiat goleniowski",
         "countryCode": "PL",
@@ -856,7 +749,6 @@
         "locale": "pl"
     },
     {
-        "id": "108",
         "geonameId": "7530795",
         "name": "Powiat gryficki",
         "countryCode": "PL",
@@ -864,7 +756,6 @@
         "locale": "pl"
     },
     {
-        "id": "109",
         "geonameId": "7530796",
         "name": "Powiat m.Jelenia Góra",
         "countryCode": "PL",
@@ -872,7 +763,6 @@
         "locale": "pl"
     },
     {
-        "id": "110",
         "geonameId": "7530797",
         "name": "Powiat m.Kielce",
         "countryCode": "PL",
@@ -880,7 +770,6 @@
         "locale": "pl"
     },
     {
-        "id": "111",
         "geonameId": "7530798",
         "name": "Powiat bartoszycki",
         "countryCode": "PL",
@@ -888,7 +777,6 @@
         "locale": "pl"
     },
     {
-        "id": "112",
         "geonameId": "7530799",
         "name": "Powiat giżycki",
         "countryCode": "PL",
@@ -896,7 +784,6 @@
         "locale": "pl"
     },
     {
-        "id": "113",
         "geonameId": "7530800",
         "name": "Powiat lidzbarski",
         "countryCode": "PL",
@@ -904,7 +791,6 @@
         "locale": "pl"
     },
     {
-        "id": "114",
         "geonameId": "7530801",
         "name": "Powiat wrocławski",
         "countryCode": "PL",
@@ -912,7 +798,6 @@
         "locale": "pl"
     },
     {
-        "id": "115",
         "geonameId": "7530802",
         "name": "Powiat obornicki",
         "countryCode": "PL",
@@ -920,7 +805,6 @@
         "locale": "pl"
     },
     {
-        "id": "116",
         "geonameId": "7530803",
         "name": "Powiat szczycieński",
         "countryCode": "PL",
@@ -928,7 +812,6 @@
         "locale": "pl"
     },
     {
-        "id": "117",
         "geonameId": "7530804",
         "name": "Powiat bolesławiecki",
         "countryCode": "PL",
@@ -936,7 +819,6 @@
         "locale": "pl"
     },
     {
-        "id": "118",
         "geonameId": "7530805",
         "name": "Powiat dzierżoniowski",
         "countryCode": "PL",
@@ -944,7 +826,6 @@
         "locale": "pl"
     },
     {
-        "id": "119",
         "geonameId": "7530806",
         "name": "Powiat m.Głogów",
         "countryCode": "PL",
@@ -952,7 +833,6 @@
         "locale": "pl"
     },
     {
-        "id": "120",
         "geonameId": "7530807",
         "name": "Powiat m.Góra",
         "countryCode": "PL",
@@ -960,7 +840,6 @@
         "locale": "pl"
     },
     {
-        "id": "121",
         "geonameId": "7530808",
         "name": "Powiat cieszyński",
         "countryCode": "PL",
@@ -968,7 +847,6 @@
         "locale": "pl"
     },
     {
-        "id": "122",
         "geonameId": "7530809",
         "name": "Powiat mikołowski",
         "countryCode": "PL",
@@ -976,7 +854,6 @@
         "locale": "pl"
     },
     {
-        "id": "123",
         "geonameId": "7530810",
         "name": "Powiat myszkowski",
         "countryCode": "PL",
@@ -984,7 +861,6 @@
         "locale": "pl"
     },
     {
-        "id": "124",
         "geonameId": "7530811",
         "name": "Powiat rybnicki",
         "countryCode": "PL",
@@ -992,7 +868,6 @@
         "locale": "pl"
     },
     {
-        "id": "125",
         "geonameId": "7530812",
         "name": "Powiat wschowski",
         "countryCode": "PL",
@@ -1000,7 +875,6 @@
         "locale": "pl"
     },
     {
-        "id": "126",
         "geonameId": "7530813",
         "name": "Powiat m.Toruń",
         "countryCode": "PL",
@@ -1008,7 +882,6 @@
         "locale": "pl"
     },
     {
-        "id": "127",
         "geonameId": "7530814",
         "name": "Powiat m.Bydgoszcz",
         "countryCode": "PL",
@@ -1016,7 +889,6 @@
         "locale": "pl"
     },
     {
-        "id": "128",
         "geonameId": "7530815",
         "name": "Powiat m.Jawor",
         "countryCode": "PL",
@@ -1024,7 +896,6 @@
         "locale": "pl"
     },
     {
-        "id": "129",
         "geonameId": "7530816",
         "name": "Powiat m.Jelenia Góra",
         "countryCode": "PL",
@@ -1032,7 +903,6 @@
         "locale": "pl"
     },
     {
-        "id": "130",
         "geonameId": "7530817",
         "name": "Powiat m.Jaworzno",
         "countryCode": "PL",
@@ -1040,7 +910,6 @@
         "locale": "pl"
     },
     {
-        "id": "131",
         "geonameId": "7530818",
         "name": "Powiat m.Opole",
         "countryCode": "PL",
@@ -1048,7 +917,6 @@
         "locale": "pl"
     },
     {
-        "id": "132",
         "geonameId": "7530819",
         "name": "Powiat m.Rzeszów",
         "countryCode": "PL",
@@ -1056,7 +924,6 @@
         "locale": "pl"
     },
     {
-        "id": "133",
         "geonameId": "7530820",
         "name": "Powiat m.Sopot",
         "countryCode": "PL",
@@ -1064,7 +931,6 @@
         "locale": "pl"
     },
     {
-        "id": "134",
         "geonameId": "7530821",
         "name": "Powiat m.Kłodzko",
         "countryCode": "PL",
@@ -1072,7 +938,6 @@
         "locale": "pl"
     },
     {
-        "id": "135",
         "geonameId": "7530822",
         "name": "Powiat legnicki",
         "countryCode": "PL",
@@ -1080,7 +945,6 @@
         "locale": "pl"
     },
     {
-        "id": "136",
         "geonameId": "7530823",
         "name": "Powiat m.Lubań ",
         "countryCode": "PL",
@@ -1088,7 +952,6 @@
         "locale": "pl"
     },
     {
-        "id": "137",
         "geonameId": "7530824",
         "name": "Powiat nowosądecki",
         "countryCode": "PL",
@@ -1096,7 +959,6 @@
         "locale": "pl"
     },
     {
-        "id": "138",
         "geonameId": "7530825",
         "name": "Powiat tarnowski",
         "countryCode": "PL",
@@ -1104,7 +966,6 @@
         "locale": "pl"
     },
     {
-        "id": "139",
         "geonameId": "7530826",
         "name": "Powiat kolneński",
         "countryCode": "PL",
@@ -1112,7 +973,6 @@
         "locale": "pl"
     },
     {
-        "id": "140",
         "geonameId": "7530827",
         "name": "Powiat łomżyński",
         "countryCode": "PL",
@@ -1120,7 +980,6 @@
         "locale": "pl"
     },
     {
-        "id": "141",
         "geonameId": "7530828",
         "name": "Powiat zambrowski",
         "countryCode": "PL",
@@ -1128,7 +987,6 @@
         "locale": "pl"
     },
     {
-        "id": "142",
         "geonameId": "7530829",
         "name": "Powiat ostrowiecki",
         "countryCode": "PL",
@@ -1136,7 +994,6 @@
         "locale": "pl"
     },
     {
-        "id": "143",
         "geonameId": "7530830",
         "name": "Powiat jarosławski",
         "countryCode": "PL",
@@ -1144,7 +1001,6 @@
         "locale": "pl"
     },
     {
-        "id": "144",
         "geonameId": "7530831",
         "name": "Powiat lubiński",
         "countryCode": "PL",
@@ -1152,7 +1008,6 @@
         "locale": "pl"
     },
     {
-        "id": "145",
         "geonameId": "7530832",
         "name": "Powiat lwówecki",
         "countryCode": "PL",
@@ -1160,7 +1015,6 @@
         "locale": "pl"
     },
     {
-        "id": "146",
         "geonameId": "7530833",
         "name": "Powiat milicki",
         "countryCode": "PL",
@@ -1168,7 +1022,6 @@
         "locale": "pl"
     },
     {
-        "id": "147",
         "geonameId": "7530834",
         "name": "Powiat oleśnicki",
         "countryCode": "PL",
@@ -1176,7 +1029,6 @@
         "locale": "pl"
     },
     {
-        "id": "148",
         "geonameId": "7530835",
         "name": "Powiat oławski",
         "countryCode": "PL",
@@ -1184,7 +1036,6 @@
         "locale": "pl"
     },
     {
-        "id": "149",
         "geonameId": "7530836",
         "name": "Powiat polkowicki",
         "countryCode": "PL",
@@ -1192,7 +1043,6 @@
         "locale": "pl"
     },
     {
-        "id": "150",
         "geonameId": "7530837",
         "name": "Powiat strzeliński",
         "countryCode": "PL",
@@ -1200,7 +1050,6 @@
         "locale": "pl"
     },
     {
-        "id": "151",
         "geonameId": "7530838",
         "name": "Powiat średzki",
         "countryCode": "PL",
@@ -1208,7 +1057,6 @@
         "locale": "pl"
     },
     {
-        "id": "152",
         "geonameId": "7530839",
         "name": "Powiat tarnobrzeski",
         "countryCode": "PL",
@@ -1216,7 +1064,6 @@
         "locale": "pl"
     },
     {
-        "id": "153",
         "geonameId": "7530840",
         "name": "Powiat m.Szczecin",
         "countryCode": "PL",
@@ -1224,7 +1071,6 @@
         "locale": "pl"
     },
     {
-        "id": "154",
         "geonameId": "7530841",
         "name": "Powiat augustowski",
         "countryCode": "PL",
@@ -1232,7 +1078,6 @@
         "locale": "pl"
     },
     {
-        "id": "155",
         "geonameId": "7530842",
         "name": "Powiat kamieński",
         "countryCode": "PL",
@@ -1240,7 +1085,6 @@
         "locale": "pl"
     },
     {
-        "id": "156",
         "geonameId": "7530843",
         "name": "Powiat kołobrzeski",
         "countryCode": "PL",
@@ -1248,7 +1092,6 @@
         "locale": "pl"
     },
     {
-        "id": "157",
         "geonameId": "7530844",
         "name": "Powiat policki",
         "countryCode": "PL",
@@ -1256,7 +1099,6 @@
         "locale": "pl"
     },
     {
-        "id": "158",
         "geonameId": "7530845",
         "name": "Powiat pyrzycki",
         "countryCode": "PL",
@@ -1264,7 +1106,6 @@
         "locale": "pl"
     },
     {
-        "id": "159",
         "geonameId": "7530846",
         "name": "Powiat świdnicki",
         "countryCode": "PL",
@@ -1272,7 +1113,6 @@
         "locale": "pl"
     },
     {
-        "id": "160",
         "geonameId": "7530847",
         "name": "Powiat trzebnicki",
         "countryCode": "PL",
@@ -1280,7 +1120,6 @@
         "locale": "pl"
     },
     {
-        "id": "161",
         "geonameId": "7530848",
         "name": "Powiat wałbrzyski",
         "countryCode": "PL",
@@ -1288,7 +1127,6 @@
         "locale": "pl"
     },
     {
-        "id": "162",
         "geonameId": "7530849",
         "name": "Powiat wołowski",
         "countryCode": "PL",
@@ -1296,7 +1134,6 @@
         "locale": "pl"
     },
     {
-        "id": "163",
         "geonameId": "7530850",
         "name": "Powiat wrocławski",
         "countryCode": "PL",
@@ -1304,7 +1141,6 @@
         "locale": "pl"
     },
     {
-        "id": "164",
         "geonameId": "7530851",
         "name": "Powiat ząbkowicki",
         "countryCode": "PL",
@@ -1312,7 +1148,6 @@
         "locale": "pl"
     },
     {
-        "id": "165",
         "geonameId": "7530852",
         "name": "Powiat zgorzelecki",
         "countryCode": "PL",
@@ -1320,7 +1155,6 @@
         "locale": "pl"
     },
     {
-        "id": "166",
         "geonameId": "7530853",
         "name": "Powiat złotoryjski",
         "countryCode": "PL",
@@ -1328,7 +1162,6 @@
         "locale": "pl"
     },
     {
-        "id": "167",
         "geonameId": "7530854",
         "name": "Powiat wodzisławski",
         "countryCode": "PL",
@@ -1336,7 +1169,6 @@
         "locale": "pl"
     },
     {
-        "id": "168",
         "geonameId": "7530855",
         "name": "Powiat nowosolski",
         "countryCode": "PL",
@@ -1344,7 +1176,6 @@
         "locale": "pl"
     },
     {
-        "id": "169",
         "geonameId": "7530856",
         "name": "Powiat żagański",
         "countryCode": "PL",
@@ -1352,7 +1183,6 @@
         "locale": "pl"
     },
     {
-        "id": "170",
         "geonameId": "7530857",
         "name": "Powiat m.Gliwice",
         "countryCode": "PL",
@@ -1360,7 +1190,6 @@
         "locale": "pl"
     },
     {
-        "id": "171",
         "geonameId": "7530858",
         "name": "Powiat m.Poznań",
         "countryCode": "PL",
@@ -1368,7 +1197,6 @@
         "locale": "pl"
     },
     {
-        "id": "172",
         "geonameId": "7530859",
         "name": "Powiat węgorzewski",
         "countryCode": "PL",
@@ -1376,7 +1204,6 @@
         "locale": "pl"
     },
     {
-        "id": "173",
         "geonameId": "7530860",
         "name": "Powiat kętrzyński",
         "countryCode": "PL",
@@ -1384,7 +1211,6 @@
         "locale": "pl"
     },
     {
-        "id": "174",
         "geonameId": "7530861",
         "name": "Powiat drawski",
         "countryCode": "PL",
@@ -1392,7 +1218,6 @@
         "locale": "pl"
     },
     {
-        "id": "175",
         "geonameId": "7530862",
         "name": "Powiat pleszewski",
         "countryCode": "PL",
@@ -1400,7 +1225,6 @@
         "locale": "pl"
     },
     {
-        "id": "176",
         "geonameId": "7530863",
         "name": "Powiat kaliski",
         "countryCode": "PL",
@@ -1408,7 +1232,6 @@
         "locale": "pl"
     },
     {
-        "id": "177",
         "geonameId": "7530864",
         "name": "Powiat łęczyński",
         "countryCode": "PL",
@@ -1416,7 +1239,6 @@
         "locale": "pl"
     },
     {
-        "id": "178",
         "geonameId": "7530865",
         "name": "Powiat łukowski",
         "countryCode": "PL",
@@ -1424,7 +1246,6 @@
         "locale": "pl"
     },
     {
-        "id": "179",
         "geonameId": "7530866",
         "name": "Powiat opolski",
         "countryCode": "PL",
@@ -1432,7 +1253,6 @@
         "locale": "pl"
     },
     {
-        "id": "180",
         "geonameId": "7530867",
         "name": "Powiat parczewski",
         "countryCode": "PL",
@@ -1440,7 +1260,6 @@
         "locale": "pl"
     },
     {
-        "id": "181",
         "geonameId": "7530868",
         "name": "Powiat puławski",
         "countryCode": "PL",
@@ -1448,7 +1267,6 @@
         "locale": "pl"
     },
     {
-        "id": "182",
         "geonameId": "7530869",
         "name": "Powiat radzyński",
         "countryCode": "PL",
@@ -1456,7 +1274,6 @@
         "locale": "pl"
     },
     {
-        "id": "183",
         "geonameId": "7530870",
         "name": "Powiat rycki",
         "countryCode": "PL",
@@ -1464,7 +1281,6 @@
         "locale": "pl"
     },
     {
-        "id": "184",
         "geonameId": "7530871",
         "name": "Powiat świdnicki",
         "countryCode": "PL",
@@ -1472,7 +1288,6 @@
         "locale": "pl"
     },
     {
-        "id": "185",
         "geonameId": "7530872",
         "name": "Powiat tomaszowski",
         "countryCode": "PL",
@@ -1480,7 +1295,6 @@
         "locale": "pl"
     },
     {
-        "id": "186",
         "geonameId": "7530873",
         "name": "Powiat włodawski",
         "countryCode": "PL",
@@ -1488,7 +1302,6 @@
         "locale": "pl"
     },
     {
-        "id": "187",
         "geonameId": "7530874",
         "name": "Powiat zamojski",
         "countryCode": "PL",
@@ -1496,7 +1309,6 @@
         "locale": "pl"
     },
     {
-        "id": "188",
         "geonameId": "7530875",
         "name": "Powiat makowski",
         "countryCode": "PL",
@@ -1504,7 +1316,6 @@
         "locale": "pl"
     },
     {
-        "id": "189",
         "geonameId": "7530876",
         "name": "Powiat piaseczyński",
         "countryCode": "PL",
@@ -1512,7 +1323,6 @@
         "locale": "pl"
     },
     {
-        "id": "190",
         "geonameId": "7530877",
         "name": "Powiat miński",
         "countryCode": "PL",
@@ -1520,7 +1330,6 @@
         "locale": "pl"
     },
     {
-        "id": "191",
         "geonameId": "7530878",
         "name": "Powiat radomski",
         "countryCode": "PL",
@@ -1528,7 +1337,6 @@
         "locale": "pl"
     },
     {
-        "id": "192",
         "geonameId": "7530879",
         "name": "Powiat nowodworski",
         "countryCode": "PL",
@@ -1536,7 +1344,6 @@
         "locale": "pl"
     },
     {
-        "id": "193",
         "geonameId": "7530880",
         "name": "Powiat mławski",
         "countryCode": "PL",
@@ -1544,7 +1351,6 @@
         "locale": "pl"
     },
     {
-        "id": "194",
         "geonameId": "7530881",
         "name": "Powiat ostrołęcki",
         "countryCode": "PL",
@@ -1552,7 +1358,6 @@
         "locale": "pl"
     },
     {
-        "id": "195",
         "geonameId": "7530882",
         "name": "Powiat ostrowski",
         "countryCode": "PL",
@@ -1560,7 +1365,6 @@
         "locale": "pl"
     },
     {
-        "id": "196",
         "geonameId": "7530883",
         "name": "Powiat otwocki",
         "countryCode": "PL",
@@ -1568,7 +1372,6 @@
         "locale": "pl"
     },
     {
-        "id": "197",
         "geonameId": "7530884",
         "name": "Powiat płoński",
         "countryCode": "PL",
@@ -1576,7 +1379,6 @@
         "locale": "pl"
     },
     {
-        "id": "198",
         "geonameId": "7530885",
         "name": "Powiat pruszkowski",
         "countryCode": "PL",
@@ -1584,7 +1386,6 @@
         "locale": "pl"
     },
     {
-        "id": "199",
         "geonameId": "7530886",
         "name": "Powiat przasnyski",
         "countryCode": "PL",
@@ -1592,7 +1393,6 @@
         "locale": "pl"
     },
     {
-        "id": "200",
         "geonameId": "7530887",
         "name": "Powiat pułtuski",
         "countryCode": "PL",
@@ -1600,7 +1400,6 @@
         "locale": "pl"
     },
     {
-        "id": "201",
         "geonameId": "7530888",
         "name": "Powiat sokołowski",
         "countryCode": "PL",
@@ -1608,7 +1407,6 @@
         "locale": "pl"
     },
     {
-        "id": "202",
         "geonameId": "7530889",
         "name": "Powiat szydłowiecki",
         "countryCode": "PL",
@@ -1616,7 +1414,6 @@
         "locale": "pl"
     },
     {
-        "id": "203",
         "geonameId": "7530890",
         "name": "Powiat płocki",
         "countryCode": "PL",
@@ -1624,7 +1421,6 @@
         "locale": "pl"
     },
     {
-        "id": "204",
         "geonameId": "7530891",
         "name": "Powiat lipski",
         "countryCode": "PL",
@@ -1632,7 +1428,6 @@
         "locale": "pl"
     },
     {
-        "id": "205",
         "geonameId": "7530892",
         "name": "Powiat łosicki",
         "countryCode": "PL",
@@ -1640,7 +1435,6 @@
         "locale": "pl"
     },
     {
-        "id": "206",
         "geonameId": "7530893",
         "name": "Powiat siedlecki",
         "countryCode": "PL",
@@ -1648,7 +1442,6 @@
         "locale": "pl"
     },
     {
-        "id": "207",
         "geonameId": "7530894",
         "name": "Powiat zwoleński",
         "countryCode": "PL",
@@ -1656,7 +1449,6 @@
         "locale": "pl"
     },
     {
-        "id": "208",
         "geonameId": "7530895",
         "name": "Powiat leżajski",
         "countryCode": "PL",
@@ -1664,7 +1456,6 @@
         "locale": "pl"
     },
     {
-        "id": "209",
         "geonameId": "7530896",
         "name": "Powiat lubaczowski",
         "countryCode": "PL",
@@ -1672,7 +1463,6 @@
         "locale": "pl"
     },
     {
-        "id": "210",
         "geonameId": "7530897",
         "name": "Powiat niżański",
         "countryCode": "PL",
@@ -1680,7 +1470,6 @@
         "locale": "pl"
     },
     {
-        "id": "211",
         "geonameId": "7530898",
         "name": "Powiat przeworski",
         "countryCode": "PL",
@@ -1688,7 +1477,6 @@
         "locale": "pl"
     },
     {
-        "id": "212",
         "geonameId": "7530899",
         "name": "Powiat stalowowolski",
         "countryCode": "PL",
@@ -1696,7 +1484,6 @@
         "locale": "pl"
     },
     {
-        "id": "213",
         "geonameId": "7530900",
         "name": "Powiat siemiatycki",
         "countryCode": "PL",
@@ -1704,7 +1491,6 @@
         "locale": "pl"
     },
     {
-        "id": "214",
         "geonameId": "7530901",
         "name": "Powiat opatowski",
         "countryCode": "PL",
@@ -1712,7 +1498,6 @@
         "locale": "pl"
     },
     {
-        "id": "215",
         "geonameId": "7530902",
         "name": "Powiat krotoszyński",
         "countryCode": "PL",
@@ -1720,7 +1505,6 @@
         "locale": "pl"
     },
     {
-        "id": "216",
         "geonameId": "7530903",
         "name": "Powiat leszczyński",
         "countryCode": "PL",
@@ -1728,7 +1512,6 @@
         "locale": "pl"
     },
     {
-        "id": "217",
         "geonameId": "7530904",
         "name": "Powiat aleksandrowski",
         "countryCode": "PL",
@@ -1736,7 +1519,6 @@
         "locale": "pl"
     },
     {
-        "id": "218",
         "geonameId": "7530905",
         "name": "Powiat brodnicki",
         "countryCode": "PL",
@@ -1744,7 +1526,6 @@
         "locale": "pl"
     },
     {
-        "id": "219",
         "geonameId": "7530906",
         "name": "Powiat bydgoski",
         "countryCode": "PL",
@@ -1752,7 +1533,6 @@
         "locale": "pl"
     },
     {
-        "id": "220",
         "geonameId": "7530907",
         "name": "Powiat chełmiński",
         "countryCode": "PL",
@@ -1760,7 +1540,6 @@
         "locale": "pl"
     },
     {
-        "id": "221",
         "geonameId": "7530908",
         "name": "Powiat golubsko-dobrzyński",
         "countryCode": "PL",
@@ -1768,7 +1547,6 @@
         "locale": "pl"
     },
     {
-        "id": "222",
         "geonameId": "7530909",
         "name": "Powiat grudziądzki",
         "countryCode": "PL",
@@ -1776,7 +1554,6 @@
         "locale": "pl"
     },
     {
-        "id": "223",
         "geonameId": "7530910",
         "name": "Powiat inowrocławski",
         "countryCode": "PL",
@@ -1784,7 +1561,6 @@
         "locale": "pl"
     },
     {
-        "id": "224",
         "geonameId": "7530911",
         "name": "Powiat lipnowski",
         "countryCode": "PL",
@@ -1792,7 +1568,6 @@
         "locale": "pl"
     },
     {
-        "id": "225",
         "geonameId": "7530912",
         "name": "Powiat mogileński",
         "countryCode": "PL",
@@ -1800,7 +1575,6 @@
         "locale": "pl"
     },
     {
-        "id": "226",
         "geonameId": "7530913",
         "name": "Powiat nakielski",
         "countryCode": "PL",
@@ -1808,7 +1582,6 @@
         "locale": "pl"
     },
     {
-        "id": "227",
         "geonameId": "7530914",
         "name": "Powiat radziejowski",
         "countryCode": "PL",
@@ -1816,7 +1589,6 @@
         "locale": "pl"
     },
     {
-        "id": "228",
         "geonameId": "7530915",
         "name": "Powiat rypiński",
         "countryCode": "PL",
@@ -1824,7 +1596,6 @@
         "locale": "pl"
     },
     {
-        "id": "229",
         "geonameId": "7530916",
         "name": "Powiat sępoleński",
         "countryCode": "PL",
@@ -1832,7 +1603,6 @@
         "locale": "pl"
     },
     {
-        "id": "230",
         "geonameId": "7530917",
         "name": "Powiat świecki",
         "countryCode": "PL",
@@ -1840,7 +1610,6 @@
         "locale": "pl"
     },
     {
-        "id": "231",
         "geonameId": "7530918",
         "name": "Powiat toruński",
         "countryCode": "PL",
@@ -1848,7 +1617,6 @@
         "locale": "pl"
     },
     {
-        "id": "232",
         "geonameId": "7530919",
         "name": "Powiat tucholski",
         "countryCode": "PL",
@@ -1856,7 +1624,6 @@
         "locale": "pl"
     },
     {
-        "id": "233",
         "geonameId": "7530920",
         "name": "Powiat wąbrzeski",
         "countryCode": "PL",
@@ -1864,7 +1631,6 @@
         "locale": "pl"
     },
     {
-        "id": "234",
         "geonameId": "7530921",
         "name": "Powiat włocławski",
         "countryCode": "PL",
@@ -1872,7 +1638,6 @@
         "locale": "pl"
     },
     {
-        "id": "235",
         "geonameId": "7530922",
         "name": "Powiat żniński",
         "countryCode": "PL",
@@ -1880,7 +1645,6 @@
         "locale": "pl"
     },
     {
-        "id": "236",
         "geonameId": "7530923",
         "name": "Powiat białobrzeski",
         "countryCode": "PL",
@@ -1888,7 +1652,6 @@
         "locale": "pl"
     },
     {
-        "id": "237",
         "geonameId": "7530924",
         "name": "Powiat ciechanowski",
         "countryCode": "PL",
@@ -1896,7 +1659,6 @@
         "locale": "pl"
     },
     {
-        "id": "238",
         "geonameId": "7530925",
         "name": "Powiat grodziski",
         "countryCode": "PL",
@@ -1904,7 +1666,6 @@
         "locale": "pl"
     },
     {
-        "id": "239",
         "geonameId": "7530926",
         "name": "Powiat legionowski",
         "countryCode": "PL",
@@ -1912,7 +1673,6 @@
         "locale": "pl"
     },
     {
-        "id": "240",
         "geonameId": "7530927",
         "name": "Powiat kutnowski",
         "countryCode": "PL",
@@ -1920,7 +1680,6 @@
         "locale": "pl"
     },
     {
-        "id": "241",
         "geonameId": "7530928",
         "name": "Powiat gostyniński",
         "countryCode": "PL",
@@ -1928,7 +1687,6 @@
         "locale": "pl"
     },
     {
-        "id": "242",
         "geonameId": "7530929",
         "name": "Powiat sierpecki",
         "countryCode": "PL",
@@ -1936,7 +1694,6 @@
         "locale": "pl"
     },
     {
-        "id": "243",
         "geonameId": "7530930",
         "name": "Powiat żuromiński",
         "countryCode": "PL",
@@ -1944,7 +1701,6 @@
         "locale": "pl"
     },
     {
-        "id": "244",
         "geonameId": "7530931",
         "name": "Powiat chojnicki",
         "countryCode": "PL",
@@ -1952,7 +1708,6 @@
         "locale": "pl"
     },
     {
-        "id": "245",
         "geonameId": "7530932",
         "name": "Powiat człuchowski",
         "countryCode": "PL",
@@ -1960,7 +1715,6 @@
         "locale": "pl"
     },
     {
-        "id": "246",
         "geonameId": "7530933",
         "name": "Powiat kwidzyński",
         "countryCode": "PL",
@@ -1968,7 +1722,6 @@
         "locale": "pl"
     },
     {
-        "id": "247",
         "geonameId": "7530934",
         "name": "Powiat starogardzki",
         "countryCode": "PL",
@@ -1976,7 +1729,6 @@
         "locale": "pl"
     },
     {
-        "id": "248",
         "geonameId": "7530935",
         "name": "Powiat tczewski",
         "countryCode": "PL",
@@ -1984,7 +1736,6 @@
         "locale": "pl"
     },
     {
-        "id": "249",
         "geonameId": "7530936",
         "name": "Powiat działdowski",
         "countryCode": "PL",
@@ -1992,7 +1743,6 @@
         "locale": "pl"
     },
     {
-        "id": "250",
         "geonameId": "7530937",
         "name": "Powiat iławski",
         "countryCode": "PL",
@@ -2000,7 +1750,6 @@
         "locale": "pl"
     },
     {
-        "id": "251",
         "geonameId": "7530938",
         "name": "Powiat nowomiejski",
         "countryCode": "PL",
@@ -2008,7 +1757,6 @@
         "locale": "pl"
     },
     {
-        "id": "252",
         "geonameId": "7530939",
         "name": "Powiat m.Płock",
         "countryCode": "PL",
@@ -2016,7 +1764,6 @@
         "locale": "pl"
     },
     {
-        "id": "253",
         "geonameId": "7530940",
         "name": "Powiat m.Siedlce",
         "countryCode": "PL",
@@ -2024,7 +1771,6 @@
         "locale": "pl"
     },
     {
-        "id": "254",
         "geonameId": "7530941",
         "name": "Powiat m.Suwałki",
         "countryCode": "PL",
@@ -2032,7 +1778,6 @@
         "locale": "pl"
     },
     {
-        "id": "255",
         "geonameId": "7530942",
         "name": "Powiat m.Słupsk",
         "countryCode": "PL",
@@ -2040,7 +1785,6 @@
         "locale": "pl"
     },
     {
-        "id": "256",
         "geonameId": "7530943",
         "name": "Powiat m.Gdynia",
         "countryCode": "PL",
@@ -2048,7 +1792,6 @@
         "locale": "pl"
     },
     {
-        "id": "257",
         "geonameId": "7530944",
         "name": "Powiat koniński",
         "countryCode": "PL",
@@ -2056,7 +1799,6 @@
         "locale": "pl"
     },
     {
-        "id": "258",
         "geonameId": "7530945",
         "name": "Powiat pilski",
         "countryCode": "PL",
@@ -2064,7 +1806,6 @@
         "locale": "pl"
     },
     {
-        "id": "259",
         "geonameId": "7530946",
         "name": "Powiat słupecki",
         "countryCode": "PL",
@@ -2072,7 +1813,6 @@
         "locale": "pl"
     },
     {
-        "id": "260",
         "geonameId": "7530947",
         "name": "Powiat wągrowiecki",
         "countryCode": "PL",
@@ -2080,7 +1820,6 @@
         "locale": "pl"
     },
     {
-        "id": "261",
         "geonameId": "7530948",
         "name": "Powiat złotowski",
         "countryCode": "PL",
@@ -2088,7 +1827,6 @@
         "locale": "pl"
     },
     {
-        "id": "262",
         "geonameId": "7530949",
         "name": "Powiat bialski",
         "countryCode": "PL",
@@ -2096,7 +1834,6 @@
         "locale": "pl"
     },
     {
-        "id": "263",
         "geonameId": "7530950",
         "name": "Powiat m.Mysłowice",
         "countryCode": "PL",
@@ -2104,7 +1841,6 @@
         "locale": "pl"
     },
     {
-        "id": "264",
         "geonameId": "7530951",
         "name": "Powiat m.Ruda Śląska",
         "countryCode": "PL",
@@ -2112,7 +1848,6 @@
         "locale": "pl"
     },
     {
-        "id": "265",
         "geonameId": "7530952",
         "name": "Powiat m.Zabrze",
         "countryCode": "PL",
@@ -2120,7 +1855,6 @@
         "locale": "pl"
     },
     {
-        "id": "266",
         "geonameId": "7530953",
         "name": "Powiat m.Żory",
         "countryCode": "PL",
@@ -2128,7 +1862,6 @@
         "locale": "pl"
     },
     {
-        "id": "267",
         "geonameId": "7530954",
         "name": "Powiat czarnkowsko-trzcianecki",
         "countryCode": "PL",
@@ -2136,7 +1869,6 @@
         "locale": "pl"
     },
     {
-        "id": "268",
         "geonameId": "7530955",
         "name": "Powiat rawski",
         "countryCode": "PL",
@@ -2144,7 +1876,6 @@
         "locale": "pl"
     },
     {
-        "id": "269",
         "geonameId": "7530956",
         "name": "Powiat międzychodzki",
         "countryCode": "PL",
@@ -2152,7 +1883,6 @@
         "locale": "pl"
     },
     {
-        "id": "270",
         "geonameId": "7530957",
         "name": "Powiat nowotomyski",
         "countryCode": "PL",
@@ -2160,7 +1890,6 @@
         "locale": "pl"
     },
     {
-        "id": "271",
         "geonameId": "7530958",
         "name": "Powiat wolsztyński",
         "countryCode": "PL",
@@ -2168,7 +1897,6 @@
         "locale": "pl"
     },
     {
-        "id": "272",
         "geonameId": "7530959",
         "name": "Powiat choszczeński",
         "countryCode": "PL",
@@ -2176,7 +1904,6 @@
         "locale": "pl"
     },
     {
-        "id": "273",
         "geonameId": "7530960",
         "name": "Powiat wałecki",
         "countryCode": "PL",
@@ -2184,7 +1911,6 @@
         "locale": "pl"
     },
     {
-        "id": "274",
         "geonameId": "7530961",
         "name": "Powiat m.Jastrzębie-Zdrój",
         "countryCode": "PL",
@@ -2192,7 +1918,6 @@
         "locale": "pl"
     },
     {
-        "id": "275",
         "geonameId": "7530962",
         "name": "Powiat m.Kielce",
         "countryCode": "PL",
@@ -2200,7 +1925,6 @@
         "locale": "pl"
     },
     {
-        "id": "276",
         "geonameId": "7530963",
         "name": "Powiat m.Konin",
         "countryCode": "PL",
@@ -2208,7 +1932,6 @@
         "locale": "pl"
     },
     {
-        "id": "277",
         "geonameId": "7530964",
         "name": "Powiat m.Częstochowa",
         "countryCode": "PL",
@@ -2216,7 +1939,6 @@
         "locale": "pl"
     },
     {
-        "id": "278",
         "geonameId": "7530965",
         "name": "Powiat m.Piekary Śląskie",
         "countryCode": "PL",
@@ -2224,7 +1946,6 @@
         "locale": "pl"
     },
     {
-        "id": "279",
         "geonameId": "7530966",
         "name": "Powiat włocławski",
         "countryCode": "PL",
@@ -2232,7 +1953,6 @@
         "locale": "pl"
     },
     {
-        "id": "280",
         "geonameId": "7530967",
         "name": "Powiat m.Chorzów",
         "countryCode": "PL",
@@ -2240,7 +1960,6 @@
         "locale": "pl"
     },
     {
-        "id": "281",
         "geonameId": "7530968",
         "name": "Powiat legnicki",
         "countryCode": "PL",
@@ -2248,7 +1967,6 @@
         "locale": "pl"
     },
     {
-        "id": "282",
         "geonameId": "7530969",
         "name": "Powiat grudziądzki",
         "countryCode": "PL",
@@ -2256,7 +1974,6 @@
         "locale": "pl"
     },
     {
-        "id": "283",
         "geonameId": "7530970",
         "name": "Powiat m.Lublin",
         "countryCode": "PL",
@@ -2264,7 +1981,6 @@
         "locale": "pl"
     },
     {
-        "id": "284",
         "geonameId": "7530971",
         "name": "Powiat m.Gdańsk",
         "countryCode": "PL",
@@ -2272,7 +1988,6 @@
         "locale": "pl"
     },
     {
-        "id": "285",
         "geonameId": "7530972",
         "name": "Powiat białogardzki",
         "countryCode": "PL",
@@ -2280,7 +1995,6 @@
         "locale": "pl"
     },
     {
-        "id": "286",
         "geonameId": "7530973",
         "name": "Powiat m.Skierniewice",
         "countryCode": "PL",
@@ -2288,7 +2002,6 @@
         "locale": "pl"
     },
     {
-        "id": "287",
         "geonameId": "7530974",
         "name": "Powiat ostrołęcki",
         "countryCode": "PL",
@@ -2296,7 +2009,6 @@
         "locale": "pl"
     },
     {
-        "id": "288",
         "geonameId": "7530975",
         "name": "Powiat m.Sosnowiec",
         "countryCode": "PL",
@@ -2304,7 +2016,6 @@
         "locale": "pl"
     },
     {
-        "id": "289",
         "geonameId": "7530976",
         "name": "Powiat krośnieński",
         "countryCode": "PL",
@@ -2312,7 +2023,6 @@
         "locale": "pl"
     },
     {
-        "id": "290",
         "geonameId": "7530977",
         "name": "Powiat sandomierski",
         "countryCode": "PL",
@@ -2320,7 +2030,6 @@
         "locale": "pl"
     },
     {
-        "id": "291",
         "geonameId": "7530978",
         "name": "Powiat gorzowski",
         "countryCode": "PL",
@@ -2328,7 +2037,6 @@
         "locale": "pl"
     },
     {
-        "id": "292",
         "geonameId": "7530979",
         "name": "Powiat międzyrzecki",
         "countryCode": "PL",
@@ -2336,7 +2044,6 @@
         "locale": "pl"
     },
     {
-        "id": "293",
         "geonameId": "7530980",
         "name": "Powiat słubicki",
         "countryCode": "PL",
@@ -2344,7 +2051,6 @@
         "locale": "pl"
     },
     {
-        "id": "294",
         "geonameId": "7530981",
         "name": "Powiat strzelecko-drezdenecki",
         "countryCode": "PL",
@@ -2352,7 +2058,6 @@
         "locale": "pl"
     },
     {
-        "id": "295",
         "geonameId": "7530982",
         "name": "Powiat m.Radom",
         "countryCode": "PL",
@@ -2360,7 +2065,6 @@
         "locale": "pl"
     },
     {
-        "id": "296",
         "geonameId": "7530983",
         "name": "Powiat m.Koszalin",
         "countryCode": "PL",
@@ -2368,7 +2072,6 @@
         "locale": "pl"
     },
     {
-        "id": "297",
         "geonameId": "7530984",
         "name": "Powiat m.Tychy",
         "countryCode": "PL",
@@ -2376,7 +2079,6 @@
         "locale": "pl"
     },
     {
-        "id": "298",
         "geonameId": "7530985",
         "name": "Powiat m.Siemianowice Śląskie",
         "countryCode": "PL",
@@ -2384,7 +2086,6 @@
         "locale": "pl"
     },
     {
-        "id": "299",
         "geonameId": "7530986",
         "name": "Powiat m.Bytom",
         "countryCode": "PL",
@@ -2392,7 +2093,6 @@
         "locale": "pl"
     },
     {
-        "id": "300",
         "geonameId": "7530987",
         "name": "Powiat sulęciński",
         "countryCode": "PL",
@@ -2400,7 +2100,6 @@
         "locale": "pl"
     },
     {
-        "id": "301",
         "geonameId": "7530988",
         "name": "Powiat świebodziński",
         "countryCode": "PL",
@@ -2408,7 +2107,6 @@
         "locale": "pl"
     },
     {
-        "id": "302",
         "geonameId": "7530989",
         "name": "Powiat gryfiński",
         "countryCode": "PL",
@@ -2416,7 +2114,6 @@
         "locale": "pl"
     },
     {
-        "id": "303",
         "geonameId": "7530990",
         "name": "Powiat m.Olsztyn",
         "countryCode": "PL",
@@ -2424,7 +2121,6 @@
         "locale": "pl"
     },
     {
-        "id": "304",
         "geonameId": "7530991",
         "name": "Powiat m.Zielona Góra",
         "countryCode": "PL",
@@ -2432,7 +2128,6 @@
         "locale": "pl"
     },
     {
-        "id": "305",
         "geonameId": "7530992",
         "name": "Powiat m.Świętochłowice",
         "countryCode": "PL",
@@ -2440,7 +2135,6 @@
         "locale": "pl"
     },
     {
-        "id": "306",
         "geonameId": "7530993",
         "name": "Powiat m.Leszno",
         "countryCode": "PL",
@@ -2448,7 +2142,6 @@
         "locale": "pl"
     },
     {
-        "id": "307",
         "geonameId": "7530994",
         "name": "Powiat poznański",
         "countryCode": "PL",
@@ -2456,7 +2149,6 @@
         "locale": "pl"
     },
     {
-        "id": "308",
         "geonameId": "7530995",
         "name": "Powiat szamotulski",
         "countryCode": "PL",
@@ -2464,7 +2156,6 @@
         "locale": "pl"
     },
     {
-        "id": "309",
         "geonameId": "7530996",
         "name": "Powiat wrzesiński",
         "countryCode": "PL",
@@ -2472,7 +2163,6 @@
         "locale": "pl"
     },
     {
-        "id": "310",
         "geonameId": "7530997",
         "name": "Powiat skarżyski",
         "countryCode": "PL",
@@ -2480,7 +2170,6 @@
         "locale": "pl"
     },
     {
-        "id": "311",
         "geonameId": "7530998",
         "name": "Powiat kamiennogórski",
         "countryCode": "PL",
@@ -2488,7 +2177,6 @@
         "locale": "pl"
     },
     {
-        "id": "312",
         "geonameId": "7530999",
         "name": "Powiat starachowicki",
         "countryCode": "PL",
@@ -2496,7 +2184,6 @@
         "locale": "pl"
     },
     {
-        "id": "313",
         "geonameId": "7531000",
         "name": "Powiat nidzicki",
         "countryCode": "PL",
@@ -2504,7 +2191,6 @@
         "locale": "pl"
     },
     {
-        "id": "314",
         "geonameId": "7531001",
         "name": "Powiat piski",
         "countryCode": "PL",
@@ -2512,7 +2198,6 @@
         "locale": "pl"
     },
     {
-        "id": "315",
         "geonameId": "7531002",
         "name": "Powiat gdański",
         "countryCode": "PL",
@@ -2520,7 +2205,6 @@
         "locale": "pl"
     },
     {
-        "id": "316",
         "geonameId": "7531003",
         "name": "Powiat zielonogórski",
         "countryCode": "PL",
@@ -2528,7 +2212,6 @@
         "locale": "pl"
     },
     {
-        "id": "317",
         "geonameId": "7531004",
         "name": "Powiat turecki",
         "countryCode": "PL",
@@ -2536,7 +2219,6 @@
         "locale": "pl"
     },
     {
-        "id": "318",
         "geonameId": "7531005",
         "name": "Powiat myśliborski",
         "countryCode": "PL",
@@ -2544,7 +2226,6 @@
         "locale": "pl"
     },
     {
-        "id": "319",
         "geonameId": "7531006",
         "name": "Powiat piotrkowski",
         "countryCode": "PL",
@@ -2552,7 +2233,6 @@
         "locale": "pl"
     },
     {
-        "id": "320",
         "geonameId": "7531007",
         "name": "Powiat poddębicki",
         "countryCode": "PL",
@@ -2560,7 +2240,6 @@
         "locale": "pl"
     },
     {
-        "id": "321",
         "geonameId": "7531008",
         "name": "Powiat radomszczański",
         "countryCode": "PL",
@@ -2568,7 +2247,6 @@
         "locale": "pl"
     },
     {
-        "id": "322",
         "geonameId": "7531009",
         "name": "Powiat sieradzki",
         "countryCode": "PL",
@@ -2576,7 +2254,6 @@
         "locale": "pl"
     },
     {
-        "id": "323",
         "geonameId": "7531010",
         "name": "Powiat bełchatowski",
         "countryCode": "PL",
@@ -2584,7 +2261,6 @@
         "locale": "pl"
     },
     {
-        "id": "324",
         "geonameId": "7531011",
         "name": "Powiat świdwiński",
         "countryCode": "PL",
@@ -2592,7 +2268,6 @@
         "locale": "pl"
     },
     {
-        "id": "325",
         "geonameId": "7531012",
         "name": "Powiat ełcki",
         "countryCode": "PL",
@@ -2600,7 +2275,6 @@
         "locale": "pl"
     },
     {
-        "id": "326",
         "geonameId": "7531013",
         "name": "Powiat olecki",
         "countryCode": "PL",
@@ -2608,7 +2282,6 @@
         "locale": "pl"
     },
     {
-        "id": "327",
         "geonameId": "7531014",
         "name": "Powiat gołdapski",
         "countryCode": "PL",
@@ -2616,7 +2289,6 @@
         "locale": "pl"
     },
     {
-        "id": "328",
         "geonameId": "7531015",
         "name": "Powiat bytowski",
         "countryCode": "PL",
@@ -2624,7 +2296,6 @@
         "locale": "pl"
     },
     {
-        "id": "329",
         "geonameId": "7531016",
         "name": "Powiat łaski",
         "countryCode": "PL",
@@ -2632,7 +2303,6 @@
         "locale": "pl"
     },
     {
-        "id": "330",
         "geonameId": "7531017",
         "name": "Powiat łęczycki",
         "countryCode": "PL",
@@ -2640,7 +2310,6 @@
         "locale": "pl"
     },
     {
-        "id": "331",
         "geonameId": "7531018",
         "name": "Powiat brzeziński",
         "countryCode": "PL",
@@ -2648,7 +2317,6 @@
         "locale": "pl"
     },
     {
-        "id": "332",
         "geonameId": "7531019",
         "name": "Powiat łódzki wschodni",
         "countryCode": "PL",
@@ -2656,7 +2324,6 @@
         "locale": "pl"
     },
     {
-        "id": "333",
         "geonameId": "7531020",
         "name": "Powiat opoczyński",
         "countryCode": "PL",
@@ -2664,7 +2331,6 @@
         "locale": "pl"
     },
     {
-        "id": "334",
         "geonameId": "7531021",
         "name": "Powiat pabianicki",
         "countryCode": "PL",
@@ -2672,7 +2338,6 @@
         "locale": "pl"
     },
     {
-        "id": "335",
         "geonameId": "7531022",
         "name": "Powiat pajęczański",
         "countryCode": "PL",
@@ -2680,7 +2345,6 @@
         "locale": "pl"
     },
     {
-        "id": "336",
         "geonameId": "7531023",
         "name": "Powiat skierniewicki",
         "countryCode": "PL",
@@ -2688,7 +2352,6 @@
         "locale": "pl"
     },
     {
-        "id": "337",
         "geonameId": "7531024",
         "name": "Powiat tomaszowski",
         "countryCode": "PL",
@@ -2696,7 +2359,6 @@
         "locale": "pl"
     },
     {
-        "id": "338",
         "geonameId": "7531025",
         "name": "Powiat wieluński",
         "countryCode": "PL",
@@ -2704,7 +2366,6 @@
         "locale": "pl"
     },
     {
-        "id": "339",
         "geonameId": "7531026",
         "name": "Powiat wieruszowski",
         "countryCode": "PL",
@@ -2712,7 +2373,6 @@
         "locale": "pl"
     },
     {
-        "id": "340",
         "geonameId": "7531027",
         "name": "Powiat zduńskowolski",
         "countryCode": "PL",
@@ -2720,7 +2380,6 @@
         "locale": "pl"
     },
     {
-        "id": "341",
         "geonameId": "7531028",
         "name": "Powiat zgierski",
         "countryCode": "PL",
@@ -2728,7 +2387,6 @@
         "locale": "pl"
     },
     {
-        "id": "342",
         "geonameId": "7531029",
         "name": "Powiat warszawski zachodni",
         "countryCode": "PL",
@@ -2736,7 +2394,6 @@
         "locale": "pl"
     },
     {
-        "id": "343",
         "geonameId": "7531030",
         "name": "Powiat krośnieński",
         "countryCode": "PL",
@@ -2744,7 +2401,6 @@
         "locale": "pl"
     },
     {
-        "id": "344",
         "geonameId": "7531031",
         "name": "Powiat garwoliński",
         "countryCode": "PL",
@@ -2752,7 +2408,6 @@
         "locale": "pl"
     },
     {
-        "id": "345",
         "geonameId": "7531032",
         "name": "Powiat bielski",
         "countryCode": "PL",
@@ -2760,7 +2415,6 @@
         "locale": "pl"
     },
     {
-        "id": "346",
         "geonameId": "7531033",
         "name": "Powiat pszczyński",
         "countryCode": "PL",
@@ -2768,7 +2422,6 @@
         "locale": "pl"
     },
     {
-        "id": "347",
         "geonameId": "7531034",
         "name": "Powiat bieruńsko-lędziński",
         "countryCode": "PL",
@@ -2776,7 +2429,6 @@
         "locale": "pl"
     },
     {
-        "id": "348",
         "geonameId": "7531035",
         "name": "Powiat zawierciański",
         "countryCode": "PL",
@@ -2784,7 +2436,6 @@
         "locale": "pl"
     },
     {
-        "id": "349",
         "geonameId": "7531036",
         "name": "Powiat żywiecki",
         "countryCode": "PL",
@@ -2792,7 +2443,6 @@
         "locale": "pl"
     },
     {
-        "id": "350",
         "geonameId": "7531037",
         "name": "Powiat buski",
         "countryCode": "PL",
@@ -2800,7 +2450,6 @@
         "locale": "pl"
     },
     {
-        "id": "351",
         "geonameId": "7531038",
         "name": "Powiat jędrzejowski",
         "countryCode": "PL",
@@ -2808,7 +2457,6 @@
         "locale": "pl"
     },
     {
-        "id": "352",
         "geonameId": "7531039",
         "name": "Powiat kazimierski",
         "countryCode": "PL",
@@ -2816,7 +2464,6 @@
         "locale": "pl"
     },
     {
-        "id": "353",
         "geonameId": "7531040",
         "name": "Powiat pińczowski",
         "countryCode": "PL",
@@ -2824,7 +2471,6 @@
         "locale": "pl"
     },
     {
-        "id": "354",
         "geonameId": "7531041",
         "name": "Powiat staszowski ",
         "countryCode": "PL",
@@ -2832,7 +2478,6 @@
         "locale": "pl"
     },
     {
-        "id": "355",
         "geonameId": "7531042",
         "name": "Powiat wysokomazowiecki",
         "countryCode": "PL",
@@ -2840,7 +2485,6 @@
         "locale": "pl"
     },
     {
-        "id": "356",
         "geonameId": "7531043",
         "name": "Powiat ostrowski",
         "countryCode": "PL",
@@ -2848,7 +2492,6 @@
         "locale": "pl"
     },
     {
-        "id": "357",
         "geonameId": "7531044",
         "name": "Powiat ostrzeszowski",
         "countryCode": "PL",
@@ -2856,7 +2499,6 @@
         "locale": "pl"
     },
     {
-        "id": "358",
         "geonameId": "7531045",
         "name": "Powiat rawicki",
         "countryCode": "PL",
@@ -2864,7 +2506,6 @@
         "locale": "pl"
     },
     {
-        "id": "359",
         "geonameId": "7531046",
         "name": "Powiat głubczycki",
         "countryCode": "PL",
@@ -2872,7 +2513,6 @@
         "locale": "pl"
     },
     {
-        "id": "360",
         "geonameId": "7531047",
         "name": "Powiat prudnicki",
         "countryCode": "PL",
@@ -2880,7 +2520,6 @@
         "locale": "pl"
     },
     {
-        "id": "361",
         "geonameId": "7531048",
         "name": "Powiat kędzierzyńsko-kozielski",
         "countryCode": "PL",
@@ -2888,7 +2527,6 @@
         "locale": "pl"
     },
     {
-        "id": "362",
         "geonameId": "7531049",
         "name": "Powiat opolski",
         "countryCode": "PL",
@@ -2896,7 +2534,6 @@
         "locale": "pl"
     },
     {
-        "id": "363",
         "geonameId": "7531050",
         "name": "Powiat lubliniecki",
         "countryCode": "PL",
@@ -2904,7 +2541,6 @@
         "locale": "pl"
     },
     {
-        "id": "364",
         "geonameId": "7531051",
         "name": "Powiat krapkowicki",
         "countryCode": "PL",
@@ -2912,7 +2548,6 @@
         "locale": "pl"
     },
     {
-        "id": "365",
         "geonameId": "7531052",
         "name": "Powiat strzelecki",
         "countryCode": "PL",
@@ -2920,7 +2555,6 @@
         "locale": "pl"
     },
     {
-        "id": "366",
         "geonameId": "7531053",
         "name": "Powiat tarnogórski",
         "countryCode": "PL",
@@ -2928,7 +2562,6 @@
         "locale": "pl"
     },
     {
-        "id": "367",
         "geonameId": "7531054",
         "name": "Powiat raciborski",
         "countryCode": "PL",
@@ -2936,7 +2569,6 @@
         "locale": "pl"
     },
     {
-        "id": "368",
         "geonameId": "7531055",
         "name": "Powiat gliwicki",
         "countryCode": "PL",
@@ -2944,7 +2576,6 @@
         "locale": "pl"
     },
     {
-        "id": "369",
         "geonameId": "7531056",
         "name": "Powiat bieszczadzki",
         "countryCode": "PL",
@@ -2952,7 +2583,6 @@
         "locale": "pl"
     },
     {
-        "id": "370",
         "geonameId": "7531057",
         "name": "Powiat brzozowski",
         "countryCode": "PL",
@@ -2960,7 +2590,6 @@
         "locale": "pl"
     },
     {
-        "id": "371",
         "geonameId": "7531058",
         "name": "Powiat tarnobrzeski",
         "countryCode": "PL",
@@ -2968,7 +2597,6 @@
         "locale": "pl"
     },
     {
-        "id": "372",
         "geonameId": "7531059",
         "name": "Powiat łobeski",
         "countryCode": "PL",
@@ -2976,7 +2604,6 @@
         "locale": "pl"
     },
     {
-        "id": "373",
         "geonameId": "7531060",
         "name": "Powiat białostocki",
         "countryCode": "PL",
@@ -2984,7 +2611,6 @@
         "locale": "pl"
     },
     {
-        "id": "374",
         "geonameId": "7531061",
         "name": "Powiat bielski",
         "countryCode": "PL",
@@ -2992,7 +2618,6 @@
         "locale": "pl"
     },
     {
-        "id": "375",
         "geonameId": "7531062",
         "name": "Powiat grajewski",
         "countryCode": "PL",
@@ -3000,7 +2625,6 @@
         "locale": "pl"
     },
     {
-        "id": "376",
         "geonameId": "7531063",
         "name": "Powiat hajnowski",
         "countryCode": "PL",
@@ -3008,7 +2632,6 @@
         "locale": "pl"
     },
     {
-        "id": "377",
         "geonameId": "7531064",
         "name": "Powiat moniecki",
         "countryCode": "PL",
@@ -3016,7 +2639,6 @@
         "locale": "pl"
     },
     {
-        "id": "378",
         "geonameId": "7531065",
         "name": "Powiat sejneński",
         "countryCode": "PL",
@@ -3024,7 +2646,6 @@
         "locale": "pl"
     },
     {
-        "id": "379",
         "geonameId": "7531066",
         "name": "Powiat sokólski",
         "countryCode": "PL",
@@ -3032,7 +2653,6 @@
         "locale": "pl"
     },
     {
-        "id": "380",
         "geonameId": "7531067",
         "name": "Powiat suwalski",
         "countryCode": "PL",
@@ -3040,7 +2660,6 @@
         "locale": "pl"
     },
     {
-        "id": "381",
         "geonameId": "7531068",
         "name": "Powiat nowodworski",
         "countryCode": "PL",
@@ -3048,7 +2667,6 @@
         "locale": "pl"
     },
     {
-        "id": "382",
         "geonameId": "7531069",
         "name": "Powiat słupski",
         "countryCode": "PL",
@@ -3056,7 +2674,6 @@
         "locale": "pl"
     },
     {
-        "id": "383",
         "geonameId": "7531070",
         "name": "Powiat wejherowski",
         "countryCode": "PL",
@@ -3064,7 +2681,6 @@
         "locale": "pl"
     },
     {
-        "id": "384",
         "geonameId": "7531071",
         "name": "Powiat sztumski",
         "countryCode": "PL",
@@ -3072,7 +2688,6 @@
         "locale": "pl"
     },
     {
-        "id": "385",
         "geonameId": "7531072",
         "name": "Powiat mrągowski",
         "countryCode": "PL",
@@ -3080,7 +2695,6 @@
         "locale": "pl"
     },
     {
-        "id": "386",
         "geonameId": "7531073",
         "name": "Powiat gostyński",
         "countryCode": "PL",
@@ -3088,7 +2702,6 @@
         "locale": "pl"
     },
     {
-        "id": "387",
         "geonameId": "7531074",
         "name": "Powiat grodziski",
         "countryCode": "PL",
@@ -3096,7 +2709,6 @@
         "locale": "pl"
     },
     {
-        "id": "388",
         "geonameId": "7531075",
         "name": "Powiat jarociński",
         "countryCode": "PL",
@@ -3104,7 +2716,6 @@
         "locale": "pl"
     },
     {
-        "id": "389",
         "geonameId": "7531076",
         "name": "Powiat kościański",
         "countryCode": "PL",
@@ -3112,7 +2723,6 @@
         "locale": "pl"
     },
     {
-        "id": "390",
         "geonameId": "7531077",
         "name": "Powiat chodzieski",
         "countryCode": "PL",
@@ -3120,7 +2730,6 @@
         "locale": "pl"
     },
     {
-        "id": "391",
         "geonameId": "7531079",
         "name": "Powiat średzki",
         "countryCode": "PL",
@@ -3128,7 +2737,6 @@
         "locale": "pl"
     },
     {
-        "id": "392",
         "geonameId": "7531080",
         "name": "Powiat śremski",
         "countryCode": "PL",
@@ -3136,7 +2744,6 @@
         "locale": "pl"
     },
     {
-        "id": "393",
         "geonameId": "7531081",
         "name": "Powiat gnieźnieński",
         "countryCode": "PL",
@@ -3144,7 +2751,6 @@
         "locale": "pl"
     },
     {
-        "id": "394",
         "geonameId": "7531082",
         "name": "Powiat kolski",
         "countryCode": "PL",
@@ -3152,7 +2758,6 @@
         "locale": "pl"
     },
     {
-        "id": "395",
         "geonameId": "7531083",
         "name": "Powiat elbląski",
         "countryCode": "PL",
@@ -3160,7 +2765,6 @@
         "locale": "pl"
     },
     {
-        "id": "396",
         "geonameId": "11669858",
         "name": "Powiat wałbrzyski",
         "countryCode": "PL",
@@ -3168,7 +2772,6 @@
         "locale": "pl"
     },
     {
-        "id": "397",
         "geonameId": "3023514",
         "name": "Corse-du-Sud",
         "countryCode": "FR",
@@ -3176,7 +2779,6 @@
         "locale": "fr"
     },
     {
-        "id": "398",
         "geonameId": "3013793",
         "name": "Haute-Corse",
         "countryCode": "FR",
@@ -3184,7 +2786,6 @@
         "locale": "fr"
     },
     {
-        "id": "399",
         "geonameId": "3013767",
         "name": "Haute-Garonne",
         "countryCode": "FR",
@@ -3192,7 +2793,6 @@
         "locale": "fr"
     },
     {
-        "id": "400",
         "geonameId": "3013736",
         "name": "Haute-Savoie",
         "countryCode": "FR",
@@ -3200,7 +2800,6 @@
         "locale": "fr"
     },
     {
-        "id": "401",
         "geonameId": "2975517",
         "name": "Savoie",
         "countryCode": "FR",
@@ -3208,7 +2807,6 @@
         "locale": "fr"
     },
     {
-        "id": "402",
         "geonameId": "11071621",
         "name": "Normandie",
         "countryCode": "FR",
@@ -3216,7 +2814,6 @@
         "locale": "fr"
     },
     {
-        "id": "403",
         "geonameId": "3030293",
         "name": "Bretagne",
         "countryCode": "FR",
@@ -3224,7 +2821,6 @@
         "locale": "fr"
     },
     {
-        "id": "404",
         "geonameId": "2921044",
         "name": "Deutschland",
         "countryCode": "DE",
@@ -3232,7 +2828,6 @@
         "locale": "de"
     },
     {
-        "id": "405",
         "geonameId": "1835841",
         "name": "South Korea",
         "countryCode": "KR",
@@ -3240,7 +2835,6 @@
         "locale": "en"
     },
     {
-        "id": "406",
         "geonameId": "1210997",
         "name": "孟加拉国",
         "countryCode": "BD",
@@ -3248,7 +2842,6 @@
         "locale": "zh"
     },
     {
-        "id": "407",
         "geonameId": "3077311",
         "name": "捷克",
         "countryCode": "CZ",
@@ -3256,7 +2849,6 @@
         "locale": "zh"
     },
     {
-        "id": "408",
         "geonameId": "130758",
         "name": "伊朗",
         "countryCode": "IR",
@@ -3264,7 +2856,6 @@
         "locale": "zh"
     },
     {
-        "id": "409",
         "geonameId": "1527747",
         "name": "韩国",
         "countryCode": "KG",
@@ -3272,7 +2863,6 @@
         "locale": "zh"
     },
     {
-        "id": "410",
         "geonameId": "1655842",
         "name": "老挝",
         "countryCode": "LA",
@@ -3280,7 +2870,6 @@
         "locale": "zh"
     },
     {
-        "id": "411",
         "geonameId": "2215636",
         "name": "利比亚",
         "countryCode": "LY",
@@ -3288,7 +2877,6 @@
         "locale": "zh"
     },
     {
-        "id": "412",
         "geonameId": "2017370",
         "name": "俄罗斯",
         "countryCode": "RU",
@@ -3296,7 +2884,6 @@
         "locale": "zh"
     },
     {
-        "id": "413",
         "geonameId": "3057568",
         "name": "斯洛伐克",
         "countryCode": "SK",
@@ -3304,7 +2891,6 @@
         "locale": "zh"
     },
     {
-        "id": "414",
         "geonameId": "1835841",
         "name": "韩国",
         "countryCode": "KR",
@@ -3312,7 +2898,6 @@
         "locale": "zh"
     },
     {
-        "id": "415",
         "geonameId": "290557",
         "name": "阿联酋",
         "countryCode": "AE",
@@ -3320,7 +2905,6 @@
         "locale": "zh"
     },
     {
-        "id": "416",
         "geonameId": "174982",
         "name": "亚美尼亚",
         "countryCode": "AM",
@@ -3328,7 +2912,6 @@
         "locale": "zh"
     },
     {
-        "id": "417",
         "geonameId": "3042058",
         "name": "列支敦士登",
         "countryCode": "LI",
@@ -3336,7 +2919,6 @@
         "locale": "zh"
     },
     {
-        "id": "419",
         "geonameId": "3041565",
         "name": "安道尔",
         "countryCode": "AD",
@@ -3344,7 +2926,6 @@
         "locale": "zh"
     },
     {
-        "id": "420",
         "geonameId": "798549",
         "name": "罗马尼亚",
         "countryCode": "RO",
@@ -3352,7 +2933,6 @@
         "locale": "zh"
     },
     {
-        "id": "421",
         "geonameId": "3575174",
         "name": "克里斯多福尼维斯",
         "countryCode": "KN",
@@ -3360,7 +2940,6 @@
         "locale": "zh"
     },
     {
-        "id": "422",
         "geonameId": "2411586",
         "name": "直布罗陀",
         "countryCode": "GI",
@@ -3368,7 +2947,6 @@
         "locale": "zh"
     },
     {
-        "id": "423",
         "geonameId": "3371123",
         "name": "布韦岛",
         "countryCode": "BV",
@@ -3376,7 +2954,6 @@
         "locale": "zh"
     },
     {
-        "id": "424",
         "geonameId": "1547376",
         "name": "科科斯基林群岛",
         "countryCode": "CC",
@@ -3384,7 +2961,6 @@
         "locale": "zh"
     },
     {
-        "id": "425",
         "geonameId": "3474414",
         "name": "福克兰群岛",
         "countryCode": "FK",
@@ -3392,7 +2968,6 @@
         "locale": "zh"
     },
     {
-        "id": "426",
         "geonameId": "2081918",
         "name": "密克罗尼西亚",
         "countryCode": "FM",
@@ -3400,7 +2975,6 @@
         "locale": "zh"
     },
     {
-        "id": "427",
         "geonameId": "3579143",
         "name": "瓜德罗普岛",
         "countryCode": "GP",
@@ -3408,7 +2982,6 @@
         "locale": "zh"
     },
     {
-        "id": "428",
         "geonameId": "3474415",
         "name": "南乔治亚岛和南桑威奇群岛",
         "countryCode": "GS",
@@ -3416,7 +2989,6 @@
         "locale": "zh"
     },
     {
-        "id": "429",
         "geonameId": "1547314",
         "name": "赫德岛和麦克唐纳群岛",
         "countryCode": "HM",
@@ -3424,7 +2996,6 @@
         "locale": "zh"
     },
     {
-        "id": "430",
         "geonameId": "617790",
         "name": "摩尔多瓦",
         "countryCode": "MD",
@@ -3432,7 +3003,6 @@
         "locale": "zh"
     },
     {
-        "id": "431",
         "geonameId": "4041468",
         "name": "北马里亚纳群岛",
         "countryCode": "MP",
@@ -3440,7 +3010,6 @@
         "locale": "zh"
     },
     {
-        "id": "432",
         "geonameId": "3570311",
         "name": "马提尼克",
         "countryCode": "MQ",
@@ -3448,7 +3017,6 @@
         "locale": "zh"
     },
     {
-        "id": "433",
         "geonameId": "2378080",
         "name": "毛里塔尼亚",
         "countryCode": "MR",
@@ -3456,7 +3024,6 @@
         "locale": "zh"
     },
     {
-        "id": "434",
         "geonameId": "3578097",
         "name": "蒙特塞拉特",
         "countryCode": "MS",
@@ -3464,7 +3031,6 @@
         "locale": "zh"
     },
     {
-        "id": "435",
         "geonameId": "4030699",
         "name": "皮特凯恩群岛",
         "countryCode": "PN",
@@ -3472,7 +3038,6 @@
         "locale": "zh"
     },
     {
-        "id": "436",
         "geonameId": "6254930",
         "name": "巴勒斯坦",
         "countryCode": "PS",
@@ -3480,7 +3045,6 @@
         "locale": "zh"
     },
     {
-        "id": "437",
         "geonameId": "241170",
         "name": "塞舌尔",
         "countryCode": "SC",
@@ -3488,7 +3052,6 @@
         "locale": "zh"
     },
     {
-        "id": "438",
         "geonameId": "607072",
         "name": "斯瓦尔巴和扬马延",
         "countryCode": "SJ",
@@ -3496,7 +3059,6 @@
         "locale": "zh"
     },
     {
-        "id": "439",
         "geonameId": "1546748",
         "name": "法属南部领地",
         "countryCode": "TF",
@@ -3504,7 +3066,6 @@
         "locale": "zh"
     },
     {
-        "id": "440",
         "geonameId": "5854968",
         "name": "美国外围小岛屿",
         "countryCode": "UM",
@@ -3512,7 +3073,6 @@
         "locale": "zh"
     },
     {
-        "id": "441",
         "geonameId": "3164670",
         "name": "梵蒂冈城",
         "countryCode": "VA",
@@ -3520,7 +3080,6 @@
         "locale": "zh"
     },
     {
-        "id": "442",
         "geonameId": "4796775",
         "name": "美属维尔京群岛",
         "countryCode": "VI",
@@ -3528,7 +3087,6 @@
         "locale": "zh"
     },
     {
-        "id": "443",
         "geonameId": "433561",
         "name": "布隆迪",
         "countryCode": "BI",
@@ -3536,7 +3094,6 @@
         "locale": "zh"
     },
     {
-        "id": "444",
         "geonameId": "239880",
         "name": "中非共和国",
         "countryCode": "CF",
@@ -3544,7 +3101,6 @@
         "locale": "zh"
     },
     {
-        "id": "445",
         "geonameId": "2921044",
         "name": "德国",
         "countryCode": "DE",
@@ -3552,7 +3108,6 @@
         "locale": "zh"
     },
     {
-        "id": "446",
         "geonameId": "2205218",
         "name": "斐济",
         "countryCode": "FJ",
@@ -3560,7 +3115,6 @@
         "locale": "zh"
     },
     {
-        "id": "447",
         "geonameId": "2372248",
         "name": "几内亚比绍",
         "countryCode": "GW",
@@ -3568,7 +3122,6 @@
         "locale": "zh"
     },
     {
-        "id": "448",
         "geonameId": "3042225",
         "name": "马恩岛",
         "countryCode": "IM",
@@ -3576,7 +3129,6 @@
         "locale": "zh"
     },
     {
-        "id": "449",
         "geonameId": "3194884",
         "name": "黑山",
         "countryCode": "ME",
@@ -3584,7 +3136,6 @@
         "locale": "zh"
     },
     {
-        "id": "450",
         "geonameId": "2110425",
         "name": "瑙鲁",
         "countryCode": "NR",
@@ -3592,7 +3143,6 @@
         "locale": "zh"
     },
     {
-        "id": "451",
         "geonameId": "3382998",
         "name": "苏里南",
         "countryCode": "SR",
@@ -3600,7 +3150,6 @@
         "locale": "zh"
     },
     {
-        "id": "452",
         "geonameId": "2464461",
         "name": "突尼斯",
         "countryCode": "TN",
@@ -3608,7 +3157,6 @@
         "locale": "zh"
     },
     {
-        "id": "453",
         "geonameId": "2110297",
         "name": "图瓦卢",
         "countryCode": "TV",
@@ -3616,7 +3164,6 @@
         "locale": "zh"
     },
     {
-        "id": "454",
         "geonameId": "3577718",
         "name": "英属维尔京群岛",
         "countryCode": "VG",
@@ -3624,7 +3171,6 @@
         "locale": "zh"
     },
     {
-        "id": "455",
         "geonameId": "2411586",
         "name": "直布羅陀",
         "countryCode": "GI",
@@ -3632,7 +3178,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "456",
         "geonameId": "3371123",
         "name": "布威島",
         "countryCode": "BV",
@@ -3640,7 +3185,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "457",
         "geonameId": "1547376",
         "name": "科克斯（基靈）群島",
         "countryCode": "CC",
@@ -3648,7 +3192,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "458",
         "geonameId": "3474414",
         "name": "福克蘭群島",
         "countryCode": "FK",
@@ -3656,7 +3199,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "459",
         "geonameId": "2081918",
         "name": "密克羅尼西亞",
         "countryCode": "FM",
@@ -3664,7 +3206,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "460",
         "geonameId": "3579143",
         "name": "瓜德羅普島",
         "countryCode": "GP",
@@ -3672,7 +3213,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "461",
         "geonameId": "3474415",
         "name": "南喬治亞島和南桑威奇群島",
         "countryCode": "GS",
@@ -3680,7 +3220,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "462",
         "geonameId": "1547314",
         "name": "赫德島和麥克唐納群島",
         "countryCode": "HM",
@@ -3688,7 +3227,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "463",
         "geonameId": "617790",
         "name": "摩爾達維亞",
         "countryCode": "MD",
@@ -3696,7 +3234,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "464",
         "geonameId": "4041468",
         "name": "北馬里亞納群島",
         "countryCode": "MP",
@@ -3704,7 +3241,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "465",
         "geonameId": "3570311",
         "name": "馬提尼克",
         "countryCode": "MQ",
@@ -3712,7 +3248,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "466",
         "geonameId": "2378080",
         "name": "毛里塔尼亞",
         "countryCode": "MR",
@@ -3720,7 +3255,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "467",
         "geonameId": "3578097",
         "name": "蒙特塞拉特",
         "countryCode": "MS",
@@ -3728,7 +3262,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "468",
         "geonameId": "4030699",
         "name": "皮特凱恩群島",
         "countryCode": "PN",
@@ -3736,7 +3269,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "469",
         "geonameId": "6254930",
         "name": "巴勒斯坦",
         "countryCode": "PS",
@@ -3744,7 +3276,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "470",
         "geonameId": "241170",
         "name": "Seychelles",
         "countryCode": "SC",
@@ -3752,7 +3283,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "471",
         "geonameId": "607072",
         "name": "斯瓦爾巴群島和揚馬延島",
         "countryCode": "SJ",
@@ -3760,7 +3290,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "472",
         "geonameId": "1546748",
         "name": "法屬南部領地",
         "countryCode": "TF",
@@ -3768,7 +3297,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "473",
         "geonameId": "5854968",
         "name": "美國偏遠小島",
         "countryCode": "UM",
@@ -3776,7 +3304,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "474",
         "geonameId": "3164670",
         "name": "梵蒂岡城",
         "countryCode": "VA",
@@ -3784,7 +3311,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "475",
         "geonameId": "4796775",
         "name": "U.S. Virgin Islands",
         "countryCode": "VI",
@@ -3792,7 +3318,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "476",
         "geonameId": "433561",
         "name": "蒲隆地",
         "countryCode": "BI",
@@ -3800,7 +3325,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "477",
         "geonameId": "239880",
         "name": "中非共和國",
         "countryCode": "CF",
@@ -3808,7 +3332,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "478",
         "geonameId": "2921044",
         "name": "德意志聯邦共和國",
         "countryCode": "DE",
@@ -3816,7 +3339,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "479",
         "geonameId": "2205218",
         "name": "斐濟",
         "countryCode": "FJ",
@@ -3824,7 +3346,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "480",
         "geonameId": "2372248",
         "name": "幾內亞比索",
         "countryCode": "GW",
@@ -3832,7 +3353,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "481",
         "geonameId": "3042225",
         "name": "曼島",
         "countryCode": "IM",
@@ -3840,7 +3360,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "482",
         "geonameId": "3194884",
         "name": "蒙特內哥羅",
         "countryCode": "ME",
@@ -3848,7 +3367,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "483",
         "geonameId": "2110425",
         "name": "諾魯",
         "countryCode": "NR",
@@ -3856,7 +3374,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "484",
         "geonameId": "3382998",
         "name": "蘇利南",
         "countryCode": "SR",
@@ -3864,7 +3381,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "485",
         "geonameId": "2464461",
         "name": "突尼西亞",
         "countryCode": "TN",
@@ -3872,7 +3388,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "486",
         "geonameId": "2110297",
         "name": "圖瓦盧",
         "countryCode": "TV",
@@ -3880,7 +3395,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "487",
         "geonameId": "3577718",
         "name": "英屬維爾京群島",
         "countryCode": "VG",
@@ -3888,7 +3402,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "488",
         "geonameId": "3041565",
         "name": "安道爾",
         "countryCode": "AD",
@@ -3896,7 +3409,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "489",
         "geonameId": "290557",
         "name": "阿聯酋",
         "countryCode": "AE",
@@ -3904,7 +3416,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "490",
         "geonameId": "1149361",
         "name": "阿富汗",
         "countryCode": "AF",
@@ -3912,7 +3423,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "491",
         "geonameId": "3576396",
         "name": "安地卡及巴布達",
         "countryCode": "AG",
@@ -3920,7 +3430,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "492",
         "geonameId": "3573511",
         "name": "安圭拉",
         "countryCode": "AI",
@@ -3928,7 +3437,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "493",
         "geonameId": "783754",
         "name": "阿爾巴尼亞",
         "countryCode": "AL",
@@ -3936,7 +3444,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "494",
         "geonameId": "174982",
         "name": "亞美尼亞",
         "countryCode": "AM",
@@ -3944,7 +3451,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "495",
         "geonameId": "3351879",
         "name": "安哥拉",
         "countryCode": "AO",
@@ -3952,7 +3458,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "496",
         "geonameId": "6697173",
         "name": "南極洲",
         "countryCode": "AQ",
@@ -3960,7 +3465,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "497",
         "geonameId": "3865483",
         "name": "阿根廷",
         "countryCode": "AR",
@@ -3968,7 +3472,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "498",
         "geonameId": "5880801",
         "name": "美屬薩摩亞",
         "countryCode": "AS",
@@ -3976,7 +3479,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "499",
         "geonameId": "2782113",
         "name": "奧地利",
         "countryCode": "AT",
@@ -3984,7 +3486,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "500",
         "geonameId": "2077456",
         "name": "澳大利亞",
         "countryCode": "AU",
@@ -3992,7 +3493,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "501",
         "geonameId": "3577279",
         "name": "阿魯巴",
         "countryCode": "AW",
@@ -4000,7 +3500,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "502",
         "geonameId": "661882",
         "name": "奧蘭群島",
         "countryCode": "AX",
@@ -4008,7 +3507,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "503",
         "geonameId": "587116",
         "name": "亞塞拜然",
         "countryCode": "AZ",
@@ -4016,7 +3514,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "504",
         "geonameId": "3277605",
         "name": "波士尼亞赫塞哥維納",
         "countryCode": "BA",
@@ -4024,7 +3521,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "505",
         "geonameId": "3374084",
         "name": "巴貝多",
         "countryCode": "BB",
@@ -4032,7 +3528,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "506",
         "geonameId": "1210997",
         "name": "孟加拉",
         "countryCode": "BD",
@@ -4040,7 +3535,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "507",
         "geonameId": "2802361",
         "name": "比利時",
         "countryCode": "BE",
@@ -4048,7 +3542,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "508",
         "geonameId": "2361809",
         "name": "布吉納法索",
         "countryCode": "BF",
@@ -4056,7 +3549,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "509",
         "geonameId": "732800",
         "name": "保加利亞",
         "countryCode": "BG",
@@ -4064,7 +3556,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "510",
         "geonameId": "290291",
         "name": "巴林",
         "countryCode": "BH",
@@ -4072,7 +3563,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "511",
         "geonameId": "2395170",
         "name": "貝南",
         "countryCode": "BJ",
@@ -4080,7 +3570,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "512",
         "geonameId": "3578476",
         "name": "聖巴泰勒米",
         "countryCode": "BL",
@@ -4088,7 +3577,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "513",
         "geonameId": "3573345",
         "name": "百慕大",
         "countryCode": "BM",
@@ -4096,7 +3584,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "514",
         "geonameId": "1820814",
         "name": "汶萊",
         "countryCode": "BN",
@@ -4104,7 +3591,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "515",
         "geonameId": "3923057",
         "name": "玻利維亞",
         "countryCode": "BO",
@@ -4112,7 +3598,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "516",
         "geonameId": "7626844",
         "name": "博奈爾島、聖尤斯達蒂斯和薩巴",
         "countryCode": "BQ",
@@ -4120,7 +3605,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "517",
         "geonameId": "3469034",
         "name": "巴西",
         "countryCode": "BR",
@@ -4128,7 +3612,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "518",
         "geonameId": "3572887",
         "name": "巴哈馬",
         "countryCode": "BS",
@@ -4136,7 +3619,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "519",
         "geonameId": "1252634",
         "name": "不丹",
         "countryCode": "BT",
@@ -4144,7 +3626,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "520",
         "geonameId": "933860",
         "name": "波札那",
         "countryCode": "BW",
@@ -4152,7 +3633,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "521",
         "geonameId": "630336",
         "name": "白俄羅斯",
         "countryCode": "BY",
@@ -4160,7 +3640,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "522",
         "geonameId": "3582678",
         "name": "貝里斯",
         "countryCode": "BZ",
@@ -4168,7 +3647,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "523",
         "geonameId": "6251999",
         "name": "加拿大",
         "countryCode": "CA",
@@ -4176,7 +3654,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "524",
         "geonameId": "203312",
         "name": "薩伊",
         "countryCode": "CD",
@@ -4184,7 +3661,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "525",
         "geonameId": "2260494",
         "name": "剛果共和國",
         "countryCode": "CG",
@@ -4192,7 +3668,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "526",
         "geonameId": "2658434",
         "name": "瑞士",
         "countryCode": "CH",
@@ -4200,7 +3675,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "527",
         "geonameId": "2287781",
         "name": "象牙海岸",
         "countryCode": "CI",
@@ -4208,7 +3682,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "528",
         "geonameId": "1899402",
         "name": "科克群島",
         "countryCode": "CK",
@@ -4216,7 +3689,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "529",
         "geonameId": "3895114",
         "name": "智利",
         "countryCode": "CL",
@@ -4224,7 +3696,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "530",
         "geonameId": "2233387",
         "name": "喀麥隆",
         "countryCode": "CM",
@@ -4232,7 +3703,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "531",
         "geonameId": "1814991",
         "name": "中國",
         "countryCode": "CN",
@@ -4240,7 +3710,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "532",
         "geonameId": "3686110",
         "name": "哥倫比亞共和國",
         "countryCode": "CO",
@@ -4248,7 +3717,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "533",
         "geonameId": "3624060",
         "name": "哥斯大黎加",
         "countryCode": "CR",
@@ -4256,7 +3724,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "534",
         "geonameId": "3562981",
         "name": "古巴",
         "countryCode": "CU",
@@ -4264,7 +3731,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "535",
         "geonameId": "3374766",
         "name": "維德角",
         "countryCode": "CV",
@@ -4272,7 +3738,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "536",
         "geonameId": "7626836",
         "name": "庫拉索",
         "countryCode": "CW",
@@ -4280,7 +3745,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "537",
         "geonameId": "2078138",
         "name": "聖誕島",
         "countryCode": "CX",
@@ -4288,7 +3752,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "538",
         "geonameId": "146669",
         "name": "賽普勒斯",
         "countryCode": "CY",
@@ -4296,7 +3759,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "539",
         "geonameId": "3077311",
         "name": "捷克",
         "countryCode": "CZ",
@@ -4304,7 +3766,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "540",
         "geonameId": "223816",
         "name": "吉布地",
         "countryCode": "DJ",
@@ -4312,7 +3773,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "541",
         "geonameId": "2623032",
         "name": "丹麥",
         "countryCode": "DK",
@@ -4320,7 +3780,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "542",
         "geonameId": "3575830",
         "name": "多明尼克",
         "countryCode": "DM",
@@ -4328,7 +3787,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "543",
         "geonameId": "3508796",
         "name": "多明尼加",
         "countryCode": "DO",
@@ -4336,7 +3794,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "544",
         "geonameId": "2589581",
         "name": "阿爾及利亞",
         "countryCode": "DZ",
@@ -4344,7 +3801,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "545",
         "geonameId": "3658394",
         "name": "厄瓜多爾",
         "countryCode": "EC",
@@ -4352,7 +3808,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "546",
         "geonameId": "453733",
         "name": "愛沙尼亞",
         "countryCode": "EE",
@@ -4360,7 +3815,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "547",
         "geonameId": "357994",
         "name": "埃及",
         "countryCode": "EG",
@@ -4368,7 +3822,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "548",
         "geonameId": "2461445",
         "name": "西撒哈拉",
         "countryCode": "EH",
@@ -4376,7 +3829,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "549",
         "geonameId": "338010",
         "name": "厄立特里亞",
         "countryCode": "ER",
@@ -4384,7 +3836,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "550",
         "geonameId": "2510769",
         "name": "西班牙",
         "countryCode": "ES",
@@ -4392,7 +3843,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "551",
         "geonameId": "337996",
         "name": "衣索比亞",
         "countryCode": "ET",
@@ -4400,7 +3850,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "552",
         "geonameId": "660013",
         "name": "芬蘭",
         "countryCode": "FI",
@@ -4408,7 +3857,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "553",
         "geonameId": "2622320",
         "name": "法羅群島",
         "countryCode": "FO",
@@ -4416,7 +3864,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "554",
         "geonameId": "3017382",
         "name": "法國",
         "countryCode": "FR",
@@ -4424,7 +3871,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "555",
         "geonameId": "2400553",
         "name": "加蓬",
         "countryCode": "GA",
@@ -4432,7 +3878,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "556",
         "geonameId": "2635167",
         "name": "英國",
         "countryCode": "GB",
@@ -4440,7 +3885,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "557",
         "geonameId": "3580239",
         "name": "格瑞那達",
         "countryCode": "GD",
@@ -4448,7 +3892,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "558",
         "geonameId": "614540",
         "name": "格魯吉亞",
         "countryCode": "GE",
@@ -4456,7 +3899,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "559",
         "geonameId": "3381670",
         "name": "法屬圭亞那",
         "countryCode": "GF",
@@ -4464,7 +3906,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "560",
         "geonameId": "3042362",
         "name": "格恩西島",
         "countryCode": "GG",
@@ -4472,7 +3913,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "561",
         "geonameId": "2300660",
         "name": "迦納",
         "countryCode": "GH",
@@ -4480,7 +3920,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "562",
         "geonameId": "3425505",
         "name": "格陵蘭",
         "countryCode": "GL",
@@ -4488,7 +3927,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "563",
         "geonameId": "2413451",
         "name": "甘比亞共和國",
         "countryCode": "GM",
@@ -4496,7 +3934,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "564",
         "geonameId": "2420477",
         "name": "幾內亞",
         "countryCode": "GN",
@@ -4504,7 +3941,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "565",
         "geonameId": "2309096",
         "name": "赤道幾內亞",
         "countryCode": "GQ",
@@ -4512,7 +3948,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "566",
         "geonameId": "390903",
         "name": "希臘",
         "countryCode": "GR",
@@ -4520,7 +3955,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "567",
         "geonameId": "3595528",
         "name": "瓜地馬拉",
         "countryCode": "GT",
@@ -4528,7 +3962,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "568",
         "geonameId": "4043988",
         "name": "關島",
         "countryCode": "GU",
@@ -4536,7 +3969,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "569",
         "geonameId": "3378535",
         "name": "圭亞那",
         "countryCode": "GY",
@@ -4544,7 +3976,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "571",
         "geonameId": "3608932",
         "name": "洪都拉斯",
         "countryCode": "HN",
@@ -4552,7 +3983,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "572",
         "geonameId": "3202326",
         "name": "克羅埃西亞",
         "countryCode": "HR",
@@ -4560,7 +3990,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "573",
         "geonameId": "3723988",
         "name": "海地",
         "countryCode": "HT",
@@ -4568,7 +3997,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "574",
         "geonameId": "719819",
         "name": "匈牙利",
         "countryCode": "HU",
@@ -4576,7 +4004,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "575",
         "geonameId": "1643084",
         "name": "印尼",
         "countryCode": "ID",
@@ -4584,7 +4011,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "576",
         "geonameId": "2963597",
         "name": "愛爾蘭共和國",
         "countryCode": "IE",
@@ -4592,7 +4018,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "577",
         "geonameId": "294640",
         "name": "以色列",
         "countryCode": "IL",
@@ -4600,7 +4025,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "578",
         "geonameId": "1269750",
         "name": "印度",
         "countryCode": "IN",
@@ -4608,7 +4032,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "579",
         "geonameId": "1282588",
         "name": "英屬印度洋領地",
         "countryCode": "IO",
@@ -4616,7 +4039,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "580",
         "geonameId": "99237",
         "name": "伊拉克",
         "countryCode": "IQ",
@@ -4624,7 +4046,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "581",
         "geonameId": "130758",
         "name": "伊朗",
         "countryCode": "IR",
@@ -4632,7 +4053,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "582",
         "geonameId": "2629691",
         "name": "冰島",
         "countryCode": "IS",
@@ -4640,7 +4060,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "583",
         "geonameId": "3175395",
         "name": "義大利",
         "countryCode": "IT",
@@ -4648,7 +4067,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "584",
         "geonameId": "3042142",
         "name": "澤西島",
         "countryCode": "JE",
@@ -4656,7 +4074,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "585",
         "geonameId": "3489940",
         "name": "牙買加",
         "countryCode": "JM",
@@ -4664,7 +4081,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "586",
         "geonameId": "248816",
         "name": "約旦",
         "countryCode": "JO",
@@ -4672,7 +4088,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "587",
         "geonameId": "1861060",
         "name": "日本",
         "countryCode": "JP",
@@ -4680,7 +4095,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "588",
         "geonameId": "192950",
         "name": "肯亞",
         "countryCode": "KE",
@@ -4688,7 +4102,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "589",
         "geonameId": "1527747",
         "name": "吉爾吉斯共和國",
         "countryCode": "KG",
@@ -4696,7 +4109,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "590",
         "geonameId": "1831722",
         "name": "柬埔寨",
         "countryCode": "KH",
@@ -4704,7 +4116,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "591",
         "geonameId": "4030945",
         "name": "吉里巴斯",
         "countryCode": "KI",
@@ -4712,7 +4123,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "592",
         "geonameId": "921929",
         "name": "葛摩",
         "countryCode": "KM",
@@ -4720,7 +4130,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "593",
         "geonameId": "3575174",
         "name": "聖基茨和尼維斯",
         "countryCode": "KN",
@@ -4728,7 +4137,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "594",
         "geonameId": "1873107",
         "name": "朝鮮民主主義人民共和國",
         "countryCode": "KP",
@@ -4736,7 +4144,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "595",
         "geonameId": "1835841",
         "name": "韓國",
         "countryCode": "KR",
@@ -4744,7 +4151,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "596",
         "geonameId": "285570",
         "name": "科威特",
         "countryCode": "KW",
@@ -4752,7 +4158,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "597",
         "geonameId": "3580718",
         "name": "開曼群島",
         "countryCode": "KY",
@@ -4760,7 +4165,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "598",
         "geonameId": "1522867",
         "name": "哈薩克",
         "countryCode": "KZ",
@@ -4768,7 +4172,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "599",
         "geonameId": "1655842",
         "name": "老撾",
         "countryCode": "LA",
@@ -4776,7 +4179,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "600",
         "geonameId": "272103",
         "name": "黎巴嫩",
         "countryCode": "LB",
@@ -4784,7 +4186,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "601",
         "geonameId": "3576468",
         "name": "聖露西亞",
         "countryCode": "LC",
@@ -4792,7 +4193,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "602",
         "geonameId": "3042058",
         "name": "列支敦士登",
         "countryCode": "LI",
@@ -4800,7 +4200,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "603",
         "geonameId": "1227603",
         "name": "斯里蘭卡",
         "countryCode": "LK",
@@ -4808,7 +4207,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "604",
         "geonameId": "2275384",
         "name": "賴比瑞亞",
         "countryCode": "LR",
@@ -4816,7 +4214,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "605",
         "geonameId": "932692",
         "name": "賴索托",
         "countryCode": "LS",
@@ -4824,7 +4221,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "606",
         "geonameId": "597427",
         "name": "立陶宛",
         "countryCode": "LT",
@@ -4832,7 +4228,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "607",
         "geonameId": "2960313",
         "name": "盧森堡",
         "countryCode": "LU",
@@ -4840,7 +4235,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "608",
         "geonameId": "458258",
         "name": "拉脫維亞",
         "countryCode": "LV",
@@ -4848,7 +4242,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "609",
         "geonameId": "2215636",
         "name": "利比亞",
         "countryCode": "LY",
@@ -4856,7 +4249,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "610",
         "geonameId": "2542007",
         "name": "摩洛哥",
         "countryCode": "MA",
@@ -4864,7 +4256,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "611",
         "geonameId": "2993457",
         "name": "摩納哥",
         "countryCode": "MC",
@@ -4872,7 +4263,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "612",
         "geonameId": "3578421",
         "name": "聖馬丁",
         "countryCode": "MF",
@@ -4880,7 +4270,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "613",
         "geonameId": "1062947",
         "name": "馬達加斯加",
         "countryCode": "MG",
@@ -4888,7 +4277,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "614",
         "geonameId": "2080185",
         "name": "馬紹爾群島",
         "countryCode": "MH",
@@ -4896,7 +4284,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "615",
         "geonameId": "718075",
         "name": "馬其頓",
         "countryCode": "MK",
@@ -4904,7 +4291,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "616",
         "geonameId": "2453866",
         "name": "馬里共和國",
         "countryCode": "ML",
@@ -4912,7 +4298,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "617",
         "geonameId": "1327865",
         "name": "緬甸",
         "countryCode": "MM",
@@ -4920,7 +4305,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "618",
         "geonameId": "2029969",
         "name": "蒙古國",
         "countryCode": "MN",
@@ -4928,7 +4312,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "620",
         "geonameId": "2562770",
         "name": "馬爾他",
         "countryCode": "MT",
@@ -4936,7 +4319,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "621",
         "geonameId": "934292",
         "name": "模里西斯",
         "countryCode": "MU",
@@ -4944,7 +4326,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "622",
         "geonameId": "1282028",
         "name": "馬爾地夫",
         "countryCode": "MV",
@@ -4952,7 +4333,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "623",
         "geonameId": "927384",
         "name": "馬拉威",
         "countryCode": "MW",
@@ -4960,7 +4340,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "624",
         "geonameId": "3996063",
         "name": "墨西哥",
         "countryCode": "MX",
@@ -4968,7 +4347,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "625",
         "geonameId": "1733045",
         "name": "馬來西亞",
         "countryCode": "MY",
@@ -4976,7 +4354,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "626",
         "geonameId": "1036973",
         "name": "莫三比克",
         "countryCode": "MZ",
@@ -4984,7 +4361,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "627",
         "geonameId": "3355338",
         "name": "納米比亞",
         "countryCode": "NA",
@@ -4992,7 +4368,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "628",
         "geonameId": "2139685",
         "name": "新赫里多尼亞",
         "countryCode": "NC",
@@ -5000,7 +4375,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "629",
         "geonameId": "2440476",
         "name": "尼日爾",
         "countryCode": "NE",
@@ -5008,7 +4382,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "630",
         "geonameId": "2155115",
         "name": "諾福克島",
         "countryCode": "NF",
@@ -5016,7 +4389,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "631",
         "geonameId": "2328926",
         "name": "奈及利亞",
         "countryCode": "NG",
@@ -5024,7 +4396,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "632",
         "geonameId": "3617476",
         "name": "尼加拉瓜",
         "countryCode": "NI",
@@ -5032,7 +4403,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "633",
         "geonameId": "2750405",
         "name": "荷蘭",
         "countryCode": "NL",
@@ -5040,7 +4410,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "634",
         "geonameId": "3144096",
         "name": "挪威",
         "countryCode": "NO",
@@ -5048,7 +4417,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "635",
         "geonameId": "1282988",
         "name": "尼泊爾",
         "countryCode": "NP",
@@ -5056,7 +4424,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "636",
         "geonameId": "4036232",
         "name": "紐埃",
         "countryCode": "NU",
@@ -5064,7 +4431,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "637",
         "geonameId": "2186224",
         "name": "紐西蘭",
         "countryCode": "NZ",
@@ -5072,7 +4438,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "638",
         "geonameId": "286963",
         "name": "阿曼",
         "countryCode": "OM",
@@ -5080,7 +4445,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "639",
         "geonameId": "3703430",
         "name": "巴拿馬",
         "countryCode": "PA",
@@ -5088,7 +4452,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "640",
         "geonameId": "3932488",
         "name": "秘魯",
         "countryCode": "PE",
@@ -5096,7 +4459,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "641",
         "geonameId": "4030656",
         "name": "法屬波利尼西亞",
         "countryCode": "PF",
@@ -5104,7 +4466,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "642",
         "geonameId": "2088628",
         "name": "巴布亞紐幾內亞",
         "countryCode": "PG",
@@ -5112,7 +4473,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "643",
         "geonameId": "1694008",
         "name": "菲律賓",
         "countryCode": "PH",
@@ -5120,7 +4480,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "644",
         "geonameId": "1168579",
         "name": "巴基斯坦",
         "countryCode": "PK",
@@ -5128,7 +4487,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "645",
         "geonameId": "798544",
         "name": "波蘭",
         "countryCode": "PL",
@@ -5136,7 +4494,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "646",
         "geonameId": "3424932",
         "name": "聖皮爾和密克隆",
         "countryCode": "PM",
@@ -5144,7 +4501,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "647",
         "geonameId": "4566966",
         "name": "波多黎各",
         "countryCode": "PR",
@@ -5152,7 +4508,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "648",
         "geonameId": "2264397",
         "name": "葡萄牙",
         "countryCode": "PT",
@@ -5160,7 +4515,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "649",
         "geonameId": "1559582",
         "name": "帛琉",
         "countryCode": "PW",
@@ -5168,7 +4522,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "650",
         "geonameId": "3437598",
         "name": "巴拉圭",
         "countryCode": "PY",
@@ -5176,7 +4529,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "651",
         "geonameId": "289688",
         "name": "卡達",
         "countryCode": "QA",
@@ -5184,7 +4536,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "652",
         "geonameId": "935317",
         "name": "留尼旺",
         "countryCode": "RE",
@@ -5192,7 +4543,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "653",
         "geonameId": "798549",
         "name": "羅馬尼亞",
         "countryCode": "RO",
@@ -5200,7 +4550,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "654",
         "geonameId": "6290252",
         "name": "塞爾維亞",
         "countryCode": "RS",
@@ -5208,7 +4557,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "655",
         "geonameId": "2017370",
         "name": "俄羅斯",
         "countryCode": "RU",
@@ -5216,7 +4564,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "656",
         "geonameId": "49518",
         "name": "盧旺達",
         "countryCode": "RW",
@@ -5224,7 +4571,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "657",
         "geonameId": "102358",
         "name": "沙烏地阿拉伯",
         "countryCode": "SA",
@@ -5232,7 +4578,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "658",
         "geonameId": "2103350",
         "name": "所羅門群島",
         "countryCode": "SB",
@@ -5240,7 +4585,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "659",
         "geonameId": "366755",
         "name": "蘇丹共和國",
         "countryCode": "SD",
@@ -5248,7 +4592,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "660",
         "geonameId": "2661886",
         "name": "瑞典",
         "countryCode": "SE",
@@ -5256,7 +4599,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "661",
         "geonameId": "1880251",
         "name": "新加坡",
         "countryCode": "SG",
@@ -5264,7 +4606,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "662",
         "geonameId": "3370751",
         "name": "聖赫勒拿",
         "countryCode": "SH",
@@ -5272,7 +4613,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "663",
         "geonameId": "3190538",
         "name": "斯洛維尼亞",
         "countryCode": "SI",
@@ -5280,7 +4620,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "664",
         "geonameId": "3057568",
         "name": "斯洛伐克",
         "countryCode": "SK",
@@ -5288,7 +4627,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "665",
         "geonameId": "2403846",
         "name": "獅子山",
         "countryCode": "SL",
@@ -5296,7 +4634,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "666",
         "geonameId": "3168068",
         "name": "聖馬利諾",
         "countryCode": "SM",
@@ -5304,7 +4641,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "667",
         "geonameId": "2245662",
         "name": "塞內加爾",
         "countryCode": "SN",
@@ -5312,7 +4648,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "668",
         "geonameId": "51537",
         "name": "索馬里",
         "countryCode": "SO",
@@ -5320,7 +4655,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "669",
         "geonameId": "7909807",
         "name": "南蘇丹",
         "countryCode": "SS",
@@ -5328,7 +4662,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "670",
         "geonameId": "2410758",
         "name": "聖多美普林西比",
         "countryCode": "ST",
@@ -5336,7 +4669,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "671",
         "geonameId": "3585968",
         "name": "薩爾瓦多",
         "countryCode": "SV",
@@ -5344,7 +4676,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "672",
         "geonameId": "7609695",
         "name": "聖馬丁島",
         "countryCode": "SX",
@@ -5352,7 +4683,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "673",
         "geonameId": "163843",
         "name": "敘利亞",
         "countryCode": "SY",
@@ -5360,7 +4690,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "674",
         "geonameId": "934841",
         "name": "史瓦濟蘭",
         "countryCode": "SZ",
@@ -5368,7 +4697,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "675",
         "geonameId": "3576916",
         "name": "特克斯和凱科斯群島",
         "countryCode": "TC",
@@ -5376,7 +4704,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "676",
         "geonameId": "2434508",
         "name": "查德",
         "countryCode": "TD",
@@ -5384,7 +4711,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "677",
         "geonameId": "2363686",
         "name": "多哥",
         "countryCode": "TG",
@@ -5392,7 +4718,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "678",
         "geonameId": "1605651",
         "name": "泰國",
         "countryCode": "TH",
@@ -5400,7 +4725,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "679",
         "geonameId": "1220409",
         "name": "塔吉克斯坦",
         "countryCode": "TJ",
@@ -5408,7 +4732,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "680",
         "geonameId": "4031074",
         "name": "托克勞",
         "countryCode": "TK",
@@ -5416,7 +4739,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "681",
         "geonameId": "1966436",
         "name": "東帝汶",
         "countryCode": "TL",
@@ -5424,7 +4746,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "682",
         "geonameId": "1218197",
         "name": "土庫曼斯坦",
         "countryCode": "TM",
@@ -5432,7 +4753,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "683",
         "geonameId": "4032283",
         "name": "東加",
         "countryCode": "TO",
@@ -5440,7 +4760,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "684",
         "geonameId": "298795",
         "name": "土耳其",
         "countryCode": "TR",
@@ -5448,7 +4767,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "685",
         "geonameId": "3573591",
         "name": "千里達和多巴哥",
         "countryCode": "TT",
@@ -5456,7 +4774,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "687",
         "geonameId": "149590",
         "name": "坦尚尼亞",
         "countryCode": "TZ",
@@ -5464,7 +4781,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "688",
         "geonameId": "690791",
         "name": "烏克蘭",
         "countryCode": "UA",
@@ -5472,7 +4788,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "689",
         "geonameId": "226074",
         "name": "烏干達",
         "countryCode": "UG",
@@ -5480,7 +4795,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "690",
         "geonameId": "6252001",
         "name": "美國",
         "countryCode": "US",
@@ -5488,7 +4802,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "691",
         "geonameId": "3439705",
         "name": "烏拉圭",
         "countryCode": "UY",
@@ -5496,7 +4809,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "692",
         "geonameId": "1512440",
         "name": "烏茲別克斯坦",
         "countryCode": "UZ",
@@ -5504,7 +4816,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "693",
         "geonameId": "3577815",
         "name": "聖文森特和格林納丁斯群島",
         "countryCode": "VC",
@@ -5512,7 +4823,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "694",
         "geonameId": "3625428",
         "name": "委內瑞拉",
         "countryCode": "VE",
@@ -5520,7 +4830,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "695",
         "geonameId": "1562822",
         "name": "越南",
         "countryCode": "VN",
@@ -5528,7 +4837,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "696",
         "geonameId": "2134431",
         "name": "瓦努阿圖",
         "countryCode": "VU",
@@ -5536,7 +4844,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "697",
         "geonameId": "4034749",
         "name": "瓦利斯和富圖納",
         "countryCode": "WF",
@@ -5544,7 +4851,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "698",
         "geonameId": "4034894",
         "name": "薩摩亞",
         "countryCode": "WS",
@@ -5552,7 +4858,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "699",
         "geonameId": "831053",
         "name": "科索沃",
         "countryCode": "XK",
@@ -5560,7 +4865,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "700",
         "geonameId": "69543",
         "name": "葉門",
         "countryCode": "YE",
@@ -5568,7 +4872,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "701",
         "geonameId": "1024031",
         "name": "馬約特",
         "countryCode": "YT",
@@ -5576,7 +4879,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "702",
         "geonameId": "953987",
         "name": "南非",
         "countryCode": "ZA",
@@ -5584,7 +4886,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "703",
         "geonameId": "895949",
         "name": "尚比亞",
         "countryCode": "ZM",
@@ -5592,7 +4893,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "704",
         "geonameId": "878675",
         "name": "辛巴威",
         "countryCode": "ZW",
@@ -5600,7 +4900,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "705",
         "geonameId": "2077456",
         "name": "澳大利亚",
         "countryCode": "AU",
@@ -5608,7 +4907,6 @@
         "locale": "zh"
     },
     {
-        "id": "706",
         "geonameId": "146669",
         "name": "赛普勒斯",
         "countryCode": "CY",
@@ -5616,7 +4914,6 @@
         "locale": "zh"
     },
     {
-        "id": "707",
         "geonameId": "718075",
         "name": "马其顿",
         "countryCode": "MK",
@@ -5624,7 +4921,6 @@
         "locale": "zh"
     },
     {
-        "id": "708",
         "geonameId": "1819730",
         "name": "Hong Kong SAR",
         "countryCode": "HK",
@@ -5632,7 +4928,6 @@
         "locale": "en"
     },
     {
-        "id": "709",
         "geonameId": "1668284",
         "name": "Taiwan Region",
         "countryCode": "TW",
@@ -5640,7 +4935,6 @@
         "locale": "en"
     },
     {
-        "id": "710",
         "geonameId": "1821275",
         "name": "Macau SAR",
         "countryCode": "MO",
@@ -5648,7 +4942,6 @@
         "locale": "en"
     },
     {
-        "id": "711",
         "geonameId": "1819730",
         "name": "香港特别行政区",
         "countryCode": "HK",
@@ -5656,7 +4949,6 @@
         "locale": "zh"
     },
     {
-        "id": "712",
         "geonameId": "1668284",
         "name": "台湾地区",
         "countryCode": "TW",
@@ -5664,7 +4956,6 @@
         "locale": "zh"
     },
     {
-        "id": "713",
         "geonameId": "1821275",
         "name": "澳门特别行政区",
         "countryCode": "MO",
@@ -5672,7 +4963,6 @@
         "locale": "zh"
     },
     {
-        "id": "714",
         "geonameId": "1819730",
         "name": "香港特別行政區",
         "countryCode": "HK",
@@ -5680,7 +4970,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "715",
         "geonameId": "1668284",
         "name": "台灣地區",
         "countryCode": "TW",
@@ -5688,7 +4977,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "716",
         "geonameId": "1821275",
         "name": "澳門特別行政區",
         "countryCode": "MO",
@@ -5696,7 +4984,6 @@
         "locale": "zh-tw"
     },
     {
-        "id": "717",
         "geonameId": "1279685",
         "name": "西藏自治区",
         "countryCode": "CN",
@@ -5704,7 +4991,6 @@
         "locale": "zh"
     },
     {
-        "id": "718",
         "geonameId": "1280239",
         "name": "青海省",
         "countryCode": "CN",
@@ -5712,7 +4998,6 @@
         "locale": "zh"
     },
     {
-        "id": "719",
         "geonameId": "1529047",
         "name": "新疆维吾尔自治区",
         "countryCode": "CN",
@@ -5720,7 +5005,6 @@
         "locale": "zh"
     },
     {
-        "id": "720",
         "geonameId": "1784764",
         "name": "浙江省",
         "countryCode": "CN",
@@ -5728,7 +5012,6 @@
         "locale": "zh"
     },
     {
-        "id": "721",
         "geonameId": "1785694",
         "name": "云南省",
         "countryCode": "CN",
@@ -5736,7 +5019,6 @@
         "locale": "zh"
     },
     {
-        "id": "722",
         "geonameId": "1792943",
         "name": "天津市",
         "countryCode": "CN",
@@ -5744,7 +5026,6 @@
         "locale": "zh"
     },
     {
-        "id": "723",
         "geonameId": "1794299",
         "name": "四川省",
         "countryCode": "CN",
@@ -5752,7 +5033,6 @@
         "locale": "zh"
     },
     {
-        "id": "724",
         "geonameId": "1795912",
         "name": "山西省",
         "countryCode": "CN",
@@ -5760,7 +5040,6 @@
         "locale": "zh"
     },
     {
-        "id": "725",
         "geonameId": "1796231",
         "name": "上海市",
         "countryCode": "CN",
@@ -5768,7 +5047,6 @@
         "locale": "zh"
     },
     {
-        "id": "726",
         "geonameId": "1796328",
         "name": "山东省",
         "countryCode": "CN",
@@ -5776,7 +5054,6 @@
         "locale": "zh"
     },
     {
-        "id": "727",
         "geonameId": "1796480",
         "name": "陕西省",
         "countryCode": "CN",
@@ -5784,7 +5061,6 @@
         "locale": "zh"
     },
     {
-        "id": "728",
         "geonameId": "1799355",
         "name": "宁夏回族自治区",
         "countryCode": "CN",
@@ -5792,7 +5068,6 @@
         "locale": "zh"
     },
     {
-        "id": "729",
         "geonameId": "1806222",
         "name": "江西省",
         "countryCode": "CN",
@@ -5800,7 +5075,6 @@
         "locale": "zh"
     },
     {
-        "id": "730",
         "geonameId": "1806260",
         "name": "江苏省",
         "countryCode": "CN",
@@ -5808,7 +5082,6 @@
         "locale": "zh"
     },
     {
-        "id": "731",
         "geonameId": "1806691",
         "name": "湖南省",
         "countryCode": "CN",
@@ -5816,7 +5089,6 @@
         "locale": "zh"
     },
     {
-        "id": "732",
         "geonameId": "1806949",
         "name": "湖北省",
         "countryCode": "CN",
@@ -5824,7 +5096,6 @@
         "locale": "zh"
     },
     {
-        "id": "733",
         "geonameId": "1808520",
         "name": "河南省",
         "countryCode": "CN",
@@ -5832,7 +5103,6 @@
         "locale": "zh"
     },
     {
-        "id": "734",
         "geonameId": "1808773",
         "name": "河北省",
         "countryCode": "CN",
@@ -5840,7 +5110,6 @@
         "locale": "zh"
     },
     {
-        "id": "735",
         "geonameId": "1809054",
         "name": "海南省",
         "countryCode": "CN",
@@ -5848,7 +5117,6 @@
         "locale": "zh"
     },
     {
-        "id": "736",
         "geonameId": "1809445",
         "name": "贵州省",
         "countryCode": "CN",
@@ -5856,7 +5124,6 @@
         "locale": "zh"
     },
     {
-        "id": "737",
         "geonameId": "1809867",
         "name": "广西壮族自治区",
         "countryCode": "CN",
@@ -5864,7 +5131,6 @@
         "locale": "zh"
     },
     {
-        "id": "738",
         "geonameId": "1809935",
         "name": "广东省",
         "countryCode": "CN",
@@ -5872,7 +5138,6 @@
         "locale": "zh"
     },
     {
-        "id": "739",
         "geonameId": "1810676",
         "name": "甘肃省",
         "countryCode": "CN",
@@ -5880,7 +5145,6 @@
         "locale": "zh"
     },
     {
-        "id": "740",
         "geonameId": "1811017",
         "name": "福建省",
         "countryCode": "CN",
@@ -5888,7 +5152,6 @@
         "locale": "zh"
     },
     {
-        "id": "741",
         "geonameId": "1814905",
         "name": "重庆市",
         "countryCode": "CN",
@@ -5896,7 +5159,6 @@
         "locale": "zh"
     },
     {
-        "id": "742",
         "geonameId": "1818058",
         "name": "安徽省",
         "countryCode": "CN",
@@ -5904,7 +5166,6 @@
         "locale": "zh"
     },
     {
-        "id": "743",
         "geonameId": "2035607",
         "name": "内蒙古自治区",
         "countryCode": "CN",
@@ -5912,7 +5173,6 @@
         "locale": "zh"
     },
     {
-        "id": "744",
         "geonameId": "2036115",
         "name": "辽宁省",
         "countryCode": "CN",
@@ -5920,7 +5180,6 @@
         "locale": "zh"
     },
     {
-        "id": "745",
         "geonameId": "2036500",
         "name": "吉林省",
         "countryCode": "CN",
@@ -5928,7 +5187,6 @@
         "locale": "zh"
     },
     {
-        "id": "746",
         "geonameId": "2036965",
         "name": "黑龙江省",
         "countryCode": "CN",
@@ -5936,7 +5194,6 @@
         "locale": "zh"
     },
     {
-        "id": "747",
         "geonameId": "2038349",
         "name": "北京市",
         "countryCode": "CN",
@@ -5944,7 +5201,6 @@
         "locale": "zh"
     },
     {
-        "id": "748",
         "geonameId": "1819730",
         "name": "Hong Kong Sonderverwaltungszone",
         "countryCode": "HK",
@@ -5952,7 +5208,6 @@
         "locale": "de"
     },
     {
-        "id": "749",
         "geonameId": "1668284",
         "name": "Taiwan Region",
         "countryCode": "TW",
@@ -5960,7 +5215,6 @@
         "locale": "de"
     },
     {
-        "id": "750",
         "geonameId": "1821275",
         "name": "Macao Sonderverwaltungszone",
         "countryCode": "MO",
@@ -5968,7 +5222,6 @@
         "locale": "de"
     },
     {
-        "id": "751",
         "geonameId": "1819730",
         "name": "Hong Kong RAE",
         "countryCode": "HK",
@@ -5976,7 +5229,6 @@
         "locale": "es"
     },
     {
-        "id": "752",
         "geonameId": "1668284",
         "name": "Taiwan Region",
         "countryCode": "TW",
@@ -5984,7 +5236,6 @@
         "locale": "es"
     },
     {
-        "id": "753",
         "geonameId": "1821275",
         "name": "Macau RAE",
         "countryCode": "MO",
@@ -5992,7 +5243,6 @@
         "locale": "es"
     },
     {
-        "id": "754",
         "geonameId": "1819730",
         "name": "Hong Kong RAS",
         "countryCode": "HK",
@@ -6000,7 +5250,6 @@
         "locale": "fr"
     },
     {
-        "id": "755",
         "geonameId": "1668284",
         "name": "Taiwan Region",
         "countryCode": "TW",
@@ -6008,7 +5257,6 @@
         "locale": "fr"
     },
     {
-        "id": "756",
         "geonameId": "1821275",
         "name": "Macau RAS",
         "countryCode": "MO",
@@ -6016,7 +5264,6 @@
         "locale": "fr"
     },
     {
-        "id": "757",
         "geonameId": "1819730",
         "name": "Hong Kong RAS",
         "countryCode": "HK",
@@ -6024,7 +5271,6 @@
         "locale": "it"
     },
     {
-        "id": "758",
         "geonameId": "1668284",
         "name": "Taiwan Region",
         "countryCode": "TW",
@@ -6032,7 +5278,6 @@
         "locale": "it"
     },
     {
-        "id": "759",
         "geonameId": "1821275",
         "name": "Macau RAS",
         "countryCode": "MO",
@@ -6040,7 +5285,6 @@
         "locale": "it"
     },
     {
-        "id": "760",
         "geonameId": "1819730",
         "name": "Hong Kong SAR",
         "countryCode": "HK",
@@ -6048,7 +5292,6 @@
         "locale": "nl"
     },
     {
-        "id": "761",
         "geonameId": "1668284",
         "name": "Taiwan Region",
         "countryCode": "TW",
@@ -6056,7 +5299,6 @@
         "locale": "nl"
     },
     {
-        "id": "762",
         "geonameId": "1821275",
         "name": "Macau SAR",
         "countryCode": "MO",
@@ -6064,7 +5306,6 @@
         "locale": "nl"
     },
     {
-        "id": "763",
         "geonameId": "1819730",
         "name": "Hong Kong SAR",
         "countryCode": "HK",
@@ -6072,7 +5313,6 @@
         "locale": "pl"
     },
     {
-        "id": "764",
         "geonameId": "1668284",
         "name": "Tajwan Region",
         "countryCode": "TW",
@@ -6080,7 +5320,6 @@
         "locale": "pl"
     },
     {
-        "id": "765",
         "geonameId": "1821275",
         "name": "Makao SAR",
         "countryCode": "MO",
@@ -6088,7 +5327,6 @@
         "locale": "pl"
     },
     {
-        "id": "766",
         "geonameId": "1819730",
         "name": "Hong Kong SAR",
         "countryCode": "HK",
@@ -6096,7 +5334,6 @@
         "locale": "tr"
     },
     {
-        "id": "767",
         "geonameId": "1668284",
         "name": "Tayvan Region",
         "countryCode": "TW",
@@ -6104,7 +5341,6 @@
         "locale": "tr"
     },
     {
-        "id": "768",
         "geonameId": "1821275",
         "name": "Macao SAR",
         "countryCode": "MO",
@@ -6112,7 +5348,6 @@
         "locale": "tr"
     },
     {
-        "id": "769",
         "geonameId": "1819730",
         "name": "香港特別行政区",
         "countryCode": "HK",
@@ -6120,7 +5355,6 @@
         "locale": "ja"
     },
     {
-        "id": "770",
         "geonameId": "1821275",
         "name": "マカオ特別行政区",
         "countryCode": "TW",
@@ -6128,7 +5362,6 @@
         "locale": "ja"
     },
     {
-        "id": "771",
         "geonameId": "1668284",
         "name": "台湾省",
         "countryCode": "MO",
@@ -6136,7 +5369,6 @@
         "locale": "ja"
     },
     {
-        "id": "772",
         "geonameId": "1819730",
         "name": "Гонконг САР",
         "countryCode": "HK",
@@ -6144,7 +5376,6 @@
         "locale": "ru"
     },
     {
-        "id": "773",
         "geonameId": "1821275",
         "name": "Макао САР",
         "countryCode": "TW",
@@ -6152,7 +5383,6 @@
         "locale": "ru"
     },
     {
-        "id": "774",
         "geonameId": "1668284",
         "name": "Тайвань область",
         "countryCode": "MO",
@@ -6160,7 +5390,6 @@
         "locale": "ru"
     },
     {
-        "id": "775",
         "geonameId": "1819730",
         "name": "เขตปกครองพิเศษ ฮ่องกง",
         "countryCode": "HK",
@@ -6168,7 +5397,6 @@
         "locale": "th"
     },
     {
-        "id": "776",
         "geonameId": "1821275",
         "name": "เขตปกครองพิเศษ มาเก๊า",
         "countryCode": "TW",
@@ -6176,7 +5404,6 @@
         "locale": "th"
     },
     {
-        "id": "777",
         "geonameId": "1668284",
         "name": "ไต้หวัน สาธารณรัฐจีน",
         "countryCode": "MO",
@@ -6184,7 +5411,6 @@
         "locale": "th"
     },
     {
-        "id": "778",
         "geonameId": "1819730",
         "name": "Гонконг САР",
         "countryCode": "HK",
@@ -6192,7 +5418,6 @@
         "locale": "uk"
     },
     {
-        "id": "779",
         "geonameId": "1821275",
         "name": "Макао САР",
         "countryCode": "TW",
@@ -6200,7 +5425,6 @@
         "locale": "uk"
     },
     {
-        "id": "780",
         "geonameId": "1668284",
         "name": "Тайвань область",
         "countryCode": "MO",

@@ -74,22 +74,22 @@ class GeonamesTranslationService
 
             if ($postValue->fcode == 'COUNTRY') {
 
-                if ($countryLocale = $this->entityManager
-                    ->getRepository(GeonamesCountryLocale::class)->findOneBy(array(
+                if ($this->entityManager
+                    ->getRepository(GeonamesCountryLocale::class)->findBy(array(
                         'geonameId' => $postValue->geonameId,
                         'locale' => $postValue->locale
                     ))
                 ) {
-                    $this->entityManager->remove($countryLocale);
+                    $dbInsertionFound[] = 'Country ' . $postValue->geonameId;
+                } else {
+                    $newCountryLocale = new GeonamesCountryLocale();
+                    $newCountryLocale
+                        ->setGeonameId($postValue->geonameId)
+                        ->setName($postValue->name)
+                        ->setCountryCode($postValue->countryCode)
+                        ->setLocale(strtolower($postValue->locale));
+                    $this->entityManager->persist($newCountryLocale);
                 }
-
-                $newCountryLocale = new GeonamesCountryLocale();
-                $newCountryLocale
-                    ->setGeonameId($postValue->geonameId)
-                    ->setName($postValue->name)
-                    ->setCountryCode($postValue->countryCode)
-                    ->setLocale(strtolower($postValue->locale));
-                $this->entityManager->persist($newCountryLocale);
             }
 
             if ($this->entityManager
@@ -99,7 +99,7 @@ class GeonamesTranslationService
                     'locale' => $postValue->locale
                 ))
             ) {
-                $dbInsertionFound[] = $postValue->geonameId;
+                $dbInsertionFound[] = 'SubDivision ' . $postValue->geonameId;
             } else {
                 $postTranslation = (new GeonamesTranslation())
                     ->setGeonameId($postValue->geonameId)
@@ -129,9 +129,25 @@ class GeonamesTranslationService
     public function patchTranslation(array $patchContent): JsonResponse
     {
         $patchResponse = new JsonResponse();
-        $patchResponse->setContent("yob");
         $dbPatchDone = array();
         foreach ($patchContent as $patchValue) {
+            if ($patchValue->fcode == 'COUNTRY') {
+                if ($countryLocaleToPatch = $this->entityManager
+                    ->getRepository(GeonamesCountryLocale::class)->findOneBy(array(
+                        'geonameId' => $patchValue->geonameId,
+                        'locale' => $patchValue->locale
+                    ))
+                ) {
+                    $countryLocaleToPatch
+                        ->setGeonameId($patchValue->geonameId)
+                        ->setName($patchValue->name)
+                        ->setCountryCode($patchValue->countryCode)
+                        ->setLocale(strtolower($patchValue->locale));
+                    $this->entityManager->persist($countryLocaleToPatch);
+                    $dbPatchDone[] = $patchValue->geonameId;
+                }
+            }
+
             if ($translationToPatch = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
                     'geonameId' => $patchValue->geonameId,
