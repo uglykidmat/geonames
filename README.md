@@ -208,5 +208,9 @@ The expected content should follow this syntax, `geonameId` and `locale` are req
 ```
 
 Calling POST with it will create new entries, PATCH will modify existing entries (if found), and DELETE will delete them.
-
 For an initial database hydration, just copy the JSON content from 'geonames_translation.json' in your 'base_data' folder, and use it as request on the POST endpoint.
+
+The `/export` URL will serve a .csv file with all the current translation entries.
+```php
+/translation/
+```
