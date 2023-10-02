@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\GeonamesCountryLocale;
 use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,6 +71,27 @@ class GeonamesTranslationService
         $dbInsertionDone = array();
 
         foreach ($postContent as $postValue) {
+
+            if ($postValue->fcode == 'COUNTRY') {
+
+                if ($countryLocale = $this->entityManager
+                    ->getRepository(GeonamesCountryLocale::class)->findOneBy(array(
+                        'geonameId' => $postValue->geonameId,
+                        'locale' => $postValue->locale
+                    ))
+                ) {
+                    $this->entityManager->remove($countryLocale);
+                }
+
+                $newCountryLocale = new GeonamesCountryLocale();
+                $newCountryLocale
+                    ->setGeonameId($postValue->geonameId)
+                    ->setName($postValue->name)
+                    ->setCountryCode($postValue->countryCode)
+                    ->setLocale(strtolower($postValue->locale));
+                $this->entityManager->persist($newCountryLocale);
+            }
+
             if ($this->entityManager
                 ->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
@@ -84,7 +106,7 @@ class GeonamesTranslationService
                     ->setName($postValue->name)
                     ->setCountryCode($postValue->countryCode)
                     ->setFcode($postValue->fcode)
-                    ->setLocale($postValue->locale);
+                    ->setLocale(strtolower($postValue->locale));
                 $this->entityManager->persist($postTranslation);
                 $dbInsertionDone[] = $postValue->geonameId;
             }

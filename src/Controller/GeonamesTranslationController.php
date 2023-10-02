@@ -6,17 +6,35 @@ use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesTranslationService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/translation')]
 class GeonamesTranslationController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private GeonamesTranslationService $translationService
+        private GeonamesTranslationService $translationService,
+        private SerializerInterface $serializer
     ) {
+    }
+
+    #[Route('/export', name: 'translation_export', methods: ['GET', 'HEAD'])]
+    public function export(): Response
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . gmdate("Ymdgi") . '_geonames_translations.csv"');
+
+        $translations = $this->serializer->serialize(
+            $this->entityManager->getRepository(GeonamesTranslation::class)->findAll(),
+            'csv'
+        );
+
+        return $response->setContent($translations);
     }
 
     #[Route('/', name: 'translation_get', methods: ['GET', 'HEAD'])]
