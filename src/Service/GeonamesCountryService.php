@@ -88,4 +88,26 @@ class GeonamesCountryService
         }
         throw new HttpException(400, 'Missing base file.');
     }
+
+    public function computeBarycenter(string $cc): Response
+    {
+        if ($country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneBy(['countryCode' => $cc])) {
+
+            $west = deg2rad($country->getWest());
+            $east = deg2rad($country->getEast());
+            $south = deg2rad($country->getSouth());
+            $north = deg2rad($country->getNorth());
+
+            $centroid_x = ($east + $west) / 2;
+            $centroid_y = ($north + $south) / 2;
+
+            $country->setLat(rad2deg($centroid_y))->setLng(rad2deg($centroid_x));
+            $this->entityManager->persist($country);
+            $this->entityManager->flush();
+
+            return new Response('Barycenter ok for ' . $country->getCountryCode() . '.');
+        }
+
+        throw new HttpException(500, 'Country code not found.');
+    }
 }

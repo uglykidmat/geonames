@@ -20,4 +20,10 @@ class GeonamesCountryController extends AbstractController
     {
         return $this->service->updateBarycenters();
     }
+
+    #[Route('/barycenter/{cc}')]
+    public function computeBarycenter(string $cc): Response
+    {
+        return $this->service->computeBarycenter($cc);
+    }
 }

@@ -145,6 +145,12 @@ Information about a specific country (countryCode being a 2-letter string) :
 ⚠️ Make sure the file 'geonames_country_barycenters.json' is in the 'base_data' root folder.
 Then visit : `/country/barycenters` and the country table will be updated accordingly.
 
+To update a specific country's barycenter :
+```php
+/country/barycenter/{string countryCode}
+```
+This script will compute the approximate barycenter of the country and update it in the database.
+
 ### GeoJson information
 
 ⚠️ Make sure the file 'geonames_geojson.json' is in the 'base_data' root folder
