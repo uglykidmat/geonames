@@ -7,6 +7,9 @@ use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
 class GeonamesTranslationService
 {
@@ -15,48 +18,29 @@ class GeonamesTranslationService
     ) {
     }
 
-    public function checkRequest(Request $postRequest): JsonResponse
+    public function checkRequest(Request $postRequest): void
     {
-        $postResponse = new JsonResponse();
-        $postResponse->setContent('{"Status": "Success"}');
-        if ($postRequest->getContentTypeFormat() != 'json' || !$postRequest->getContent()) {
-            $postResponse->setStatusCode(415);
-            $postResponse->setContent('{"Status":"Failure","Error" : "Unsupported Media Type, expected content-type application/JSON"}');
-
-            return $postResponse;
+        if ($postRequest->getContentTypeFormat() !== 'json' || !$postRequest->getContent()) {
+            throw new UnsupportedMediaTypeHttpException('Unsupported Media Type, expected content-type application/JSON');
         }
-        $postContent = (array) @json_decode($postRequest->getContent());
         if (!(json_last_error() === JSON_ERROR_NONE)) {
-            $postResponse->setStatusCode(422);
-            $postResponse->setContent('{"Status": "Failure","Error" : "' . json_last_error_msg() . '"}');
-
-            return $postResponse;
+            throw new UnprocessableEntityHttpException(json_last_error_msg());
         }
-        return $postResponse;
     }
 
-    public function checkRequestContent(array $postContent): JsonResponse
+    public function checkRequestContent(array $postContent): void
     {
-        $postResponse = new JsonResponse();
-        $postResponse->setContent('{"Status": "Success"}');
-        $errorsInPostContent = false;
         foreach ($postContent as $postValue) {
             if (
                 empty($postValue->geonameId) ||
                 empty($postValue->name) ||
                 empty($postValue->countryCode) ||
                 empty($postValue->fcode) ||
-                empty($postValue->locale) ||
-                $errorsInPostContent == true
+                empty($postValue->locale)
             ) {
-                $errorsInPostContent = true;
-                $postResponse->setStatusCode(400);
-                $postResponse->setContent('{"Status": "Failure","Error" : "Missing fields or null values are not allowed"}');
-
-                return $postResponse;
+                throw new BadRequestHttpException('Missing fields or null values are not allowed for ' . print_r($postValue, true));
             }
         }
-        return $postResponse;
     }
 
     public function getTranslations()
@@ -72,7 +56,7 @@ class GeonamesTranslationService
 
         foreach ($postContent as $postValue) {
 
-            if ($postValue->fcode == 'COUNTRY') {
+            if ($postValue->fcode === 'COUNTRY') {
 
                 if ($this->entityManager
                     ->getRepository(GeonamesCountryLocale::class)->findBy(array(
@@ -131,7 +115,7 @@ class GeonamesTranslationService
         $patchResponse = new JsonResponse();
         $dbPatchDone = array();
         foreach ($patchContent as $patchValue) {
-            if ($patchValue->fcode == 'COUNTRY') {
+            if ($patchValue->fcode === 'COUNTRY') {
                 if ($countryLocaleToPatch = $this->entityManager
                     ->getRepository(GeonamesCountryLocale::class)->findOneBy(array(
                         'geonameId' => $patchValue->geonameId,
