@@ -67,6 +67,11 @@ To clean database entries, use `app:adp` followed by the featureCode.
 php bin/console app:adp ADM1
 ```
 
+Some administrative divisions have an alternative admincode. To import them, make sure the file 'geonames_alternative_divisions.json' is in the 'base_data' folder, then visit
+```php
+/administrativedivisions/alternatives/update
+```
+
 Global search in Symfony database : 
 ```php
 /search/{string geoquery}-{string featureCode}
