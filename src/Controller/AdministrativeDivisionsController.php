@@ -7,13 +7,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\AdministrativeDivisionsService;
 
+#[Route('/administrativedivisions')]
 class AdministrativeDivisionsController extends AbstractController
 {
     public function __construct(private AdministrativeDivisionsService $service)
     {
     }
 
-    #[Route('/administrativedivisions/zipcodes', name: 'administrative_divisions_zipcodes')]
+    #[Route('/zipcodes', name: 'administrative_divisions_zipcodes')]
     public function zipcodes(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/ZipCodes.php';
@@ -23,7 +24,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/administrativedivisions/zipcodesexceptions', name: 'administrative_divisions_zipcodesexceptions')]
+    #[Route('/zipcodesexceptions', name: 'administrative_divisions_zipcodesexceptions')]
     public function zipcodesexceptions(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/ZipCodes_exceptions.php';
@@ -33,7 +34,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/administrativedivisions/txttojson', name: 'administrative_divisions_txttojson')]
+    #[Route('/txttojson', name: 'administrative_divisions_txttojson')]
     public function txttojson(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/txt_to_json.php';
@@ -43,7 +44,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/administrativedivisions/jsonsortbyvalue', name: 'administrative_divisions_jsonsortbyvalue')]
+    #[Route('/jsonsortbyvalue', name: 'administrative_divisions_jsonsortbyvalue')]
     public function jsonsortbyvalue(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/json_sort_by_value.php';
@@ -51,5 +52,11 @@ class AdministrativeDivisionsController extends AbstractController
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
         ]);
+    }
+
+    #[Route('/alternatives/update', name: 'alternatives_update')]
+    public function updateAlternativeCodes(): Response
+    {
+        return $this->service->updateAlternativeCodes();
     }
 }

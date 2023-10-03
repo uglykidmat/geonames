@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdministrativeDivisionsService
 {
@@ -102,5 +103,27 @@ class AdministrativeDivisionsService
         $response->setContent('{"status":"Ok", "' . $fcode . '" : "' . $responseContent . '"}');
 
         return $response;
+    }
+
+    public function updateAlternativeCodes(): JsonResponse
+    {
+        $response = new JsonResponse();
+
+        if ($altCodesList = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_alternative_divisions.json'))) {
+            foreach ($altCodesList as $altCode) {
+                if ($adminDiv = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($altCode->geonameId)) {
+
+                    $adminDiv->setAdminCodeAlt1($altCode->adminCodes1 ?? null)
+                        ->setAdminCodeAlt2($altCode->adminCodes2 ?? null)
+                        ->setAdminCodeAlt3($altCode->adminCodes3 ?? null);
+                    $this->entityManager->persist($adminDiv);
+                }
+            }
+            $this->entityManager->flush();
+
+            return $response->setContent(json_encode(['Status' => 'Success']));
+        }
+
+        throw new HttpException(500, 'Country code not found.');
     }
 }
