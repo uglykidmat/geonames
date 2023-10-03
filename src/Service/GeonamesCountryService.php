@@ -89,9 +89,9 @@ class GeonamesCountryService
         throw new HttpException(400, 'Missing base file.');
     }
 
-    public function computeBarycenter(string $cc): Response
+    public function computeBarycenter(string $countryCode): Response
     {
-        if ($country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneBy(['countryCode' => $cc])) {
+        if ($country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneBy(['countryCode' => $countryCode])) {
 
             $west = deg2rad($country->getWest());
             $east = deg2rad($country->getEast());
