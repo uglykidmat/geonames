@@ -117,6 +117,15 @@ class GeonamesAdministrativeDivision
     #[ORM\Column(nullable: true)]
     private ?int $astergdem = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adminCodeAlt1 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adminCodeAlt2 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adminCodeAlt3 = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -532,6 +541,42 @@ class GeonamesAdministrativeDivision
     public function setAstergdem(?int $astergdem): static
     {
         $this->astergdem = $astergdem;
+
+        return $this;
+    }
+
+    public function getAdminCodeAlt1(): ?string
+    {
+        return $this->adminCodeAlt1;
+    }
+
+    public function setAdminCodeAlt1(?string $adminCodeAlt1): static
+    {
+        $this->adminCodeAlt1 = $adminCodeAlt1;
+
+        return $this;
+    }
+
+    public function getAdminCodeAlt2(): ?string
+    {
+        return $this->adminCodeAlt2;
+    }
+
+    public function setAdminCodeAlt2(?string $adminCodeAlt2): static
+    {
+        $this->adminCodeAlt2 = $adminCodeAlt2;
+
+        return $this;
+    }
+
+    public function getAdminCodeAlt3(): ?string
+    {
+        return $this->adminCodeAlt3;
+    }
+
+    public function setAdminCodeAlt3(?string $adminCodeAlt3): static
+    {
+        $this->adminCodeAlt3 = $adminCodeAlt3;
 
         return $this;
     }
