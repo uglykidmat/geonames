@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\GeonamesCountry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -69,5 +70,22 @@ class GeonamesCountryService
 
             return $response->setContent(implode(',', $updateList));
         } else throw new HttpException("Could not get country list from Geonames");
+    }
+
+    public function updateBarycenters(): Response
+    {
+        if ($countryBarycenters = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_barycenters.json'))) {
+
+            foreach ($countryBarycenters as $barycenter) {
+                $country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneBy(['geonameId' => $barycenter->geonameId])
+                    ->setLat($barycenter->lat)
+                    ->setLng($barycenter->lng);
+                $this->entityManager->persist($country);
+            }
+            $this->entityManager->flush();
+
+            return new Response('OK.');
+        }
+        throw new HttpException(400, 'Missing base file.');
     }
 }

@@ -140,6 +140,11 @@ Information about a specific country (countryCode being a 2-letter string) :
 /country/level/get/{string countryCode}
 ```
 
+### Country Barycenters
+
+⚠️ Make sure the file 'geonames_country_barycenters.json' is in the 'base_data' root folder.
+Then visit : `/country/barycenters` and the country table will be updated accordingly.
+
 ### GeoJson information
 
 ⚠️ Make sure the file 'geonames_geojson.json' is in the 'base_data' root folder
@@ -189,7 +194,7 @@ php vendor/bin/phpunit --testdox
 
 Use different HTTP methods on the translation API endpoint :
 ```php
-/translation/
+/translation
 ```
 * GET : paginated list
 * POST : bulk creation
@@ -219,5 +224,5 @@ For an initial database hydration, just copy the JSON content from 'geonames_tra
 
 The `/export` URL will serve a .csv file with all the current translation entries.
 ```php
-/translation/
+/translation/export
 ```
