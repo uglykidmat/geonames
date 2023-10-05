@@ -26,7 +26,7 @@ class SentryTestController extends AbstractController
     public function testLog()
     {
         // the following code will test if monolog integration logs to sentry
-        $this->logger->error('My custom logged error.');
+        $this->logger->error('My custom monolog error.');
 
         // the following code will test if an uncaught exception logs to sentry
         throw new RuntimeException('Sentry test error.');
