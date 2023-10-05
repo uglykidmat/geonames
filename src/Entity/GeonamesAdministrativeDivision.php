@@ -385,7 +385,12 @@ class GeonamesAdministrativeDivision
 
     public function getAdminCodes(): array
     {
-        $adminCodes = array($this->adminCode1, $this->adminCode2, $this->adminCode3, $this->adminCode4);
+        $adminCodes = array(
+            isset($this->adminCodeAlt1) ? $this->adminCodeAlt1 : $this->adminCode1,
+            isset($this->adminCodeAlt2) ? $this->adminCodeAlt2 : $this->adminCode2,
+            isset($this->adminCodeAlt3) ? $this->adminCodeAlt3 : $this->adminCode3,
+            $this->adminCode4
+        );
         return $adminCodes;
     }
 
