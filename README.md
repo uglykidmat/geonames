@@ -57,7 +57,6 @@ Some administrative divisions have an alternative admincode. To import them, mak
 /administrativedivisions/alternatives/update
 ```
 
-
 ## Usage/Examples
 The Geoname controller has a few functions :
 
