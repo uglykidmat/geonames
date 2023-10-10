@@ -16,10 +16,10 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
 
     public function getUserBadgeFrom(string $accessToken): UserBadge
     {
-        if ($accessToken !== $this->token || null === $accessToken) {
-
-            throw new BadCredentialsException('Invalid credentials.');
+        if ($accessToken === $this->token) {
+            return new UserBadge($this->user);
         }
-        return new UserBadge($this->user);
+
+        throw new BadCredentialsException('Invalid credentials.');
     }
 }
