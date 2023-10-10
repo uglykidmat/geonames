@@ -12,22 +12,52 @@ Download/Installation
 ```bash
   composer install
 ```
-Update database configuration 
+Update database configuration in your `.env` files.
 ```doctrine
   DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=15&charset=utf8"
 ```
-then 
+then run these commands to create the database :
 ```
 php bin/console doctrine:database:create
-php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
+the database should then be ready for hydration. Run these commands in order :
 
-Homepage :
+`symfony server:start -d` to start the server.
+
+1. update the countries
+- basic information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
 
 ```bash
-  /
+php bin/console countryupdate
 ```
+2. update the countries' locales (translations)
+- Countries names translated into many language. The table "country_locale" must first be updated with geonames information :
+```bash
+php bin/console app:clu 1
+php bin/console app:clu 2
+php bin/console app:clu 3
+php bin/console app:clu 4
+php bin/console app:clu 5
+```
+The Ids are split into different files since loading them all causes a timeout error. Importing a file results in about 9000 entries in the database.
+
+3. subdivisions
+- token
+Update your `GEONAMES_TOKEN` variable in the correct `.env`file.
+- Import/Update : 
+The command line arguments are featureCode ("ADM1","ADM2","ADM3") and "startRow" which sets the start of the geonames Response content. Example :
+```bash
+php bin/console app:adu ADM1 1
+```
+will yield the first level Administrative Divisions of countries which have a minimum used_level of 1, starting from row 1. Updates are done by batch of 1000 entries, so the next logical steps would be to run the same command with the second argument increased by 1000, like :
+`php bin/console app:adu ADM1 1000`
+Some administrative divisions have an alternative admincode. To import them, make sure the file 'geonames_alternative_divisions.json' is in the 'base_data' folder, then visit
+```php
+/administrativedivisions/alternatives/update
+```
+
+
 ## Usage/Examples
 The Geoname controller has a few functions :
 
@@ -54,22 +84,10 @@ The search will be on the coordinates, and use the postalcode/countrycode couple
 This URL is protected by a token, if not provided you will encounter a 401 error.
 
 ### Subdivisions
-Import/Update : 
-The command line arguments are featureCode ("ADM1","ADM2","ADM3") and "startRow" which sets the start of the geonames Response content. Example :
-```bash
-php bin/console app:adu ADM1 1
-```
-will yield the first level Administrative Divisions of countries which have a minimum used_level of 1, starting from row 1. Updates are done by batch of 1000 entries, so the next logical steps would be to run the same command with the second argument increased by 1000, like :
-`php bin/console app:adu ADM1 1000`
 
 To clean database entries, use `app:adp` followed by the featureCode.
 ```bash
 php bin/console app:adp ADM1
-```
-
-Some administrative divisions have an alternative admincode. To import them, make sure the file 'geonames_alternative_divisions.json' is in the 'base_data' folder, then visit
-```php
-/administrativedivisions/alternatives/update
 ```
 
 Global search in Symfony database : 
@@ -101,21 +119,6 @@ Search by Latitude and Longitude :
 ### Countries
 
 1. Update
-- basic information (make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
-```bash
-php bin/console countryupdate
-```
-
-2. Locales
-- Countries names translated into many language. The table "country_locale" must first be updated with geonames information :
-```bash
-php bin/console app:clu 1
-php bin/console app:clu 2
-php bin/console app:clu 3
-php bin/console app:clu 4
-php bin/console app:clu 5
-```
-The Ids are split into different files since loading them all causes a timeout error. Importing a file results in about 9000 entries in the database.
 
 To update all the names ("locales") for a specific country, you need its geonamesId (find it here `https://www.geonames.org/countries/`, click on the desired country name, then on the name again, the ID will be in the URL). Then run : 
 ```bash
@@ -123,10 +126,10 @@ php bin/console app:clsu 3017382
 ```
 to get all of France's names, for example.
 
-3. Translations list
+2. Translations list
 - Calling the endpoint `/countrynames/{locale}` (locale being a 2-letter code) will return a list of every country names in the selected locale.
 
-4. Other
+3. Other
 
 Search for some information on a country :
 ```php

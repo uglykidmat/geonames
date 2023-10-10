@@ -15,7 +15,7 @@ class GeonamesCountryController extends AbstractController
     ) {
     }
 
-    #[Route('/barycenters')]
+    #[Route('/barycenters/update')]
     public function updateBarycenters(): Response
     {
         return $this->service->updateBarycenters();
