@@ -7,30 +7,46 @@ security:
         app_user_provider:
             memory:
                 users:
-                    gtr: { password: 'c3c9677cf573800aa30a68795143082b68d7a8056ee0e816c512004f33ddafb5', roles: ['ROLE_USER']}
-
+                    gtr: { password: '%env(CREDENTIALS_TOKEN)%', roles: ['ROLE_USER']}
+                    gator: { password: '%env(CREDENTIALS_PASSWORD)%', roles: ['ROLE_AUTH']}
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-      
+        basic-auth:
+            http_basic:
+                realm: Enter credentials
         main:
             lazy: true
             provider: app_user_provider
             access_token:
                 token_handler: App\Security\AccessTokenHandler
+            http_basic:
+                realm: Enter credentials
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        - { path: ^/status, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_USER }
+when@prod: &prod
+    security:
+        access_control:
+            - { path: ^/status, roles: PUBLIC_ACCESS }
+            - { path: ^/geonames/search, roles: ROLE_USER }
+            - { path: ^/, roles: ROLE_AUTH }
 
 when@test:
-    security: false
+    security:
+        password_hashers:
+            # By default, password hashers are resource intensive and take time. This is
+            # important to generate secure password hashes. In tests however, secure hashes
+            # are not important, waste resources and increase test times. The following
+            # reduces the work factor to the lowest possible values.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
+
+when@dev:
+    security:
+        access_control:
+            - { path: ^/status, roles: PUBLIC_ACCESS }
+            - { path: ^/geonames/search, roles: ROLE_USER }
+            - { path: ^/, roles: ROLE_AUTH }
