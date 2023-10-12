@@ -57,6 +57,11 @@ Some administrative divisions have an alternative admincode. To import them, mak
 /administrativedivisions/alternatives/update
 ```
 
+## Security
+`/status` is publicly available.
+`/geonames/search` is accessible via a Bearer Token.
+`/*` any other page is accessible via basic_auth.
+
 ## Usage/Examples
 The Geoname controller has a few functions :
 
