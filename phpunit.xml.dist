@@ -31,6 +31,9 @@
         <testsuite name="Geonames Entities Test Suite">
             <directory>tests/EntitiesTests</directory>
         </testsuite>
+        <testsuite name="Security Test Suite">
+            <directory>tests/RandomTests</directory>
+        </testsuite>
     </testsuites>
 
     <coverage includeUncoveredFiles="true"
