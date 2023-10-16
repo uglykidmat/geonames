@@ -82,18 +82,14 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $latlngSearchResponse = json_decode($this->client->request(
                 'GET',
                 $this->urlBase
-                    . 'findNearbyJSON',
+                    . 'findNearbyPlaceNameJSON',
                 ['query' => [
                     'formatted' => 'true',
                     'lat' => $lat,
                     'lng' => $lng,
                     'username' => $this->token,
                     'style' => 'full',
-                    'maxRows' => '1',
-                    'fclass' => 'P',
-                    'fcode' => 'PPLA',
-                    'fcode' => 'PPLC',
-                    'fcode' => 'PPL',
+                    'maxRows' => '1'
                 ],]
             )->getContent());
         } catch (\Exception $e) {
@@ -104,6 +100,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
             return reset($latlngSearchResponse->geonames)->geonameId;
         }
+
         throw new HttpException(500, 'Empty response from Geonames Service.');
     }
 

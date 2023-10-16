@@ -20,7 +20,7 @@ class GeonamesSearchController extends AbstractController
         if (empty($jsonPayloadString)) {
             throw new BadRequestHttpException('Empty JISONE request');
         }
-
+        set_time_limit(0);
         $parsedRequest = $searchService->bulkRequest($jsonPayloadString);
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent($parsedRequest);
