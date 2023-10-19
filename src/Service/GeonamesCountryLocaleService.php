@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\GeonamesCountryLocale;
+use App\Entity\GeonamesTranslation;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Interface\GeonamesAPIServiceInterface;
@@ -41,7 +42,7 @@ class GeonamesCountryLocaleService
                                 ->setGeonameId($geonameId)
                                 ->setCountryCode($countryResponse->countryCode)
                                 ->setName($countryLang->name)
-                                ->setLocale($countryLang->lang);
+                                ->setLocale(strtolower($countryLang->lang));
                             $this->entityManager->persist($newCountryLocale);
 
                             $output[] = [$newCountryLocale->getCountryCode() => $newCountryLocale->getLocale()];
@@ -92,17 +93,15 @@ class GeonamesCountryLocaleService
         return $output;
     }
 
-    public function getCountryNamesForLocale($locale): JsonResponse
+    public function getCountryNamesForLocale(string $locale): JsonResponse
     {
         $response = new JsonResponse();
         $content = [];
-
         $localesCacheKey = 'locales_' . $locale;
-
         $localesCachedData = $this->redisCache->getItem($localesCacheKey);
         if ($localesCachedData->isHit()) {
             return $response->setContent($localesCachedData->get());
-        } else
+        } else {
             foreach ($this->entityManager->getRepository(GeonamesCountryLocale::class)
                 ->findBy(
                     array('locale' => $locale),
@@ -113,8 +112,24 @@ class GeonamesCountryLocaleService
                 $entry['name'] = $countryLocale->getName();
                 $content[] = $entry;
             }
+            if ($translationOverrides = $this->entityManager->getRepository(GeonamesTranslation::class)
+                ->findBy(
+                    array('locale' => $locale, 'fcode' => 'COUNTRY')
+                )
+            ) {
+                foreach ($translationOverrides as $override) {
+                    unset($content[$override->getGeonameId()]);
+                    $entry['countryCode'] = $override->getCountryCode();
+                    $entry['geonameId'] = $override->getGeonameId();
+                    $entry['name'] = $override->getName();
+                    $content[] = $entry;
+                }
+            }
+        }
+
         $localesCachedData->set(json_encode($content));
         $this->redisCache->save($localesCachedData);
+
         return $response->setContent(json_encode($content));
     }
 }
