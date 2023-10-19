@@ -25,6 +25,9 @@ class GeonamesCountryLocale
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPreferredName = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class GeonamesCountryLocale
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function isIsPreferredName(): ?bool
+    {
+        return $this->isPreferredName;
+    }
+
+    public function setIsPreferredName(?bool $isPreferredName): static
+    {
+        $this->isPreferredName = $isPreferredName;
 
         return $this;
     }
