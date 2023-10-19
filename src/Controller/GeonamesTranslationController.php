@@ -28,7 +28,6 @@ class GeonamesTranslationController extends AbstractController
         $response = new Response();
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="' . gmdate("Ymdgi") . '_geonames_translations.csv"');
-
         $translations = $this->serializer->serialize(
             $this->entityManager->getRepository(GeonamesTranslation::class)->findAll(),
             'csv'
@@ -41,7 +40,6 @@ class GeonamesTranslationController extends AbstractController
     public function get(): JsonResponse
     {
         $getResponse = $this->entityManager->getRepository(GeonamesTranslation::class)->findAll();
-
         $result = array_map(static fn (GeonamesTranslation $value): array => $value->toArray(), $getResponse);
         //TODO: return rendered paginated filtered list
         return new JsonResponse($result);
@@ -52,8 +50,6 @@ class GeonamesTranslationController extends AbstractController
         Request $postRequest,
     ): JsonResponse {
         $postContent = json_decode($postRequest->getContent());
-
-        // check and die en error
         $this->translationService->checkRequest($postRequest);
         $this->translationService->checkRequestContent($postContent);
 
@@ -65,8 +61,6 @@ class GeonamesTranslationController extends AbstractController
         Request $patchRequest,
     ): JsonResponse {
         $patchContent = json_decode($patchRequest->getContent());
-
-        // check and die en error
         $this->translationService->checkRequest($patchRequest);
         $this->translationService->checkRequestContent($patchContent);
 
@@ -78,8 +72,6 @@ class GeonamesTranslationController extends AbstractController
         Request $deleteRequest,
     ): JsonResponse {
         $deleteContent = json_decode($deleteRequest->getContent());
-
-        // check and die en error
         $this->translationService->checkRequest($deleteRequest);
         $this->translationService->checkRequestContent($deleteContent);
 
