@@ -9,7 +9,7 @@
 ###< symfony/framework-bundle ###
 
 .idea
-
+*.rdb
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
