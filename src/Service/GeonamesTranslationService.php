@@ -43,21 +43,14 @@ class GeonamesTranslationService
         }
     }
 
-    public function getTranslations()
-    {
-    }
-
     public function postTranslation(array $postContent): JsonResponse
     {
         $postResponse = new JsonResponse();
-
         $dbInsertionFound = array();
         $dbInsertionDone = array();
 
         foreach ($postContent as $postValue) {
-
             if ($postValue->fcode === 'COUNTRY') {
-
                 if ($this->entityManager
                     ->getRepository(GeonamesCountryLocale::class)->findBy(array(
                         'geonameId' => $postValue->geonameId,
