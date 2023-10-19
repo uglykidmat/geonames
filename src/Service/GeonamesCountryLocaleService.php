@@ -24,12 +24,9 @@ class GeonamesCountryLocaleService
     {
         $output = [];
         if ($idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_' . $file . '.json'))) {
-
             foreach ($idsList as $geonameId => $uselessvalue) {
-
                 $countryResponse = $this->apiservice->getJsonSearch($geonameId);
                 $countryLangs = $countryResponse->alternateNames;
-
                 foreach ($countryLangs as $countryLang) {
                     if (isset($countryLang->lang)) {
                         if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
@@ -42,7 +39,8 @@ class GeonamesCountryLocaleService
                                 ->setGeonameId($geonameId)
                                 ->setCountryCode($countryResponse->countryCode)
                                 ->setName($countryLang->name)
-                                ->setLocale(strtolower($countryLang->lang));
+                                ->setLocale(strtolower($countryLang->lang))
+                                ->setIsPreferredName($countryLang->isPreferredName ?? null);
                             $this->entityManager->persist($newCountryLocale);
 
                             $output[] = [$newCountryLocale->getCountryCode() => $newCountryLocale->getLocale()];
@@ -77,7 +75,8 @@ class GeonamesCountryLocaleService
                         ->setGeonameId($geonameId)
                         ->setCountryCode($countryResponse->countryCode)
                         ->setName($countryLang->name)
-                        ->setLocale(strtolower($countryLang->lang));
+                        ->setLocale(strtolower($countryLang->lang))
+                        ->setIsPreferredName($countryLang->isPreferredName ?? null);
                     $this->entityManager->persist($newCountryLocale);
 
                     $output .= $newCountryLocale->getCountryCode() .
@@ -104,7 +103,7 @@ class GeonamesCountryLocaleService
         } else {
             foreach ($this->entityManager->getRepository(GeonamesCountryLocale::class)
                 ->findBy(
-                    array('locale' => $locale),
+                    array('locale' => $locale, 'isPreferredName' => true),
                     array('countryCode' => 'ASC')
                 ) as $countryLocale) {
                 $entry['countryCode'] = $countryLocale->getCountryCode();
@@ -112,6 +111,7 @@ class GeonamesCountryLocaleService
                 $entry['name'] = $countryLocale->getName();
                 $content[] = $entry;
             }
+
             if ($translationOverrides = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findBy(
                     array('locale' => $locale, 'fcode' => 'COUNTRY')
