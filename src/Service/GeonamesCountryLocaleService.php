@@ -22,7 +22,6 @@ class GeonamesCountryLocaleService
 
     public function updateCountryBatch(int $file): string
     {
-        $output = [];
         if ($idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_' . $file . '.json'))) {
             $outputCount = 0;
             foreach ($idsList as $geonameId => $uselessvalue) {
@@ -32,7 +31,7 @@ class GeonamesCountryLocaleService
                         if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
                             ->findOneBy(array(
                                 'geonameId' => $geonameId,
-                                'locale' => $countryLang->lang
+                                'locale' => strtolower($countryLang->lang)
                             ))) {
                             $newCountryLocale = new GeonamesCountryLocale();
                             $newCountryLocale
@@ -43,18 +42,16 @@ class GeonamesCountryLocaleService
                                 ->setIsPreferredName($countryLang->isPreferredName ?? null)
                                 ->setIsShortName($countryLang->isShortName ?? null);
                             $this->entityManager->persist($newCountryLocale);
+                            $outputCount++;
                         }
                     }
-                    $outputCount++;
                 }
-
                 $this->entityManager->flush();
-                $output[0] = $outputCount;
             }
-            if (empty($output)) {
-                (string)$output = "all elements in this file have already been imported";
+            if ($outputCount == 0) {
+                (string)$outputCount = "all elements in this file have already been imported";
             }
-            return json_encode($output);
+            return json_encode(['ImportsDone' => $outputCount]);
         } else throw new HttpException(400, 'Invalid request : file number ' . $file . ' does not exist');
     }
 
@@ -68,7 +65,7 @@ class GeonamesCountryLocaleService
                 if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
                     ->findOneBy(array(
                         'geonameId' => $geonameId,
-                        'locale' => $countryLang->lang
+                        'locale' => strtolower($countryLang->lang)
                     ))) {
                     $newCountryLocale = new GeonamesCountryLocale();
                     $newCountryLocale
@@ -95,7 +92,6 @@ class GeonamesCountryLocaleService
 
     public function getCountryNamesForLocale(string $locale): JsonResponse
     {
-        //set_time_limit(0);
         $response = new JsonResponse();
         $content = [];
         $localesCacheKey = 'locales_' . $locale;
@@ -113,7 +109,6 @@ class GeonamesCountryLocaleService
                     if (
                         $preferredLocalesList[$i]->getGeonameId() == $shortLocale->getGeonameId()
                     ) {
-                        unset($preferredLocalesList[$i]);
                         $preferredLocalesList[$i] = $shortLocale;
                     }
                 }
