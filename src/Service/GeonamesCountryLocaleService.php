@@ -104,17 +104,20 @@ class GeonamesCountryLocaleService
             $shortLocalesList = $this->entityManager->getRepository(GeonamesCountryLocale::class)
                 ->findPreferredAndShortLocales($locale);
 
-            for ($i = 0; $i < count($preferredLocalesList); $i++) {
-                foreach ($shortLocalesList as $shortLocale) {
+            foreach ($preferredLocalesList as $preferredIndex => $preferredLocale) {
+                foreach ($shortLocalesList as $shortIndex => $shortLocale) {
                     if (
-                        $preferredLocalesList[$i]->getGeonameId() == $shortLocale->getGeonameId()
+                        $preferredLocale->getGeonameId() == $shortLocale->getGeonameId()
                     ) {
-                        $preferredLocalesList[$i] = $shortLocale;
+                        unset($preferredLocalesList[$preferredIndex]);
+                        $preferredLocalesList[$preferredIndex] = $shortLocale;
+                        unset($shortLocalesList[$shortIndex]);
                     }
                 }
             }
+            $completeList = array_merge($preferredLocalesList, $shortLocalesList);
 
-            foreach ($preferredLocalesList as $countryLocale) {
+            foreach ($completeList as $countryLocale) {
                 $entry['countryCode'] = $countryLocale->getCountryCode();
                 $entry['geonameId'] = $countryLocale->getGeonameId();
                 $entry['name'] = $countryLocale->getName();
