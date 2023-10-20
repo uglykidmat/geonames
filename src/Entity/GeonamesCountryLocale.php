@@ -110,10 +110,6 @@ class GeonamesCountryLocale
 
     public function isPrefAndShort(): ?bool
     {
-        if ($this->isShortName && $this->isPreferredName) {
-            return true;
-        }
-
-        return false;
+        return ($this->isShortName && $this->isPreferredName);
     }
 }
