@@ -24,10 +24,10 @@ class GeonamesCountryLocaleService
     {
         $output = [];
         if ($idsList = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountriesGeonameIds_' . $file . '.json'))) {
+            $outputCount = 0;
             foreach ($idsList as $geonameId => $uselessvalue) {
                 $countryResponse = $this->apiservice->getJsonSearch($geonameId);
-                $countryLangs = $countryResponse->alternateNames;
-                foreach ($countryLangs as $countryLang) {
+                foreach ($countryResponse->alternateNames as $countryLang) {
                     if (isset($countryLang->lang)) {
                         if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
                             ->findOneBy(array(
@@ -40,15 +40,16 @@ class GeonamesCountryLocaleService
                                 ->setCountryCode($countryResponse->countryCode)
                                 ->setName($countryLang->name)
                                 ->setLocale(strtolower($countryLang->lang))
-                                ->setIsPreferredName($countryLang->isPreferredName ?? null);
+                                ->setIsPreferredName($countryLang->isPreferredName ?? null)
+                                ->setIsShortName($countryLang->isShortName ?? null);
                             $this->entityManager->persist($newCountryLocale);
-
-                            $output[] = [$newCountryLocale->getCountryCode() => $newCountryLocale->getLocale()];
                         }
                     }
+                    $outputCount++;
                 }
 
                 $this->entityManager->flush();
+                $output[0] = $outputCount;
             }
             if (empty($output)) {
                 (string)$output = "all elements in this file have already been imported";
@@ -60,10 +61,9 @@ class GeonamesCountryLocaleService
     public function updateCountrySingle(int $geonameId): string
     {
         $countryResponse = $this->apiservice->getJsonSearch($geonameId);
-        $countryLangs = $countryResponse->alternateNames;
         $output = '';
 
-        foreach ($countryLangs as $countryLang) {
+        foreach ($countryResponse->alternateNames as $countryLang) {
             if (isset($countryLang->lang)) {
                 if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
                     ->findOneBy(array(
@@ -76,7 +76,8 @@ class GeonamesCountryLocaleService
                         ->setCountryCode($countryResponse->countryCode)
                         ->setName($countryLang->name)
                         ->setLocale(strtolower($countryLang->lang))
-                        ->setIsPreferredName($countryLang->isPreferredName ?? null);
+                        ->setIsPreferredName($countryLang->isPreferredName ?? null)
+                        ->setIsShortName($countryLang->isShortName ?? null);
                     $this->entityManager->persist($newCountryLocale);
 
                     $output .= $newCountryLocale->getCountryCode() .
@@ -94,6 +95,7 @@ class GeonamesCountryLocaleService
 
     public function getCountryNamesForLocale(string $locale): JsonResponse
     {
+        //set_time_limit(0);
         $response = new JsonResponse();
         $content = [];
         $localesCacheKey = 'locales_' . $locale;
@@ -101,11 +103,23 @@ class GeonamesCountryLocaleService
         if ($localesCachedData->isHit()) {
             return $response->setContent($localesCachedData->get());
         } else {
-            foreach ($this->entityManager->getRepository(GeonamesCountryLocale::class)
-                ->findBy(
-                    array('locale' => $locale, 'isPreferredName' => true),
-                    array('countryCode' => 'ASC')
-                ) as $countryLocale) {
+            $preferredLocalesList = $this->entityManager->getRepository(GeonamesCountryLocale::class)
+                ->findPreferredLocales($locale);
+            $shortLocalesList = $this->entityManager->getRepository(GeonamesCountryLocale::class)
+                ->findPreferredAndShortLocales($locale);
+
+            for ($i = 0; $i < count($preferredLocalesList); $i++) {
+                foreach ($shortLocalesList as $shortLocale) {
+                    if (
+                        $preferredLocalesList[$i]->getGeonameId() == $shortLocale->getGeonameId()
+                    ) {
+                        unset($preferredLocalesList[$i]);
+                        $preferredLocalesList[$i] = $shortLocale;
+                    }
+                }
+            }
+
+            foreach ($preferredLocalesList as $countryLocale) {
                 $entry['countryCode'] = $countryLocale->getCountryCode();
                 $entry['geonameId'] = $countryLocale->getGeonameId();
                 $entry['name'] = $countryLocale->getName();
