@@ -45,4 +45,25 @@ class GeonamesCountryLocaleRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findPreferredAndShortLocales($locale): array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->andWhere('g.isPreferredName = true')
+            ->andWhere('g.isShortName = true')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPreferredLocales($locale): array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->andWhere('g.isPreferredName = true')
+            ->andWhere('g.isShortName IS null')
+            ->getQuery()
+            ->getResult();
+    }
 }

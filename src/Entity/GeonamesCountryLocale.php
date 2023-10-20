@@ -28,6 +28,9 @@ class GeonamesCountryLocale
     #[ORM\Column(nullable: true)]
     private ?bool $isPreferredName = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isShortName = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,5 +94,26 @@ class GeonamesCountryLocale
         $this->isPreferredName = $isPreferredName;
 
         return $this;
+    }
+
+    public function isIsShortName(): ?bool
+    {
+        return $this->isShortName;
+    }
+
+    public function setIsShortName(?bool $isShortName): static
+    {
+        $this->isShortName = $isShortName;
+
+        return $this;
+    }
+
+    public function isPrefAndShort(): ?bool
+    {
+        if ($this->isShortName && $this->isPreferredName) {
+            return true;
+        }
+
+        return false;
     }
 }
