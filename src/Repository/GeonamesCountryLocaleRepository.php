@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\GeonamesCountryLocale;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<GeonamesCountryLocale>
@@ -21,49 +22,15 @@ class GeonamesCountryLocaleRepository extends ServiceEntityRepository
         parent::__construct($registry, GeonamesCountryLocale::class);
     }
 
-    //    /**
-    //     * @return GeonamesCountryLocale[] Returns an array of GeonamesCountryLocale objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?GeonamesCountryLocale
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-    public function findPreferredAndShortLocales($locale): array
+    public function findLocales($locale): array
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.locale = :locale')
-            ->setParameter('locale', $locale)
-            ->andWhere('g.isPreferredName = true')
-            ->andWhere('g.isShortName = true')
-            ->getQuery()
-            ->getResult();
-    }
+        $connection = $this->getEntityManager()->getConnection();
+        $query =
+            'SELECT g.geoname_id, g.country_code,
+                (SELECT name FROM geonames_country_locale as gcl WHERE gcl.geoname_id = g.geoname_id AND gcl.locale = g.locale ORDER BY gcl.is_preferred_name, gcl.is_short_name LIMIT 1)  
+            FROM geonames_country_locale as g WHERE g.locale = :locale GROUP BY g.geoname_id, g.locale, g.country_code';
+        $resultSet = $connection->executeQuery($query, ['locale' => $locale]);
 
-    public function findPreferredLocales($locale): array
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.locale = :locale')
-            ->setParameter('locale', $locale)
-            ->andWhere('g.isPreferredName = true')
-            ->andWhere('g.isShortName IS null')
-            ->getQuery()
-            ->getResult();
+        return $resultSet->fetchAllAssociative();
     }
 }
