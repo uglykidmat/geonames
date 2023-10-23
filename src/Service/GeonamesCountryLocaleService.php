@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use App\Entity\GeonamesCountryLocale;
 use App\Entity\GeonamesTranslation;
+use App\Entity\GeonamesCountryLocale;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Interface\GeonamesAPIServiceInterface;
@@ -93,55 +93,44 @@ class GeonamesCountryLocaleService
     public function getCountryNamesForLocale(string $locale): JsonResponse
     {
         $response = new JsonResponse();
-        $content = [];
         $localesCacheKey = 'locales_' . $locale;
         $localesCachedData = $this->redisCache->getItem($localesCacheKey);
         if ($localesCachedData->isHit()) {
             return $response->setContent($localesCachedData->get());
         } else {
-            $preferredLocalesList = $this->entityManager->getRepository(GeonamesCountryLocale::class)
-                ->findPreferredLocales($locale);
-            $shortLocalesList = $this->entityManager->getRepository(GeonamesCountryLocale::class)
-                ->findPreferredAndShortLocales($locale);
-
-            foreach ($preferredLocalesList as $preferredIndex => $preferredLocale) {
-                foreach ($shortLocalesList as $shortIndex => $shortLocale) {
-                    if (
-                        $preferredLocale->getGeonameId() == $shortLocale->getGeonameId()
-                    ) {
-                        unset($preferredLocalesList[$preferredIndex]);
-                        $preferredLocalesList[$preferredIndex] = $shortLocale;
-                        unset($shortLocalesList[$shortIndex]);
-                    }
-                }
-            }
-            $completeList = array_merge($preferredLocalesList, $shortLocalesList);
-
-            foreach ($completeList as $countryLocale) {
-                $entry['countryCode'] = $countryLocale->getCountryCode();
-                $entry['geonameId'] = $countryLocale->getGeonameId();
-                $entry['name'] = $countryLocale->getName();
-                $content[] = $entry;
-            }
-
+            $baseLocales = $this->entityManager->getRepository(GeonamesCountryLocale::class)
+                ->findLocales($locale);
             if ($translationOverrides = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findBy(
-                    array('locale' => $locale, 'fcode' => 'COUNTRY')
+                    ['locale' => $locale, 'fcode' => 'COUNTRY']
                 )
             ) {
-                foreach ($translationOverrides as $override) {
-                    unset($content[$override->getGeonameId()]);
-                    $entry['countryCode'] = $override->getCountryCode();
-                    $entry['geonameId'] = $override->getGeonameId();
-                    $entry['name'] = $override->getName();
-                    $content[] = $entry;
+                foreach ($baseLocales as $baseKey => $baseValue) {
+                    foreach ($translationOverrides as $overrideKey => $overrideValue) {
+                        if (
+                            $baseValue['geoname_id'] == $overrideValue->getGeonameId()
+                        ) {
+                            unset($baseLocales[$baseKey]);
+                            $newValue['geoname_id'] = $overrideValue->getGeonameId();
+                            $newValue['country_code'] = $overrideValue->getCountryCode();
+                            $newValue['name'] = $overrideValue->getName();
+                            $baseLocales[] = $newValue;
+                            unset($translationOverrides[$overrideKey]);
+                        }
+                    }
+                }
+
+                foreach ($translationOverrides as $overrideValue) {
+                    $newValue['geoname_id'] = $overrideValue->getGeonameId();
+                    $newValue['country_code'] = $overrideValue->getCountryCode();
+                    $newValue['name'] = $overrideValue->getName();
+                    $baseLocales[] = $newValue;
                 }
             }
         }
-
-        $localesCachedData->set(json_encode($content));
+        $localesCachedData->set(json_encode(array_values($baseLocales)));
         $this->redisCache->save($localesCachedData);
 
-        return $response->setContent(json_encode($content));
+        return $response->setContent(json_encode(array_values($baseLocales)));
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\GeonamesCountryLocale;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
