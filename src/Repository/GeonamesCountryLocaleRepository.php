@@ -25,7 +25,7 @@ class GeonamesCountryLocaleRepository extends ServiceEntityRepository
     {
         $connection = $this->getEntityManager()->getConnection();
         $query =
-            'SELECT g.geoname_id, g.country_code,
+            'SELECT g.geoname_id AS "geonameId", g.country_code AS "countryCode",
                 (SELECT name FROM geonames_country_locale as gcl WHERE gcl.geoname_id = g.geoname_id AND gcl.locale = g.locale ORDER BY gcl.is_preferred_name, gcl.is_short_name LIMIT 1)  
             FROM geonames_country_locale as g WHERE g.locale = :locale GROUP BY g.geoname_id, g.locale, g.country_code';
         $resultSet = $connection->executeQuery($query, ['locale' => $locale]);
