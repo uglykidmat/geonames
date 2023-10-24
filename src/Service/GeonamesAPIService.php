@@ -46,7 +46,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
         }
-
         $this->responseCheck($postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
@@ -95,7 +94,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
         }
-
         if (!empty($latlngSearchResponse->geonames) && is_array($latlngSearchResponse->geonames)) {
 
             return reset($latlngSearchResponse->geonames)->geonameId;
@@ -129,8 +127,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     . 'countrySubdivisionJSON',
                 ['query' => [
                     'style' => 'full',
-                    'maxRows' => '10',
-                    'radius' => '40',
+                    'maxRows' => '1',
+                    'radius' => '5',
                     'level' => '3',
                     'lat' => $lat,
                     'lng' => $lng,
@@ -149,11 +147,9 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
     {
         $response = new JsonResponse();
 
-        $countriesUrl = '';
         foreach ($countries as $country) {
-            $countriesUrl .= '&country=' . $country;
+            $countriesArray[] = ['country' => $country];
         }
-
         try {
             $searchResponse = $this->client->request(
                 'GET',
@@ -165,15 +161,16 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     'formatted' => 'true',
                     'startRow' => $startRow,
                     'username' => $this->token,
-                    'featureCode' => $fCode . $countriesUrl,
+                    'featureCode' => $fCode,
+                    ...$countriesArray
                 ],]
             );
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
         }
-
         $this->responseCheck($searchResponse, "search");
         $response->setContent($searchResponse->getContent());
+
         return $response;
     }
 

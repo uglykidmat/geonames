@@ -383,12 +383,12 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getAdminCodes(): array
+    public function getAdminCodes(bool $altCodes = false): array
     {
         $adminCodes = array(
-            isset($this->adminCodeAlt1) ? $this->adminCodeAlt1 : $this->adminCode1,
-            isset($this->adminCodeAlt2) ? $this->adminCodeAlt2 : $this->adminCode2,
-            isset($this->adminCodeAlt3) ? $this->adminCodeAlt3 : $this->adminCode3,
+            $altCodes && isset($this->adminCodeAlt1) ? $this->adminCodeAlt1 : $this->adminCode1,
+            $altCodes && isset($this->adminCodeAlt2) ? $this->adminCodeAlt2 : $this->adminCode2,
+            $altCodes && isset($this->adminCodeAlt3) ? $this->adminCodeAlt3 : $this->adminCode3,
             $this->adminCode4
         );
         return $adminCodes;
