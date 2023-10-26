@@ -101,6 +101,16 @@ To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' 
 /administrativedivisions/alternatives/update
 ```
 
+## Security
+`/status` is publicly available.
+`/geonames/search` is accessible via a Bearer Token.
+`/*` any other page is accessible via basic_auth.
+
+## Api Documentation
+`/api/doc.json` for a json output
+`/api/doc` for the Nelmio API documentation
+`/api` for the standard API documentation
+
 ## Usage/Examples
 The Geoname controller has a few functions :
 
