@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 class GeonamesController extends AbstractController
 {
@@ -15,7 +16,8 @@ class GeonamesController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'welcome')]
+    #[Route('/', name: 'welcome', methods: ['GET'])]
+    #[OA\Tag(name: 'Geonames Homepage')]
     public function welcome(RouterInterface $router): Response
     {
         $geonamesPackage = new Package(new EmptyVersionStrategy());

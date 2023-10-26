@@ -8,8 +8,10 @@ use App\Service\GeonamesCountryLevelService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use OpenApi\Attributes as OA;
 
 #[Route('/country/level')]
+#[OA\Tag(name: 'Geonames Countries Level')]
 class GeonamesCountryLevelController extends AbstractController
 {
     public function __construct(
@@ -18,7 +20,7 @@ class GeonamesCountryLevelController extends AbstractController
     ) {
     }
 
-    #[Route('/update', name: 'country_level_update')]
+    #[Route('/update', name: 'country_level_update', methods: ['GET'])]
     public function update(): JsonResponse
     {
         $updatedLevels = [];
@@ -42,7 +44,7 @@ class GeonamesCountryLevelController extends AbstractController
         return new JsonResponse(['Status' => 'Success', 'Countries OK' => implode(',', $levelsFound), 'Countries KO' => implode(',', $updatedLevels)]);
     }
 
-    #[Route('/get', name: 'country_level_get')]
+    #[Route('/get', name: 'country_level_get', methods: ['GET'])]
     public function getAllLevels(): JsonResponse
     {
         $response = new JsonResponse();
@@ -56,7 +58,7 @@ class GeonamesCountryLevelController extends AbstractController
         return $response;
     }
 
-    #[Route('/get/{countrycode}', name: 'country_level_get_country_code')]
+    #[Route('/get/{countrycode}', name: 'country_level_get_country_code', methods: ['GET'])]
     public function get(string $countrycode): JsonResponse
     {
         $countryLevel = $this->entityManager->getRepository(GeonamesCountryLevel::class)

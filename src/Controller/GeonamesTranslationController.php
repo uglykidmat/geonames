@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Attributes as OA;
 
 #[Route('/translation')]
+#[OA\Tag(name: 'Geonames Translations')]
 class GeonamesTranslationController extends AbstractController
 {
     public function __construct(
@@ -24,7 +25,6 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('/export', name: 'translation_export', methods: ['GET', 'HEAD'])]
-    #[OA\Tag(name: 'Geonames Translations')]
     public function export(): Response
     {
         $response = new Response();
@@ -39,7 +39,6 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('', name: 'translation_get', methods: ['GET', 'HEAD'])]
-    #[OA\Tag(name: 'Geonames Translations')]
     public function get(): JsonResponse
     {
         $getResponse = $this->entityManager->getRepository(GeonamesTranslation::class)->findAll();
@@ -49,7 +48,6 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('', name: 'translation_post', methods: ['POST'])]
-    #[OA\Tag(name: 'Geonames Translations')]
     public function post(
         Request $postRequest,
     ): JsonResponse {
@@ -61,7 +59,6 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('', name: 'translation_patch', methods: ['PATCH'])]
-    #[OA\Tag(name: 'Geonames Translations')]
     public function patch(
         Request $patchRequest,
     ): JsonResponse {
@@ -73,7 +70,6 @@ class GeonamesTranslationController extends AbstractController
     }
 
     #[Route('', name: 'translation_delete', methods: ['DELETE'])]
-    #[OA\Tag(name: 'Geonames Translations')]
     public function delete(
         Request $deleteRequest,
     ): JsonResponse {

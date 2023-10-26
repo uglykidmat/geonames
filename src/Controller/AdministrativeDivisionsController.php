@@ -14,7 +14,7 @@ class AdministrativeDivisionsController extends AbstractController
     {
     }
 
-    #[Route('/zipcodes', name: 'administrative_divisions_zipcodes')]
+    #[Route('/zipcodes', name: 'administrative_divisions_zipcodes', methods: ['GET'])]
     public function zipcodes(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/ZipCodes.php';
@@ -24,7 +24,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/zipcodesexceptions', name: 'administrative_divisions_zipcodesexceptions')]
+    #[Route('/zipcodesexceptions', name: 'administrative_divisions_zipcodesexceptions', methods: ['GET'])]
     public function zipcodesexceptions(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/ZipCodes_exceptions.php';
@@ -34,7 +34,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/txttojson', name: 'administrative_divisions_txttojson')]
+    #[Route('/txttojson', name: 'administrative_divisions_txttojson', methods: ['GET'])]
     public function txttojson(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/txt_to_json.php';
@@ -44,7 +44,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/jsonsortbyvalue', name: 'administrative_divisions_jsonsortbyvalue')]
+    #[Route('/jsonsortbyvalue', name: 'administrative_divisions_jsonsortbyvalue', methods: ['GET'])]
     public function jsonsortbyvalue(): Response
     {
         require_once __DIR__ . '/../../administrative_divisions/zipcodes/json_sort_by_value.php';
@@ -54,7 +54,7 @@ class AdministrativeDivisionsController extends AbstractController
         ]);
     }
 
-    #[Route('/alternatives/update', name: 'alternatives_update')]
+    #[Route('/alternatives/update', name: 'alternatives_update', methods: ['GET'])]
     public function updateAlternativeCodes(): Response
     {
         return $this->service->updateAlternativeCodes();

@@ -10,8 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\SerializerInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/geonamesapi', name: 'api_home')]
+#[OA\Tag(name: 'Geonames API')]
 class GeonamesAPIController extends AbstractController
 {
     public function __construct(
@@ -21,7 +23,7 @@ class GeonamesAPIController extends AbstractController
     ) {
     }
 
-    #[Route('/postalcodesearch/{postalcode}', name: 'api_postalcodesearch')]
+    #[Route('/postalcodesearch/{postalcode}', name: 'api_postalcodesearch', methods: ['GET'])]
     public function postalCodeSearch(
         string $postalcode
     ): JsonResponse {
@@ -30,7 +32,7 @@ class GeonamesAPIController extends AbstractController
         return $response;
     }
 
-    #[Route('/postalcodelookup/{postalcode}-{countrycode}', name: 'api_postalcodelookup')]
+    #[Route('/postalcodelookup/{postalcode}-{countrycode}', name: 'api_postalcodelookup', methods: ['GET'])]
     public function postalCodeLookup(
         string $postalcode,
         string $countrycode
@@ -45,7 +47,7 @@ class GeonamesAPIController extends AbstractController
         return $response;
     }
 
-    #[Route('/latlng/{lat}-{lng}', name: 'api_latlng')]
+    #[Route('/latlng/{lat}-{lng}', name: 'api_latlng', methods: ['GET'])]
     public function latLngSearch(
         GeonamesDBCachingService $cachingService,
         float $lat,
@@ -67,7 +69,7 @@ class GeonamesAPIController extends AbstractController
         return $response->setContent($coordinates);
     }
 
-    #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng')]
+    #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng', methods: ['GET'])]
     public function countrySubDivisionSearch(
         float $lat,
         float $lng
