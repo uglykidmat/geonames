@@ -18,7 +18,6 @@ class AdministrativeDivisionsService
         private string $redisDsn
     ) {
     }
-
     public function purgeAdminDivisions(string $fcode): string
     {
         if ($this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->removeByFcode($fcode)) {
