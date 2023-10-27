@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesCountryLevel;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeonamesAdministrativeDivision;

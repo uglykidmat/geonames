@@ -21,18 +21,15 @@ services:
             - '../src/Kernel.php'
 
     App\Service\GeonamesAPIService:
-        autowire: true
         arguments:
             $token: '%env(GEONAMES_TOKEN)%'
             $urlBase: '%env(GEONAMES_BASE_URL)%'
     
     App\Service\GeonamesCountryService:
-        autowire: true
         arguments:
             $token: '%env(GEONAMES_TOKEN)%'
 
     App\Service\GeonamesSearchService:
-        autowire: true
         arguments:
             $redisDsn: '%env(REDIS_HOST)%'
 
@@ -41,7 +38,10 @@ services:
             $redisDsn: '%env(REDIS_HOST)%'
             
     App\Service\AdministrativeDivisionsService:
-        autowire: true
+        arguments:
+            $redisDsn: '%env(REDIS_HOST)%'
+
+    App\Service\AdministrativeDivisionLocaleService:
         arguments:
             $redisDsn: '%env(REDIS_HOST)%'
 

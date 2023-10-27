@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
+use App\Repository\AdministrativeDivisionLocaleRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\AdministrativeDivisionsService;
+use App\Service\AdministrativeDivisionLocaleService;
 
 #[Route('/administrativedivisions')]
 class AdministrativeDivisionsController extends AbstractController
 {
-    public function __construct(private AdministrativeDivisionsService $service)
-    {
+    public function __construct(
+        private AdministrativeDivisionsService $service,
+        private AdministrativeDivisionLocaleService $localeService
+    ) {
     }
 
     #[Route('/zipcodes', name: 'administrative_divisions_zipcodes', methods: ['GET'])]
@@ -58,5 +62,11 @@ class AdministrativeDivisionsController extends AbstractController
     public function updateAlternativeCodes(): Response
     {
         return $this->service->updateAlternativeCodes();
+    }
+
+    #[Route('/locales/{fcode}/{locale}', name: 'locales_get', methods: ['GET', 'HEAD'])]
+    public function getSubdivisionsLocales(string $fcode, string $locale): Response
+    {
+        return $this->localeService->getSubdivisionsLocales($fcode, $locale);
     }
 }

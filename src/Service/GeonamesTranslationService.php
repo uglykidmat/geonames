@@ -50,25 +50,6 @@ class GeonamesTranslationService
         $dbInsertionDone = array();
 
         foreach ($postContent as $postValue) {
-            if ($postValue->fcode === 'COUNTRY') {
-                if ($this->entityManager
-                    ->getRepository(GeonamesCountryLocale::class)->findBy(array(
-                        'geonameId' => $postValue->geonameId,
-                        'locale' => $postValue->locale
-                    ))
-                ) {
-                    $dbInsertionFound[] = 'Country ' . $postValue->geonameId;
-                } else {
-                    $newCountryLocale = new GeonamesCountryLocale();
-                    $newCountryLocale
-                        ->setGeonameId($postValue->geonameId)
-                        ->setName($postValue->name)
-                        ->setCountryCode($postValue->countryCode)
-                        ->setLocale(strtolower($postValue->locale));
-                    $this->entityManager->persist($newCountryLocale);
-                }
-            }
-
             if ($this->entityManager
                 ->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
@@ -76,7 +57,7 @@ class GeonamesTranslationService
                     'locale' => $postValue->locale
                 ))
             ) {
-                $dbInsertionFound[] = 'SubDivision ' . $postValue->geonameId;
+                $dbInsertionFound[] = $postValue->geonameId;
             } else {
                 $postTranslation = (new GeonamesTranslation())
                     ->setGeonameId($postValue->geonameId)
@@ -91,7 +72,7 @@ class GeonamesTranslationService
         }
 
         if (count($dbInsertionDone) == 0) {
-            $postResponse->setContent('{"POST" : "Success", "GeonameIds already found" : "' . implode(',', $dbInsertionFound) . '"}');
+            $postResponse->setContent('{"POST" : "Notification", "GeonameIds already found" : "' . implode(',', $dbInsertionFound) . '"}');
         } else if (count($dbInsertionFound) == 0) {
             $postResponse->setContent('{"POST" : "Success", "GeonameIds inserted" : "' . implode(',', $dbInsertionDone) . '"}');
             $postResponse->setStatusCode(201);
@@ -108,23 +89,6 @@ class GeonamesTranslationService
         $patchResponse = new JsonResponse();
         $dbPatchDone = array();
         foreach ($patchContent as $patchValue) {
-            if ($patchValue->fcode === 'COUNTRY') {
-                if ($countryLocaleToPatch = $this->entityManager
-                    ->getRepository(GeonamesCountryLocale::class)->findOneBy(array(
-                        'geonameId' => $patchValue->geonameId,
-                        'locale' => $patchValue->locale
-                    ))
-                ) {
-                    $countryLocaleToPatch
-                        ->setGeonameId($patchValue->geonameId)
-                        ->setName($patchValue->name)
-                        ->setCountryCode($patchValue->countryCode)
-                        ->setLocale(strtolower($patchValue->locale));
-                    $this->entityManager->persist($countryLocaleToPatch);
-                    $dbPatchDone[] = $patchValue->geonameId;
-                }
-            }
-
             if ($translationToPatch = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
                     'geonameId' => $patchValue->geonameId,
@@ -142,7 +106,9 @@ class GeonamesTranslationService
         $this->entityManager->flush();
 
         $patchResponse->setStatusCode(200);
-        $patchResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "' . implode(',', $dbPatchDone) . '"}');
+        if (empty($dbPatchDone)) {
+            $patchResponse->setContent('{"PATCH" : "Notification", "No IDs were found."}');
+        } else $patchResponse->setContent('{"PATCH" : "Success", "GeonameIds updated" : "' . implode(',', $dbPatchDone) . '"}');
 
         return $patchResponse;
     }
@@ -152,7 +118,6 @@ class GeonamesTranslationService
         $deleteResponse = new JsonResponse();
         $dbDeleteDone = array();
         foreach ($deleteContent as $deleteValue) {
-
             if ($translationToDelete = $this->entityManager->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
                     'geonameId' => $deleteValue->geonameId,
@@ -167,7 +132,9 @@ class GeonamesTranslationService
         $this->entityManager->flush();
 
         $deleteResponse->setStatusCode(200);
-        $deleteResponse->setContent('{"DELETE" : "Success", "GeonameIds deleted" : "' . implode(',', $dbDeleteDone) . '"}');
+        if (empty($dbDeleteDone)) {
+            $deleteResponse->setContent('{"DELETE" : "Notification", "No IDs were found."}');
+        } else $deleteResponse->setContent('{"DELETE" : "Success", "GeonameIds deleted" : "' . implode(',', $dbDeleteDone) . '"}');
 
         return $deleteResponse;
     }
