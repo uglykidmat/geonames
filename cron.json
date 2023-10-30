@@ -1,31 +1,19 @@
 {
     "jobs": [
         {
-            "command": "0 1 1 */6 0 php bin/console countryupdate"
+            "command": "0 1 1 */6 0 php bin/console app:cu"
         },
         {
-            "command": "5 1 1 */4 0 php bin/console app:clu 1"
+            "command": "5 1 1 */4 0 php bin/console app:clu"
         },
         {
-            "command": "6 1 1 */4 0 php bin/console app:clu 2"
+            "command": "15 1 1 */4 0 php bin/console app:clvu"
         },
         {
-            "command": "7 1 1 */4 0 php bin/console app:clu 3"
+            "command": "20 1 1 */4 0 php bin/console app:cgu"
         },
         {
-            "command": "8 1 1 */4 0 php bin/console app:clu 4"
-        },
-        {
-            "command": "9 1 1 */4 0 php bin/console app:clu 5"
-        },
-        {
-            "command": "10 1 1 */4 0 php bin/console app:clvu"
-        },
-        {
-            "command": "11 1 1 */4 0 php bin/console app:cgu"
-        },
-        {
-            "command": "12 1 1 */4 0 php bin/console app:cbu"
+            "command": "25 1 1 */4 0 php bin/console app:cbu"
         }
     ]
 }

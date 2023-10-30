@@ -4,9 +4,9 @@ namespace App\Command;
 
 use App\Service\GeonamesCountryLocaleService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,19 +21,23 @@ class CountryLocaleUpdateCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this->addArgument('file', InputArgument::REQUIRED, 'file');
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $io = new SymfonyStyle($input, $output);
-        $file = $input->getArgument('file');
-        $io->title('Fetching :');
-        $io->text('Running...');
-        $result = $this->service->updateCountryBatch($file);
-        $io->success('Success. Translations for geonameIds in file ' . $file . ' : ' . $result);
+        $progressBar = new ProgressBar($output, 5);
+
+        $io->text("🔜 Running...\r 💀 Please be patient, the hydration process can take up to 4 minutes !");
+        $progressBar->start();
+        $fileNum = 0;
+
+        while (++$fileNum <= 5) {
+            if ($this->service->updateCountryBatch($fileNum)) {
+                $progressBar->advance();
+            }
+        }
+
+        $progressBar->finish();
+        $io->success('Success : country locales updated successfully.');
 
         return Command::SUCCESS;
     }

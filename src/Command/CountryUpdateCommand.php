@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(
     name: 'CountryUpdate',
     description: 'Performs a purge of the "geonames_country" table and fills it with information from geonames.',
-    aliases: ['countryupdate']
+    aliases: ['app:cu']
 )]
 class CountryUpdateCommand extends Command
 {
