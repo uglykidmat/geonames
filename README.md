@@ -2,6 +2,8 @@
 
 "Reverse/Geocoding Webservices" : this repository contains the Geonames Controller, built on a Symfony 6.3.1 skeleton.
 
+The general information can be found here : https://www.notion.so/gtrsuite/Geonames-5561d74e241c4fee8dcf0ee39c4a1221
+
 ## Deployment
 
 #### 1. Download/Installation
@@ -32,18 +34,15 @@ the database should then be ready for hydration.
 - basic information ( ⚠️ make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
 
 ```bash
-php bin/console countryupdate
+php bin/console app:cu
 ```
 #### 2. update the countries' locales (translated names)
 - Countries names translated into different languages. The table "country_locale" must first be updated with geonames information :
 ```bash
-php bin/console app:clu 1
-php bin/console app:clu 2
-php bin/console app:clu 3
-php bin/console app:clu 4
-php bin/console app:clu 5
+php bin/console app:clu
 ```
-ℹ️ The Ids are split into different files since loading them all causes a timeout error. Importing a file results in about 9000 entries in the database.
+ℹ️ This command runs a few subprocesses which manage the different files containing the Ids, since loading them all at once caused a timeout error.
+Importing these files should result in about 43000 new entries in the database.
 
 To update all the names ("locales") for a specific country, you need its geonamesId (find it here https://www.geonames.org/countries/, click on the desired country name, then on the name again, the ID will be in the URL). Then run :
 
@@ -58,26 +57,38 @@ to get all of France's names, for example.
 ```php
 /country/level/update
 ```
+or
+```bash
+php bin/console app:clvu
+```
 
 #### 4. Update GeoJson data
 
-⚠️ Make sure the file 'geonames_geojson.json' is in the 'base_data' root folder
+⚠️ Make sure the file 'geonames_geojson.json' is in the 'base_data' root folder :
 ```php
 /geojson/update
 ```
+or
+```bash
+php bin/console app:cgu
+```
+
 Will update the database entries (countries or administrative divisions) if their geonameID is found.
 
-5. Country Barycenters
+#### 5. Country Barycenters
 
 ⚠️ Make sure the file 'geonames_country_barycenters.json' is in the 'base_data' root folder.
-Then visit : `/country/barycenters` and the country table will be updated accordingly.
+Then visit : `/country/barycenters/update` and the country table will be updated accordingly.
 
 To update a specific country's barycenter :
 ```php
 /country/barycenter/{string countryCode}
 ```
+or
+```bash
+php bin/console app:cbu
+```
 This script will compute the approximate barycenter of the country and update it in the database.
-
 
 ## Subdivisions hydration
 - Update your `GEONAMES_TOKEN` variable in the correct `.env`file.
@@ -101,10 +112,10 @@ To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' 
 /administrativedivisions/alternatives/update
 ```
 
-## Security
-`/status` is publicly available.
-`/geonames/search` is accessible via a Bearer Token.
-`/*` any other page is accessible via basic_auth.
+## Security information
+- `/status` is publicly available.
+- `/geonames/search` is accessible via a Bearer Token.
+- `/*` any other page is accessible via basic_auth.
 
 ## Api Documentation
 `/api/doc.json` for a json output
@@ -266,8 +277,3 @@ Running the tests :
 ```bash
 php vendor/bin/phpunit --testdox
 ```
-
-## Security information
-- `/status` is publicly available.
-- `/geonames/search` is accessible via a Bearer Token.
-- `/*` any other page is accessible via basic_auth.
