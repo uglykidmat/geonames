@@ -26,7 +26,7 @@ class GeojsonCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Starting...');
         $io->text($this->controller->update());
-        $io->success('Success. Countries levels have been successfully updated.');
+        $io->success('Success. Countries data have been successfully updated.');
 
         return Command::SUCCESS;
     }

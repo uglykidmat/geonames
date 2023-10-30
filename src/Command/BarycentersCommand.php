@@ -26,7 +26,7 @@ class BarycentersCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Starting...');
         $io->text($this->controller->updateBarycenters());
-        $io->success('Success. Countries barycenters have been successfully updated.');
+        $io->success('Success. Country barycenters have been successfully updated.');
 
         return Command::SUCCESS;
     }
