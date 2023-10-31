@@ -32,7 +32,7 @@ class GeonamesAPIController extends AbstractController
         return $response;
     }
 
-    #[Route('/postalcodelookup/{postalcode}-{countrycode}', name: 'api_postalcodelookup', methods: ['GET'])]
+    #[Route('/postalcodelookup/{postalcode}/{countrycode}', name: 'api_postalcodelookup', methods: ['GET'])]
     public function postalCodeLookup(
         string $postalcode,
         string $countrycode
