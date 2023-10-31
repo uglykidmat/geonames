@@ -23,6 +23,7 @@ class AdministrativeDivisionsCommand extends Command
 
     protected function configure(): void
     {
+        $this->addArgument('country', InputArgument::REQUIRED, 'country');
         $this->addArgument('fcode', InputArgument::REQUIRED, 'fcode');
         $this->addArgument('startrow', InputArgument::REQUIRED, 'startrow');
     }
@@ -30,16 +31,14 @@ class AdministrativeDivisionsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $io = new SymfonyStyle($input, $output);
+        $country = $input->getArgument('country');
         $fcode = $input->getArgument('fcode');
         $startrow = $input->getArgument('startrow');
         $io->title('Fetching :');
         $io->text('Running...');
 
-        $countries = json_decode($this->service->getCountriesLevel($fcode)->getContent());
-
-        if ($this->service->addAdminDivisions($fcode, $startrow, $countries)) {
-            $io->success('Success.');
-            $io->success('Administrative Divisions (fCode ' . $fcode . ' for countries ' . json_encode($countries) . ') have been imported from row ' . $startrow);
+        if ($serviceResult = $this->service->addAdminDivisions($fcode, $startrow, $country)) {
+            $io->success($serviceResult->getContent());
 
             return Command::SUCCESS;
         } else $io->error('Something went wrong !');

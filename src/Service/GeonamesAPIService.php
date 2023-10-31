@@ -143,30 +143,50 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         return new Response($countrySubDivisionSearchResponse->getContent());
     }
 
-    public function searchJSON(string $fCode, int $startRow, array $countries): JsonResponse
+    public function searchJSON(string $fCode, int $startRow, array|string $countries): JsonResponse
     {
         $response = new JsonResponse();
-
-        foreach ($countries as $country) {
-            $countriesArray[] = ['country' => $country];
-        }
-        try {
-            $searchResponse = $this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'searchJSON',
-                ['query' => [
-                    'style' => 'full',
-                    'maxRows' => '1000',
-                    'formatted' => 'true',
-                    'startRow' => $startRow,
-                    'username' => $this->token,
-                    'featureCode' => $fCode,
-                    ...$countriesArray
-                ],]
-            );
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
+        if (gettype($countries) != 'string') {
+            foreach ($countries as $country) {
+                $countriesArray[] = ['country' => $country];
+            }
+            try {
+                $searchResponse = $this->client->request(
+                    'GET',
+                    $this->urlBase
+                        . 'searchJSON',
+                    ['query' => [
+                        'style' => 'full',
+                        'maxRows' => '1000',
+                        'formatted' => 'true',
+                        'startRow' => $startRow,
+                        'username' => $this->token,
+                        'featureCode' => $fCode,
+                        ...$countriesArray
+                    ],]
+                );
+            } catch (\Exception $e) {
+                throw new BadRequestException('Invalid Geonames.org API token.');
+            }
+        } else {
+            try {
+                $searchResponse = $this->client->request(
+                    'GET',
+                    $this->urlBase
+                        . 'searchJSON',
+                    ['query' => [
+                        'style' => 'full',
+                        'maxRows' => '1000',
+                        'formatted' => 'true',
+                        'startRow' => $startRow,
+                        'username' => $this->token,
+                        'featureCode' => $fCode,
+                        'country' => $countries
+                    ],]
+                );
+            } catch (\Exception $e) {
+                throw new BadRequestException('Invalid Geonames.org API token.');
+            }
         }
         $this->responseCheck($searchResponse, "search");
         $response->setContent($searchResponse->getContent());

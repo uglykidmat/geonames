@@ -18,6 +18,24 @@ class AdministrativeDivisionsController extends AbstractController
     ) {
     }
 
+    #[Route('/locales/update/{countrycode}', name: 'locales_update', methods: ['GET', 'HEAD'])]
+    public function updateSubdivisionsLocales(string $countrycode): Response
+    {
+        return $this->localeService->updateSubdivisionsLocales($countrycode);
+    }
+
+    #[Route('/locales/{countrycode}/{locale}/{fcode}', name: 'locales_get', methods: ['GET', 'HEAD'])]
+    public function showSubdivisionsLocales(string $countrycode, string $locale, string $fcode): Response
+    {
+        return $this->localeService->showSubdivisionsLocales($countrycode, strtolower($locale), $fcode);
+    }
+
+    #[Route('/alternatives/update', name: 'alternatives_update', methods: ['GET'])]
+    public function updateAlternativeCodes(): Response
+    {
+        return $this->service->updateAlternativeCodes();
+    }
+
     #[Route('/zipcodes', name: 'administrative_divisions_zipcodes', methods: ['GET'])]
     public function zipcodes(): Response
     {
@@ -56,17 +74,5 @@ class AdministrativeDivisionsController extends AbstractController
         return $this->render('administrative_divisions/index.html.twig', [
             'controller_name' => 'AdministrativeDivisionsController',
         ]);
-    }
-
-    #[Route('/alternatives/update', name: 'alternatives_update', methods: ['GET'])]
-    public function updateAlternativeCodes(): Response
-    {
-        return $this->service->updateAlternativeCodes();
-    }
-
-    #[Route('/locales/{fcode}/{locale}', name: 'locales_get', methods: ['GET', 'HEAD'])]
-    public function getSubdivisionsLocales(string $fcode, string $locale): Response
-    {
-        return $this->localeService->getSubdivisionsLocales($fcode, $locale);
     }
 }

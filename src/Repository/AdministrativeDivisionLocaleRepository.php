@@ -21,28 +21,28 @@ class AdministrativeDivisionLocaleRepository extends ServiceEntityRepository
         parent::__construct($registry, AdministrativeDivisionLocale::class);
     }
 
-//    /**
-//     * @return AdministrativeDivisionLocale[] Returns an array of AdministrativeDivisionLocale objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return AdministrativeDivisionLocale[] Returns an array of AdministrativeDivisionLocale objects
+    //     */
+    // public function findByCountryCodeAndFCode($countrycode): array
+    // {
+    //     return $this->createQueryBuilder('a')
+    //         ->andWhere('a.countryCode = :cc')
+    //         ->setParameter('cc', $countrycode)
+    //         ->andWhere('a.fCode = ADM1')
+    //         ->orderBy('a.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
-//    public function findOneBySomeField($value): ?AdministrativeDivisionLocale
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?AdministrativeDivisionLocale
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

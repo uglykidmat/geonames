@@ -71,4 +71,15 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByCountryCodeADM($countrycode): ?array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.countryCode = :cc')
+            ->setParameter('cc', $countrycode)
+            ->andWhere('g.fcode LIKE :adm')
+            ->setParameter('adm', 'ADM%')
+            ->getQuery()
+            ->execute();
+    }
 }
