@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
 
 class StatusController extends AbstractController
 {
-    #[Route('/status', name: 'status')]
+    #[Route('/status', name: 'status', methods: ['GET'])]
     #[OA\Tag(name: 'Geonames Status')]
     public function status(): JsonResponse
     {
