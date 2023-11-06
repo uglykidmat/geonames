@@ -204,7 +204,7 @@ class AdministrativeDivisionsService
                 'code_up' => $countrycode,
                 'code' => $adminDiv->{'getAdminCode' . $level}($this->altCodes),
                 'name' => $name,
-                'geonameId' => $adminDiv->getGeonameId(),
+                'geonameId' => (string)$adminDiv->getGeonameId(),
             ];
         }
 
