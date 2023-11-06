@@ -165,30 +165,22 @@ class AdministrativeDivisionsService
         $apiCacheData = $this->redisCache->getItem($apiCacheKey);
         if ($apiCacheData->isHit()) {
             return $response->setContent($apiCacheData->get());
-        } else {
-
-            $level1 = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
-                ['countryCode' => $countrycode, 'fcode' => 'ADM1']
-            );
-            $level2 = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
-                ['countryCode' => $countrycode, 'fcode' => 'ADM2']
-            );
-            $level3 = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
-                ['countryCode' => $countrycode, 'fcode' => 'ADM3']
-            );
-
-            $apiLevel1 = self::buildApiResponse($level1, $locale, $countrycode, 1);
-            $apiLevel2 = self::buildApiResponse($level2, $locale, $countrycode, 2);
-            $apiLevel3 = self::buildApiResponse($level3, $locale, $countrycode, 3);
-
-            $responseContent = ['level1' => $apiLevel1, 'level2' => $apiLevel2, 'level3' => $apiLevel3];
-
-            $apiCacheData->set(json_encode($responseContent));
-            $this->redisCache->save($apiCacheData);
-            $response->setContent(json_encode($responseContent));
-
-            return $response;
         }
+
+        $responseContent = [];
+        for ($level = 1; $level <= 3; $level++) {
+            $levelList = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
+                ['countryCode' => $countrycode, 'fcode' => 'ADM' . $level]
+            );
+
+            $responseContent['level' . $level] = $this->buildApiResponse($levelList, $locale, $countrycode, $level);
+        }
+
+        $apiCacheData->set(json_encode($responseContent));
+        $this->redisCache->save($apiCacheData);
+        $response->setContent(json_encode($responseContent));
+
+        return $response;
     }
 
     public function buildApiResponse(array $adminDivsForLevel, string $locale, string $countrycode, int $level): array
@@ -196,28 +188,24 @@ class AdministrativeDivisionsService
         $apiLevelResponse = [];
 
         foreach ($adminDivsForLevel as $adminDiv) {
-            if (!$adminDivLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneBy(
+
+            // default
+            $name = $adminDiv->getName();
+
+            if ($adminDivLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneBy(
                 ['geonameId' => $adminDiv->getGeonameId(), 'locale' => $locale]
-
             )) {
-                $this->admLocService->getSubdivisionsLocalesForId($adminDiv->getGeonameId());
-
-                $entry['code_up'] = $countrycode;
-                $entry['code'] = ($level == 1) ? $adminDiv->getAdminCode1($this->altCodes) : (($level == 2) ? $adminDiv->getAdminCode2($this->altCodes) : $adminDiv->getAdminCode3($this->altCodes));
-
-                if ($fallbackLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneFallBack($adminDiv->getGeonameId(), strtolower($countrycode))) {
-                    $entry['name'] = $fallbackLocale->getName();
-                } else $entry['name'] = $adminDiv->getName();
-
-                $entry['geonameId'] = $adminDiv->getGeonameId();
-                $apiLevelResponse[] = $entry;
-            } else {
-                $entry['code_up'] = $countrycode;
-                $entry['code'] = ($level == 1) ? $adminDiv->getAdminCode1($this->altCodes) : (($level == 2) ? $adminDiv->getAdminCode2($this->altCodes) : $adminDiv->getAdminCode3($this->altCodes));
-                $entry['name'] = $adminDivLocale->getName();
-                $entry['geonameId'] = $adminDiv->getGeonameId();
-                $apiLevelResponse[] = $entry;
+                $name = $adminDivLocale->getName();
+            } else if ($fallbackLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneFallBack($adminDiv->getGeonameId(), strtolower($countrycode))) {
+                $name = $fallbackLocale->getName();
             }
+
+            $apiLevelResponse[] = [
+                'code_up' => $countrycode,
+                'code' => $adminDiv->{'getAdminCode' . $level }($this->altCodes),
+                'name' => $name,
+                'geonameId' => $adminDiv->getGeonameId(),
+            ];
         }
 
         return $apiLevelResponse;
