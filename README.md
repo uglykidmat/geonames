@@ -147,6 +147,14 @@ Handles POST requests : the content must be a JSON string following this structu
 The search will be on the coordinates, and use the postalcode/countrycode couple to find the subdivisions.
 This URL is protected by a token, if not provided you will encounter a 401 error.
 
+### POST endpoint
+```bash
+  /administrativedivisions/api/{lang}/{countryCode}
+```
+Example : /administrativedivisions/api/it/FR
+Handles GET requests for getting all the subdivision names of a country in a specific language.
+
+
 ### Translations
 
 ℹ️ "Translations" act as locales overrides. The following endpoints are used to manage these translations.

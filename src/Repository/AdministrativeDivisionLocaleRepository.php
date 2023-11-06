@@ -36,13 +36,14 @@ class AdministrativeDivisionLocaleRepository extends ServiceEntityRepository
     //         ->getResult();
     // }
 
-    //    public function findOneBySomeField($value): ?AdministrativeDivisionLocale
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findOneFallBack(int $geonameId, string $countryCode): ?AdministrativeDivisionLocale
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.geonameId = :id')
+            ->setParameter('id', $geonameId)
+            ->andWhere('a.locale = :locale')
+            ->setParameter('locale', $countryCode)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

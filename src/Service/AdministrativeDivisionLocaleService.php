@@ -30,12 +30,9 @@ class AdministrativeDivisionLocaleService
                 'fCode' => $fcode
             ]
         );
-        //dd($subDivLocales);
         foreach ($subDivLocales as $locale) {
-            //dd($locale);
             $output[] = ['name' => $locale->getName(), 'lang' => $locale->getFcode(), 'country' => $locale->getCountryCode()];
         }
-        //dd($output);
         $response->setContent(json_encode($output));
 
         return $response;
