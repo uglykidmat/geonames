@@ -2,21 +2,41 @@
 
 namespace App\Controller;
 
-use App\Repository\AdministrativeDivisionLocaleRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\AdministrativeDivisionsService;
 use App\Service\AdministrativeDivisionLocaleService;
+use App\Service\GeonamesCountryLocaleService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/administrativedivisions')]
 class AdministrativeDivisionsController extends AbstractController
 {
     public function __construct(
         private AdministrativeDivisionsService $service,
-        private AdministrativeDivisionLocaleService $localeService
+        private AdministrativeDivisionLocaleService $localeService,
+        private GeonamesCountryLocaleService $countrylocaleService
     ) {
     }
+
+    #[Route('/api/{locale}/{countrycode}', name: 'subdivisions_api', methods: ['GET', 'HEAD'])]
+    public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse
+    {
+        return $this->service->getSubdivisionsForApi($locale, $countrycode);
+    }
+
+    #--5043-------------------------------------------------------------------
+    #[Route('/{locale}/{fcode}', name: 'subdivisions_export', methods: ['GET', 'HEAD'])]
+    public function getSubdivisions(string $locale, string $fcode): JsonResponse
+    {
+        $response = new JsonResponse();
+        #TODO
+        #return $this->service->showSubdivisionsLocales($countrycode, strtolower($locale), $fcode);
+        $this->service->getSubdivisions($locale, $fcode);
+        return $response;
+    }
+    #-------------------------------------------------------------------------
 
     #[Route('/locales/update/{countrycode}', name: 'locales_update', methods: ['GET', 'HEAD'])]
     public function updateSubdivisionsLocales(string $countrycode): Response

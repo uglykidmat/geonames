@@ -2,20 +2,28 @@
 
 namespace App\Service;
 
-use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesCountryLevel;
+use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesAdministrativeDivision;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class AdministrativeDivisionsService
 {
     public function __construct(
+        #[Autowire('%env(ALT_CODES_FETCH)%')]
+        private readonly bool $altCodes,
         private GeonamesAPIServiceInterface $apiservice,
         private EntityManagerInterface $entityManager,
         private GeonamesDBCachingService $dbservice,
+        private GeonamesCountryLevelService $clvlService,
+        private GeonamesCountryLocaleService $clService,
+        private AdministrativeDivisionLocaleService $admLocService,
+        private CacheItemPoolInterface $redisCache,
         private string $redisDsn
     ) {
     }
@@ -131,5 +139,87 @@ class AdministrativeDivisionsService
         }
 
         throw new HttpException(500, 'Country code not found.');
+    }
+
+    public function getSubdivisions(string $locale, string $fcode): JsonResponse
+    {
+        $response = new JsonResponse();
+        $content = [];
+        $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode($fcode);
+        // dd($list);
+        foreach ($list as $subDivision) {
+            dd($subDivision);
+            $subDivInfo = [];
+            #TODO
+        }
+
+        return $response;
+    }
+
+    public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse
+    {
+        set_time_limit(0);
+        $response = new JsonResponse();
+
+        $apiCacheKey = 'apiAdminDiv_' . $locale . '_' . $countrycode;
+        $apiCacheData = $this->redisCache->getItem($apiCacheKey);
+        if ($apiCacheData->isHit()) {
+            return $response->setContent($apiCacheData->get());
+        } else {
+
+            $level1 = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
+                ['countryCode' => $countrycode, 'fcode' => 'ADM1']
+            );
+            $level2 = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
+                ['countryCode' => $countrycode, 'fcode' => 'ADM2']
+            );
+            $level3 = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
+                ['countryCode' => $countrycode, 'fcode' => 'ADM3']
+            );
+
+            $apiLevel1 = self::buildApiResponse($level1, $locale, $countrycode, 1);
+            $apiLevel2 = self::buildApiResponse($level2, $locale, $countrycode, 2);
+            $apiLevel3 = self::buildApiResponse($level3, $locale, $countrycode, 3);
+
+            $responseContent = ['level1' => $apiLevel1, 'level2' => $apiLevel2, 'level3' => $apiLevel3];
+
+            $apiCacheData->set(json_encode($responseContent));
+            $this->redisCache->save($apiCacheData);
+            $response->setContent(json_encode($responseContent));
+
+            return $response;
+        }
+    }
+
+    public function buildApiResponse(array $adminDivsForLevel, string $locale, string $countrycode, int $level): array
+    {
+        $apiLevelResponse = [];
+
+        foreach ($adminDivsForLevel as $adminDiv) {
+            if (!$adminDivLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneBy(
+                ['geonameId' => $adminDiv->getGeonameId(), 'locale' => $locale]
+
+            )) {
+                $this->admLocService->getSubdivisionsLocalesForId($adminDiv->getGeonameId());
+
+                $entry['code_up'] = $countrycode;
+                $entry['code'] = ($level == 1) ? $adminDiv->getAdminCode1($this->altCodes) : (($level == 2) ? $adminDiv->getAdminCode2($this->altCodes) : $adminDiv->getAdminCode3($this->altCodes));
+
+                if ($fallbackLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneFallBack($adminDiv->getGeonameId(), strtolower($countrycode))) {
+                    $entry['name'] = $fallbackLocale->getName();
+                } else $entry['name'] = $adminDiv->getName();
+
+                $entry['geonameId'] = $adminDiv->getGeonameId();
+                $apiLevelResponse[] = $entry;
+            } else {
+                $entry['code_up'] = $countrycode;
+                $entry['code'] = ($level == 1) ? $adminDiv->getAdminCode1($this->altCodes) : (($level == 2) ? $adminDiv->getAdminCode2($this->altCodes) : $adminDiv->getAdminCode3($this->altCodes));
+                $entry['name'] = $adminDivLocale->getName();
+                $entry['geonameId'] = $adminDiv->getGeonameId();
+                $apiLevelResponse[] = $entry;
+            }
+        }
+
+        return $apiLevelResponse;
     }
 }
