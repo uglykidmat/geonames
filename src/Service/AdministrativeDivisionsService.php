@@ -9,6 +9,7 @@ use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesAdministrativeDivision;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\AdministrativeDivisionLocaleService;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -188,7 +189,6 @@ class AdministrativeDivisionsService
         $apiLevelResponse = [];
 
         foreach ($adminDivsForLevel as $adminDiv) {
-
             // default
             $name = $adminDiv->getName();
 
@@ -202,7 +202,7 @@ class AdministrativeDivisionsService
 
             $apiLevelResponse[] = [
                 'code_up' => $countrycode,
-                'code' => $adminDiv->{'getAdminCode' . $level }($this->altCodes),
+                'code' => $adminDiv->{'getAdminCode' . $level}($this->altCodes),
                 'name' => $name,
                 'geonameId' => $adminDiv->getGeonameId(),
             ];
