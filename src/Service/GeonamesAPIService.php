@@ -48,7 +48,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
         }
-        $this->responseCheck($postalCodeSearchResponse, "postalcode");
+        $this->responseCheck(null, $postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
     }
@@ -72,7 +72,18 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid Geonames.org API token.');
         }
-        $this->responseCheck($postalCodeSearchResponse, "postalcode");
+        $postalCodeRequest = [
+            'query' => [
+                'formatted' => 'true',
+                'postalcode' => $postalCode,
+                'maxRows' => '1',
+                'username' => $this->token,
+                'country' => $countrycode,
+                'style' => 'full',
+            ]
+        ];
+
+        $this->responseCheck($postalCodeRequest, $postalCodeSearchResponse, "postalcode");
 
         return json_decode($postalCodeSearchResponse->getContent(), true);
     }
@@ -190,13 +201,13 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                 throw new BadRequestException('Invalid Geonames.org API token.');
             }
         }
-        $this->responseCheck($searchResponse, "search");
+        $this->responseCheck(null, $searchResponse, "search");
         $response->setContent($searchResponse->getContent());
 
         return $response;
     }
 
-    private function responseCheck(object $searchResponse, string $searchType): void
+    private function responseCheck(array|null $request, object $searchResponse, string $searchType): void
     {
         if ($searchResponse->getStatusCode() >= 400) {
             throw new Exception('Unavailable Webservice or malformed API url');
@@ -207,13 +218,13 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         switch ($searchType) {
             case "postalcode":
                 if (empty($formattedSearchResponse['postalcodes'])) {
-                    $this->logger->error('PostalCode search error - empty response', $formattedSearchResponse);
+                    $this->logger->error('PostalCode search error - empty response', $request);
                 }
                 break;
 
             case "latlng":
                 if (empty($formattedSearchResponse['geonames'])) {
-                    $this->logger->error('Coordinates search error - empty response', $formattedSearchResponse);
+                    $this->logger->error('Coordinates search error - empty response', $request);
                 }
                 break;
             case 'search':
