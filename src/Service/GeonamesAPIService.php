@@ -3,14 +3,15 @@
 namespace App\Service;
 
 use stdClass;
+use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GeonamesAPIService implements GeonamesAPIServiceInterface
 {
@@ -18,7 +19,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         public HttpClientInterface $client,
         private string $token,
         private string $urlBase,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger,
     ) {
         $this->client = $client->withOptions([
             'headers' => [
@@ -200,18 +202,18 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             throw new Exception('Unavailable Webservice or malformed API url');
         }
 
+        $formattedSearchResponse = array_change_key_case($searchResponse->toArray(), CASE_LOWER);
+
         switch ($searchType) {
             case "postalcode":
-                $searchResponse = array_change_key_case($searchResponse->toArray(), CASE_LOWER);
-                if (empty($searchResponse['postalcodes'])) {
-
-                    throw new Exception('Empty content');
+                if (empty($formattedSearchResponse['postalcodes'])) {
+                    $this->logger->error('PostalCode search error - empty response', $formattedSearchResponse);
                 }
                 break;
 
             case "latlng":
-                if (empty($searchResponse->toArray()['geonames'])) {
-                    throw new Exception('Empty content');
+                if (empty($formattedSearchResponse['geonames'])) {
+                    $this->logger->error('Coordinates search error - empty response', $formattedSearchResponse);
                 }
                 break;
             case 'search':
