@@ -89,6 +89,13 @@ class GeonamesSearchService
             $bulkRow->country_code
         );
 
+        if (empty($geonamesZipCodeFound['postalcodes'][0])) {
+            return [
+                'error' => true,
+                'message' => 'empty geocode postalCodeLookupJSON'
+            ];
+        }
+
         $geoIdFound = $this->apiService->latLngSearch(
             $geonamesZipCodeFound['postalcodes'][0]['lat'],
             $geonamesZipCodeFound['postalcodes'][0]['lng']
