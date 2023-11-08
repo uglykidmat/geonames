@@ -23,6 +23,15 @@ class GeonamesSearchServiceTest extends TestCase
         ]
     ];
 
+    private $inputStringForEmptyResponse =
+    [
+        "country_code" => "GB",
+        "elt_id" => "7185578",
+        "lat" => null,
+        "lng" => null,
+        "zip_code" => "N39 TX86"
+    ];
+
     public function arrayEncoder(string $input): array
     {
         return json_decode($input, true);
@@ -45,5 +54,30 @@ class GeonamesSearchServiceTest extends TestCase
         self::assertSame('POST', $mockResponse->getRequestMethod());
         self::assertSame('http://localhost:8000/geonames/search', $mockResponse->getRequestUrl());
         self::assertSame(200, $mockResponse->getStatusCode());
+    }
+
+    public function testShouldReturnEmptyResponse()
+    {
+        $mockResponse = new MockResponse(
+            json_encode($this->inputStringForEmptyResponse),
+            [
+                'http_code' => 200,
+                'response_headers' => ['Content-Type: application/json'],
+                'response_body' => [
+                    "elt_id" => "7185578",
+                    "error" => true,
+                    "message" => "empty geocode postalCodeLookupJSON"
+                ]
+            ]
+        );
+        $client = new MockHttpClient($mockResponse, 'http://localhost:8000');
+        $client->request('POST', '/geonames/search');
+
+        self::assertSame('POST', $mockResponse->getRequestMethod());
+        self::assertSame('http://localhost:8000/geonames/search', $mockResponse->getRequestUrl());
+        self::assertSame(200, $mockResponse->getStatusCode());
+        self::assertSame($this->inputStringForEmptyResponse['elt_id'], $mockResponse->getInfo('response_body')['elt_id'], 'AAAAAAAAAAAAH');
+        self::assertSame(true, $mockResponse->getInfo('response_body')['error']);
+        self::assertSame('empty geocode postalCodeLookupJSON', $mockResponse->getInfo('response_body')['message']);
     }
 }
