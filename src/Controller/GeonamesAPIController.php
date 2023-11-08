@@ -23,15 +23,6 @@ class GeonamesAPIController extends AbstractController
     ) {
     }
 
-    #[Route('/postalcodesearch/{postalcode}', name: 'api_postalcodesearch', methods: ['GET'])]
-    public function postalCodeSearch(
-        string $postalcode
-    ): JsonResponse {
-        $response = new JsonResponse($this->apiService->postalCodeSearchJSON($postalcode));
-
-        return $response;
-    }
-
     #[Route('/postalcodelookup/{postalcode}/{countrycode}', name: 'api_postalcodelookup', methods: ['GET'])]
     public function postalCodeLookup(
         string $postalcode,
@@ -67,16 +58,5 @@ class GeonamesAPIController extends AbstractController
         $coordinates = $this->serializer->serialize($cachingService->searchSubdivisionInDatabase($geonameIdFound), 'json');
 
         return $response->setContent($coordinates);
-    }
-
-    #[Route('/subdivisions/{lat}-{lng}', name: 'api_subdivisions_by_latlng', methods: ['GET'])]
-    public function countrySubDivisionSearch(
-        float $lat,
-        float $lng
-    ): JsonResponse {
-        $response = new JsonResponse();
-        $response->setContent($this->apiService->countrySubDivisionSearch($lat, $lng)->getContent());
-
-        return $response;
     }
 }

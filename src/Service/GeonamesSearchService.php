@@ -88,7 +88,6 @@ class GeonamesSearchService
             $bulkRow->zip_code,
             $bulkRow->country_code
         );
-
         if (empty($geonamesZipCodeFound['postalcodes'][0])) {
             return [
                 'error' => true,

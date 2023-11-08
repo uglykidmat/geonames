@@ -30,48 +30,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         ]);
     }
 
-    public function postalCodeSearchJSON(string $postalCode): array
-    {
-        try {
-            $postalCodeSearchResponse = $this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'postalCodeSearchJSON',
-                ['query' => [
-                    'formatted' => 'true',
-                    'postalcode' => $postalCode,
-                    'maxRows' => '10',
-                    'username' => $this->token,
-                    'style' => 'full',
-                ]]
-            );
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
-        }
-        $this->responseCheck(null, $postalCodeSearchResponse, "postalcode");
-
-        return json_decode($postalCodeSearchResponse->getContent(), true);
-    }
-
     public function postalCodeLookupJSON(string $postalCode, string $countrycode): array
     {
-        try {
-            $postalCodeSearchResponse = $this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'postalCodeLookupJSON',
-                ['query' => [
-                    'formatted' => 'true',
-                    'postalcode' => $postalCode,
-                    'maxRows' => '1',
-                    'username' => $this->token,
-                    'country' => $countrycode,
-                    'style' => 'full',
-                ]]
-            );
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
-        }
         $postalCodeRequest = [
             'query' => [
                 'formatted' => 'true',
@@ -83,9 +43,20 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             ]
         ];
 
+        try {
+            $postalCodeSearchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'postalCodeLookupJSON',
+                $postalCodeRequest
+            );
+        } catch (\Exception $e) {
+            throw new BadRequestException('Invalid Geonames.org API token.');
+        }
+
         $this->responseCheck($postalCodeRequest, $postalCodeSearchResponse, "postalcode");
 
-        return json_decode($postalCodeSearchResponse->getContent(), true);
+        return $postalCodeSearchResponse->toArray();
     }
 
     public function latLngSearch(float $lat, float $lng): ?int
@@ -129,31 +100,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             throw new BadRequestException('Invalid Geonames.org API token.');
         }
         return $getJsonSearchResponse;
-    }
-
-    public function countrySubDivisionSearch(float $lat, float $lng): Response
-    {
-        try {
-            $countrySubDivisionSearchResponse = $this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'countrySubdivisionJSON',
-                ['query' => [
-                    'style' => 'full',
-                    'maxRows' => '1',
-                    'radius' => '5',
-                    'level' => '3',
-                    'lat' => $lat,
-                    'lng' => $lng,
-                    'username' => $this->token,
-                    'formatted' => 'true',
-                ],]
-            );
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
-        }
-
-        return new Response($countrySubDivisionSearchResponse->getContent());
     }
 
     public function searchJSON(string $fCode, int $startRow, array|string $countries): JsonResponse
