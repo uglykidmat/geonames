@@ -15,8 +15,7 @@ class GeonamesCountryLevelService
 
     public function addCountryLevel(array $countryLevel): void
     {
-        $countryLevel = new GeonamesCountryLevel();
-        $countryLevel
+        $countryLevelObj = (new GeonamesCountryLevel())
             ->setCountryCode($countryLevel["countrycode"])
             ->setMaxLevel($countryLevel["max_level"])
             ->setUsedLevel($countryLevel["used_level"])
@@ -27,6 +26,6 @@ class GeonamesCountryLevelService
             ->setADM5($countryLevel["ADM5"])
             ->setDone($countryLevel["done"]);
 
-        $this->entityManager->persist($countryLevel);
+        $this->entityManager->persist($countryLevelObj);
     }
 }

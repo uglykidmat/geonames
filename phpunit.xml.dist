@@ -39,7 +39,7 @@
     <coverage includeUncoveredFiles="true"
             pathCoverage="false"
             ignoreDeprecatedCodeUnits="true"
-            disableCodeCoverageIgnore="true"> 
+            disableCodeCoverageIgnore="true">
     </coverage>
 
     <!-- <listeners>

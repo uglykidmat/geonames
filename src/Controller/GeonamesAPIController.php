@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Service\GeonamesAPIService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesDBCachingService;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,7 +45,12 @@ class GeonamesAPIController extends AbstractController
         float $lng
     ): JsonResponse {
         $response = new JsonResponse();
-        $geonameIdFound = $this->apiService->latLngSearch($lat, $lng);
+
+        try {
+            $geonameIdFound = $this->apiService->latLngSearch($lat, $lng);
+        }catch(\Exception $e){
+            throw new HttpException($e->getCode(), $e->getMessage());
+        }
 
         if (!$cachingService->searchSubdivisionInDatabase($geonameIdFound)) {
 

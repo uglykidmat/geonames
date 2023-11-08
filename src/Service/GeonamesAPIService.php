@@ -61,8 +61,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
     public function latLngSearch(float $lat, float $lng): ?int
     {
-        try {
-            $latlngSearchResponse = json_decode($this->client->request(
+            $latlngSearchResponse = $this->client->request(
                 'GET',
                 $this->urlBase
                     . 'findNearbyPlaceNameJSON',
@@ -74,10 +73,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     'style' => 'full',
                     'maxRows' => '1'
                 ],]
-            )->getContent());
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
-        }
+            )->toArray();
+
         if (!empty($latlngSearchResponse->geonames) && is_array($latlngSearchResponse->geonames)) {
 
             return reset($latlngSearchResponse->geonames)->geonameId;
@@ -105,7 +102,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
     public function searchJSON(string $fCode, int $startRow, array|string $countries): JsonResponse
     {
         $response = new JsonResponse();
-        if (gettype($countries) != 'string') {
+        if (gettype($countries) !== 'string') {
             foreach ($countries as $country) {
                 $countriesArray[] = ['country' => $country];
             }
