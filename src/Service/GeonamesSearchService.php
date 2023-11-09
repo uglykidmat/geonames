@@ -27,7 +27,6 @@ class GeonamesSearchService
     {
         $bulkResponse = [];
         $bulkRequest = json_decode($request);
-
         foreach ($bulkRequest as $bulkIndex => $bulkRow) {
             $bulkResponse[$bulkIndex] = $this->requestOne($bulkRow);
         }

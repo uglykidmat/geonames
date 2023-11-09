@@ -3,6 +3,7 @@
 namespace App\Interface;
 
 use stdClass;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface GeonamesAPIServiceInterface
 {
@@ -12,5 +13,5 @@ interface GeonamesAPIServiceInterface
 
     public function getJsonSearch(int $geonameId): ?stdClass;
 
-    public function searchJSON(string $fCode, int $startRow, array $countries);
+    public function searchJSON(string $fCode, int $startRow, array $countries): JsonResponse;
 }
