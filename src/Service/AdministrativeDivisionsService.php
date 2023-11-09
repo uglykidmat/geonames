@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\GeonamesCountry;
 use App\Entity\GeonamesTranslation;
 use App\Entity\GeonamesCountryLevel;
-use App\Entity\GeonamesCountryLocale;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AdministrativeDivisionLocale;
@@ -167,13 +166,6 @@ class AdministrativeDivisionsService
                 $name = $translation->getName();
             }
 
-            // else if 
-
-            // {
-            //     $name = $this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId($subDivision->getGeonameId(), $locale)[0]['name'];
-            //     //dd($this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId($subDivision->getGeonameId(), $locale));
-            // }
-
             $subDivInfos[] = [
                 'name' => $name,
                 'path' => $name,
@@ -188,7 +180,6 @@ class AdministrativeDivisionsService
                 'objectID' => (string)$subDivision->getGeonameId()
             ];
         }
-        //dd(__DIR__);
         file_put_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_" . $level . "_" . $locale . ".json", json_encode($subDivInfos, JSON_PRETTY_PRINT));
 
         return $subDivInfos;
@@ -226,7 +217,6 @@ class AdministrativeDivisionsService
         $apiLevelResponse = [];
 
         foreach ($adminDivsForLevel as $adminDiv) {
-            // default
             $name = $adminDiv->getName();
 
             if ($adminDivLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneBy(
