@@ -65,7 +65,7 @@ class AdministrativeDivisionLocaleService
         $newLocalesCount = 0;
         $apiResponse = $this->apiservice->getJsonSearch($geonameId);
         foreach ($apiResponse->alternateNames as $localeItem) {
-            if (isset($localeItem->lang)) {
+            if (isset($localeItem->lang) && $localeItem->lang !== 'link') {
                 if (!$this->entityManager->getRepository(AdministrativeDivisionLocale::class)
                     ->findOneBy(array(
                         'geonameId' => $geonameId,
@@ -83,9 +83,9 @@ class AdministrativeDivisionLocaleService
                     $this->entityManager->persist($newLocale);
                     $newLocalesCount++;
                 }
-                $this->entityManager->flush();
             }
         }
+        $this->entityManager->flush();
 
         return $newLocalesCount;
     }
