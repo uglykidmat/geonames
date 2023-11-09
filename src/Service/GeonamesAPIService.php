@@ -28,35 +28,6 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         ]);
     }
 
-    public function postalCodeLookupJSON(string $postalCode, string $countrycode): array
-    {
-        $postalCodeRequest = [
-            'query' => [
-                'formatted' => 'true',
-                'postalcode' => $postalCode,
-                'maxRows' => '1',
-                'username' => $this->token,
-                'country' => $countrycode,
-                'style' => 'full',
-            ]
-        ];
-
-        try {
-            $postalCodeLookupResponse = $this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'postalCodeLookupJSON',
-                $postalCodeRequest
-            )->toArray();
-        } catch (\Exception $e) {
-            throw new BadRequestException('Unavailable Webservice or malformed API url for postalCode lookup.');
-        }
-
-        $this->responseCheck($postalCodeRequest, $postalCodeLookupResponse, "postalcode");
-
-        return $postalCodeLookupResponse;
-    }
-
     public function latLngSearch(float $lat, float $lng): ?int
     {
         $query = ['query' => [
@@ -79,8 +50,32 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
             return $latlngSearchResponse['geonames'][0]['geonameId'];
         }
+        $this->logger->error('Empty response from Geonames Service for Coordinates lat/lng search.');
+    }
 
-        throw new HttpException(500, 'Empty response from Geonames Service.');
+    public function postalCodeLookupJSON(string $postalCode, string $countrycode): array
+    {
+        $postalCodeRequest = [
+            'query' => [
+                'formatted' => 'true',
+                'postalcode' => $postalCode,
+                'maxRows' => '1',
+                'username' => $this->token,
+                'country' => $countrycode,
+                'style' => 'full',
+            ]
+        ];
+
+        $postalCodeLookupResponse = $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'postalCodeLookupJSON',
+            $postalCodeRequest
+        )->toArray();
+
+        $this->responseCheck($postalCodeRequest, $postalCodeLookupResponse, "postalcode");
+
+        return $postalCodeLookupResponse;
     }
 
     public function countrySubDivisionSearch(float $lat, float $lng): array
@@ -92,16 +87,13 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             'username' => $this->token,
             'formatted' => 'true',
         ],];
-        try {
-            $countrySubDivisionSearchResponse = $this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'countrySubdivisionJSON',
-                $query
-            )->toArray();
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
-        }
+
+        $countrySubDivisionSearchResponse = $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'countrySubdivisionJSON',
+            $query
+        )->toArray();
 
         return $countrySubDivisionSearchResponse;
     }
@@ -138,36 +130,28 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                 'featureCode' => $fCode,
                 ...$countriesArray
             ],];
-            try {
-                $searchResponse = $this->client->request(
-                    'GET',
-                    $this->urlBase
-                        . 'searchJSON',
-                    $query
-                )->toArray();
-            } catch (\Exception $e) {
-                throw new BadRequestException('Error during Geonames searchJSON request.');
-            }
+            $searchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'searchJSON',
+                $query
+            )->toArray();
         } else {
-            try {
-                $query = ['query' => [
-                    'style' => 'full',
-                    'maxRows' => '1000',
-                    'formatted' => 'true',
-                    'startRow' => $startRow,
-                    'username' => $this->token,
-                    'featureCode' => $fCode,
-                    'country' => $countries
-                ],];
-                $searchResponse = $this->client->request(
-                    'GET',
-                    $this->urlBase
-                        . 'searchJSON',
-                    $query
-                )->toArray();
-            } catch (\Exception $e) {
-                throw new BadRequestException('Error during Geonames searchJSON request.');
-            }
+            $query = ['query' => [
+                'style' => 'full',
+                'maxRows' => '1000',
+                'formatted' => 'true',
+                'startRow' => $startRow,
+                'username' => $this->token,
+                'featureCode' => $fCode,
+                'country' => $countries
+            ],];
+            $searchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'searchJSON',
+                $query
+            )->toArray();
         }
         $this->responseCheck(null, $searchResponse, "search");
         $response->setContent(json_encode($searchResponse));

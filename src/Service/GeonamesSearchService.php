@@ -2,13 +2,14 @@
 // src/Service/GeonamesSearchService.php
 namespace App\Service;
 
-use App\Entity\GeonamesAdministrativeDivision;
-use App\Repository\GeonamesCountryLevelRepository;
 use stdClass;
 use App\Entity\GeonamesCountry;
 use App\Entity\GeonamesCountryLevel;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\GeonamesAdministrativeDivision;
+use App\Repository\GeonamesCountryLevelRepository;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class GeonamesSearchService
 {
@@ -65,10 +66,14 @@ class GeonamesSearchService
 
     public function getByCoodinates(stdClass $bulkRow): array
     {
-        $geoIdFound = $this->apiService->latLngSearch(
-            $bulkRow->lat,
-            $bulkRow->lng
-        );
+        try {
+            $geoIdFound = $this->apiService->latLngSearch(
+                $bulkRow->lat,
+                $bulkRow->lng
+            );
+        } catch (\Exception $e) {
+            throw new BadRequestException('Unavailable Webservice or malformed API url for Coordinates lat/lng search.');
+        }
 
         $geoDivision = $this->getGeoDivision($geoIdFound);
         $UsedLevel = $this->getLevel($geoDivision);
@@ -83,10 +88,15 @@ class GeonamesSearchService
 
     public function getByZipcode(mixed $bulkRow): array
     {
-        $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
-            $bulkRow->zip_code,
-            $bulkRow->country_code
-        );
+        try {
+            $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
+                $bulkRow->zip_code,
+                $bulkRow->country_code
+            );
+        } catch (\Exception $e) {
+            throw new BadRequestException('Unavailable Webservice or malformed API url for postalCode lookup.');
+        }
+
         if (empty($geonamesZipCodeFound['postalcodes'][0])) {
             return [
                 'error' => true,
@@ -110,6 +120,15 @@ class GeonamesSearchService
             'country_code' => $geoDivision->getCountryCode(),
             ...$adminCodesArray
         ];
+    }
+    public function countrySubDivisionSearch(float $lat, float $lng): array
+    {
+        try {
+            $countrySubDivResult = $this->apiService->countrySubDivisionSearch($lat, $lng);
+        } catch (\Exception $e) {
+            throw new BadRequestException('Invalid Geonames.org API token.');
+        }
+        return $countrySubDivResult;
     }
 
     // TODO : externalize those method in CacheRedisService

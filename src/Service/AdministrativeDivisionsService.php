@@ -2,7 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\GeonamesCountry;
+use App\Entity\GeonamesTranslation;
 use App\Entity\GeonamesCountryLevel;
+use App\Entity\GeonamesCountryLocale;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AdministrativeDivisionLocale;
@@ -12,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\AdministrativeDivisionLocaleService;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class AdministrativeDivisionsService
 {
@@ -62,7 +66,11 @@ class AdministrativeDivisionsService
         $newEntryCount = 0;
         $entriesFoundCount = 0;
         $adminDivRepository = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class);
-        $apiResult = json_decode($this->apiservice->searchJSON($fcode, $startrow, $countries)->getContent());
+        try {
+            $apiResult = json_decode($this->apiservice->searchJSON($fcode, $startrow, $countries)->getContent());
+        } catch (\Exception $e) {
+            throw new BadRequestException('Error during Geonames searchJSON request.');
+        }
         if (count($apiResult->geonames) != 0) {
             foreach ($apiResult->geonames as $entry) {
                 if (!$adminDivRepository->findOneByGeonameId($entry->geonameId)) {
@@ -142,19 +150,48 @@ class AdministrativeDivisionsService
         throw new HttpException(500, 'Country code not found.');
     }
 
-    public function getSubdivisions(string $locale, string $fcode): JsonResponse
+    public function getSubdivisionsForExport(string $locale, int $level): array
     {
-        $response = new JsonResponse();
-        $content = [];
-        $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode($fcode);
-        // dd($list);
-        foreach ($list as $subDivision) {
-            dd($subDivision);
-            $subDivInfo = [];
-            #TODO
-        }
+        $locales = ["en", "fr", "it", "de", "es", "nl", "pl", "ru", "th", "zh", "ko", "ar", "ja", "tr", "uk", "zh-tw",];
 
-        return $response;
+        if ($level == 0) {
+            $list = $this->entityManager->getRepository(GeonamesCountry::class)->findAll();
+        } else $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode('ADM' . $level);
+
+        foreach ($list as $subDivision) {
+            if ($translation = $this->entityManager->getRepository(
+                GeonamesTranslation::class
+            )->findOneByGeonameId(
+                $subDivision->getGeonameId()
+            )) {
+                $name = $translation->getName();
+            }
+
+            // else if 
+
+            // {
+            //     $name = $this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId($subDivision->getGeonameId(), $locale)[0]['name'];
+            //     //dd($this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId($subDivision->getGeonameId(), $locale));
+            // }
+
+            $subDivInfos[] = [
+                'name' => $name,
+                'path' => $name,
+                '_geoloc' =>
+                [
+                    'lat' => (float)$subDivision->getLat(),
+                    'lng' => (float)$subDivision->getLng()
+                ],
+                'level' => (string)$this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($subDivision->getCountryCode())->getUsedLevel(),
+                'code' => $subDivision->getCountryCode(),
+                'country_code' => $subDivision->getCountryCode(),
+                'objectID' => (string)$subDivision->getGeonameId()
+            ];
+        }
+        //dd(__DIR__);
+        file_put_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_" . $level . "_" . $locale . ".json", json_encode($subDivInfos, JSON_PRETTY_PRINT));
+
+        return $subDivInfos;
     }
 
     public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse
