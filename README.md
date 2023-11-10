@@ -111,6 +111,10 @@ To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' 
 ```php
 /administrativedivisions/alternatives/update
 ```
+or
+```bash
+php bin/console app:adaltu
+```
 
 ## Security information
 - `/status` is publicly available.
