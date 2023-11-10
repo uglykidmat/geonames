@@ -270,8 +270,14 @@ class AdministrativeDivisionsService
                 $name = $fallbackLocale->getName();
             }
 
+            if ($level == 1) {
+                $adminCodeUp = $countrycode;
+            } else {
+                $adminCodeUp = $adminDiv->{'getAdminCode' . $level - 1}($this->altCodes);
+            }
+
             $apiLevelResponse[] = [
-                'code_up' => $countrycode,
+                'code_up' => $adminCodeUp,
                 'code' => $adminDiv->{'getAdminCode' . $level}($this->altCodes),
                 'name' => $name,
                 'geonameId' => (string)$adminDiv->getGeonameId(),
