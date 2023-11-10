@@ -15,12 +15,15 @@ class GeonamesCountryLocaleServiceTest extends WebTestCase
     #[TestDox('Mock setup')]
     public function setUp(): void
     {
-        $this->serviceMock = $this->getMockBuilder(GeonamesCountryLocaleService::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['updateCountryBatch', 'updateCountrySingle', 'getCountryNamesForLocale'])
-            ->getMock();
+        $this->serviceMock = $this->createMock(GeonamesCountryLocaleService::class);
+        // $this->serviceMock = $this->getMockBuilder(GeonamesCountryLocaleService::class)
+        //     ->disableOriginalConstructor()
+        //     ->onlyMethods(['updateCountryBatch', 'updateCountrySingle', 'getCountryNamesForLocale'])
+        //     ->getMock();
 
-        self::getContainer()->set(GeonamesCountryLocaleService::class, $this->serviceMock);
+        // var_dump($this->serviceMock);
+        // dd('pop');
+        static::getContainer()->set(GeonamesCountryLocaleService::class, $this->serviceMock);
     }
 
     public function testShouldUpdateCountryBatch(): void

@@ -78,8 +78,8 @@ class GeonamesCountryService
 
             foreach ($countryBarycenters as $barycenter) {
                 $country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneBy(['geonameId' => $barycenter->geonameId])
-                    ->setLat($barycenter->lat)
-                    ->setLng($barycenter->lng);
+                    ->setLat((float)$barycenter->lat)
+                    ->setLng((float)$barycenter->lng);
                 $this->entityManager->persist($country);
             }
             $this->entityManager->flush();

@@ -9,6 +9,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesAdministrativeDivision;
+use App\Entity\GeonamesCountryLocale;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\AdministrativeDivisionLocaleService;
@@ -158,10 +159,52 @@ class AdministrativeDivisionsService
         } else $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode('ADM' . $level);
 
         foreach ($list as $subDivision) {
+            //____________________
+            //_________COUNTRIES__
+            //____________________
+            if ($level == 0) {
+                if ($localeFound = $this->entityManager->getRepository(
+                    GeonamesCountryLocale::class
+                )->findLocalesForGeoId(
+                    $subDivision->getGeonameId(),
+                    $locale
+                )) {
+
+                    $name = $localeFound[0]['name'];
+                } else if ($locale == 'zh-tw') {
+                    $name = $this->entityManager->getRepository(
+                        GeonamesCountryLocale::class
+                    )->findOneBy(
+                        [
+                            'locale' => 'zh',
+                            'geonameId' => $subDivision->getGeonameId()
+                        ]
+                    )->getName();
+                }
+            } else {
+                //____________________
+                //_________ADMX__TODO_
+                //____________________
+
+                $name = $this->entityManager->getRepository(
+                    AdministrativeDivisionLocale::class
+                )->findOneBy([
+                    'locale' => $locale,
+                    'geonameId' => $subDivision->getGeonameId()
+                ])->getName();
+            }
+
+            //____________________
+            //_________OVERRIDES__
+            //____________________
+
             if ($translation = $this->entityManager->getRepository(
                 GeonamesTranslation::class
-            )->findOneByGeonameId(
-                $subDivision->getGeonameId()
+            )->findOneBy(
+                [
+                    'locale' => $locale,
+                    'geonameId' => $subDivision->getGeonameId()
+                ]
             )) {
                 $name = $translation->getName();
             }

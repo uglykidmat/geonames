@@ -26,17 +26,15 @@ class AdministrativeDivisionsController extends AbstractController
         return $this->service->getSubdivisionsForApi($locale, $countrycode);
     }
 
-    #--5043-------------------------------------------------------------------
-    #[Route('/{locale}/{fcode}', name: 'subdivisions_export', methods: ['GET', 'HEAD'])]
-    public function getSubdivisions(string $locale, string $fcode): JsonResponse
+    #--5043------------------------------------------------------------
+    #[Route('/export/{locale}/{level}', name: 'subdivisions_export', methods: ['GET', 'HEAD'])]
+    public function getSubdivisions(string $locale, int $level): JsonResponse
     {
-        $response = new JsonResponse();
-        #TODO
-        #return $this->service->showSubdivisionsLocales($countrycode, strtolower($locale), $fcode);
-        $this->service->getSubdivisions($locale, $fcode);
-        return $response;
+        return $this->json(
+            $this->service->getSubdivisionsForExport($locale, $level)
+        );
     }
-    #-------------------------------------------------------------------------
+    #------------------------------------------------------------------
 
     #[Route('/locales/update/{countrycode}', name: 'locales_update', methods: ['GET', 'HEAD'])]
     public function updateSubdivisionsLocales(string $countrycode): Response

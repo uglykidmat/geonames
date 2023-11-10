@@ -108,10 +108,10 @@ class GeonamesCountryLocaleService
                 foreach ($baseLocales as $baseKey => $baseValue) {
                     foreach ($translationOverrides as $overrideKey => $overrideValue) {
                         if (
-                            $baseValue['geoname_id'] == $overrideValue->getGeonameId()
+                            $baseValue['geonameId'] == $overrideValue->getGeonameId()
                         ) {
                             unset($baseLocales[$baseKey]);
-                            $newValue['geoname_id'] = $overrideValue->getGeonameId();
+                            $newValue['geonameId'] = $overrideValue->getGeonameId();
                             $newValue['country_code'] = $overrideValue->getCountryCode();
                             $newValue['name'] = $overrideValue->getName();
                             $baseLocales[] = $newValue;
@@ -121,7 +121,7 @@ class GeonamesCountryLocaleService
                 }
 
                 foreach ($translationOverrides as $overrideValue) {
-                    $newValue['geoname_id'] = $overrideValue->getGeonameId();
+                    $newValue['geonameId'] = $overrideValue->getGeonameId();
                     $newValue['country_code'] = $overrideValue->getCountryCode();
                     $newValue['name'] = $overrideValue->getName();
                     $baseLocales[] = $newValue;
