@@ -337,11 +337,9 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getAdminCode1(bool $altCodes = false): ?string
+    public function getAdminCode1(): ?string
     {
-        $adminCode1 = $altCodes && isset($this->adminCodeAlt1) ? $this->adminCodeAlt1 : $this->adminCode1;
-
-        return $adminCode1;
+        return $this->adminCode1;
     }
 
     public function setAdminCode1(?string $adminCode1): static
@@ -351,11 +349,9 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getAdminCode2(bool $altCodes = false): ?string
+    public function getAdminCode2(): ?string
     {
-        $adminCode2 = $altCodes && isset($this->adminCodeAlt2) ? $this->adminCodeAlt2 : $this->adminCode2;
-
-        return $adminCode2;
+        return $this->adminCode2;
     }
 
     public function setAdminCode2(?string $adminCode2): static
@@ -365,11 +361,9 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
-    public function getAdminCode3(bool $altCodes = false): ?string
+    public function getAdminCode3(): ?string
     {
-        $adminCode3 = $altCodes && isset($this->adminCodeAlt3) ? $this->adminCodeAlt3 : $this->adminCode3;
-
-        return $adminCode3;
+        return $this->adminCode3;
     }
 
     public function setAdminCode3(?string $adminCode3): static
