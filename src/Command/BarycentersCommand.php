@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'BarycenterUpdate',
-    description: 'Performs an update of the Geojson data on the country entities.',
+    description: 'Performs an update of the countries’ Barycenters.',
     aliases: ['app:cbu']
 )]
 class BarycentersCommand extends Command
