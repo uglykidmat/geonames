@@ -93,17 +93,17 @@ This script will compute the approximate barycenter of the country and update it
 ## Subdivisions hydration
 - Update your `GEONAMES_TOKEN` variable in the correct `.env`file.
 - Import/Update : 
-The command line arguments are featureCode ("ADM1","ADM2","ADM3") and "startRow" which sets the start of the geonames Response content. Example :
+The command line arguments are countryCode, featureCode ("ADM1","ADM2","ADM3") and "startRow" which sets the start of the geonames Response content. Example :
 ```bash
-php bin/console app:adu ADM1 1
+php bin/console app:adu FR ADM1 1
 ```
-will yield the first level Administrative Divisions of countries which have a minimum used_level of 1, starting from row 1. Updates are done by batch of 1000 entries, so the next logical steps would be to run the same command with the second argument increased by 1000, like :
+will yield the first level Administrative Divisions of France, starting from row 1. Updates are done by batch of 1000 entries, so the next logical steps would be to run the same command with the second argument increased by 1000, like :
 
 ```bash
-php bin/console app:adu ADM1 1000
-php bin/console app:adu ADM1 2000
-php bin/console app:adu ADM2 1
-php bin/console app:adu ADM2 1000
+php bin/console app:adu DE ADM1 1000
+php bin/console app:adu IT ADM3 2000
+php bin/console app:adu JP ADM2 1
+php bin/console app:adu ES ADM2 1000
 ```
 Some administrative divisions have an alternative admincode.
 
@@ -115,6 +115,7 @@ To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' 
 ## Security information
 - `/status` is publicly available.
 - `/geonames/search` is accessible via a Bearer Token.
+- `/geonames/api` is accessible via a Bearer Token.
 - `/*` any other page is accessible via basic_auth.
 
 ## Api Documentation
@@ -147,7 +148,12 @@ Handles POST requests : the content must be a JSON string following this structu
 The search will be on the coordinates, and use the postalcode/countrycode couple to find the subdivisions.
 This URL is protected by a token, if not provided you will encounter a 401 error.
 
-### POST endpoint
+### GET endpoint
+Hydrate the database first, for every country code needed. Example for Japan : 
+```bash
+/administrativedivisions/locales/update/JP
+```
+then call the endpoint : 
 ```bash
   /administrativedivisions/api/{lang}/{countryCode}
 ```

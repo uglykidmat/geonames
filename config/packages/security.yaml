@@ -25,6 +25,7 @@ when@prod: &prod
         access_control:
             - { path: ^/status, roles: PUBLIC_ACCESS }
             - { path: ^/geonames/search, roles: ROLE_USER }
+            - { path: ^/administrativedivisions/api, roles: ROLE_USER }
             - { path: ^/, roles: ROLE_AUTH }
 when@dev:
     <<: *prod
