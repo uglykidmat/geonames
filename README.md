@@ -154,6 +154,13 @@ This URL is protected by a token, if not provided you will encounter a 401 error
 Example : /administrativedivisions/api/it/FR
 Handles GET requests for getting all the subdivision names of a country in a specific language.
 
+### EXPORT endpoint
+```bash
+  /administrativedivisions/export/{locale}/{level}
+```
+Example :  `/administrativedivisions/export/fr/0`, `/administrativedivisions/export/it/1`
+Handles GET requests for getting all the subdivisions in a specific language, filtered by level. 0 represents the countries, 1,2,3 the subdivisions.
+The result page contains JSON information, and a file with the same content will be created in the `/var/geonames_export_data/` folder.
 
 ### Translations
 
