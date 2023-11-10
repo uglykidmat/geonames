@@ -120,7 +120,7 @@ class AdministrativeDivisionsService
             }
             $this->entityManager->flush();
         }
-        $result = ['Status' => 'Success', 'Entries found' => $entriesFoundCount + 1, 'New entries' => $newEntryCount, 'Max entries for this fcode' => $apiResult->totalResultsCount];
+        $result = ['Status' => 'Success', 'Entries already found' => $entriesFoundCount + 1, 'New entries' => $newEntryCount, 'Max entries for this fcode' => $apiResult->totalResultsCount];
 
         $response->setContent(json_encode($result));
 
@@ -130,7 +130,7 @@ class AdministrativeDivisionsService
     public function updateAlternativeCodes(): JsonResponse
     {
         $response = new JsonResponse();
-        $content = [];
+        $count = 0;
         if ($altCodesList = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_alternative_divisions.json'))) {
             foreach ($altCodesList as $altCode) {
                 if ($adminDiv = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($altCode->geonameId)) {
@@ -139,12 +139,13 @@ class AdministrativeDivisionsService
                         ->setAdminCodeAlt2($altCode->adminCodes2 ?? null)
                         ->setAdminCodeAlt3($altCode->adminCodes3 ?? null);
                     $this->entityManager->persist($adminDiv);
-                    $content[] = [$adminDiv->getGeonameId() => 'new alt code ' . $altCode->adminCodes1];
+                    $count++;
                 }
             }
             $this->entityManager->flush();
+            $content = $count . ' alternative codes inserted';
 
-            return $response->setContent(json_encode($content));
+            return $response->setContent($content);
         }
 
         throw new HttpException(500, 'Country code not found.');
