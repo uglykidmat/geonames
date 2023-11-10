@@ -1,4 +1,4 @@
-# Geonames v2.1.5
+# Geonames v2.1.6
 
 "Reverse/Geocoding Webservices" : this repository contains the Geonames Controller, built on a Symfony 6.3.1 skeleton.
 
