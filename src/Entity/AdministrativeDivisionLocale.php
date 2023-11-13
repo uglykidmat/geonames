@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AdministrativeDivisionLocaleRepository;
 
 #[ApiResource(order: ['geonameId' => 'ASC'])]
@@ -35,6 +36,8 @@ class AdministrativeDivisionLocale
 
     #[ORM\Column(nullable: true)]
     private ?bool $isShortName = null;
+
+    private EntityManagerInterface $entityManager;
 
     public function getId(): ?int
     {
@@ -91,6 +94,9 @@ class AdministrativeDivisionLocale
 
     public function getName(): ?string
     {
+        if ($translation = $this->entityManager->getRepository(GeonamesTranslation::class)->getOneByGeonameId($this->geonameId)) {
+            return $translation->getName();
+        }
         return $this->name;
     }
 
