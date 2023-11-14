@@ -51,6 +51,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             return $latlngSearchResponse['geonames'][0]['geonameId'];
         }
         $this->logger->error('Empty response from Geonames Service for Coordinates lat/lng search.');
+
+        return null;
     }
 
     public function postalCodeLookupJSON(string $postalCode, string $countrycode): array

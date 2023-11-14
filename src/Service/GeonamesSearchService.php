@@ -75,14 +75,20 @@ class GeonamesSearchService
             throw new BadRequestException('Unavailable Webservice or malformed API url for Coordinates lat/lng search.');
         }
 
-        $geoDivision = $this->getGeoDivision($geoIdFound);
-        $UsedLevel = $this->getLevel($geoDivision);
-        $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $UsedLevel);
+        if (isset($geoIdFound)) {
+            $geoDivision = $this->getGeoDivision($geoIdFound);
+            $UsedLevel = $this->getLevel($geoDivision);
+            $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $UsedLevel);
 
+            return [
+                'used_level' => $UsedLevel,
+                'country_code' => $geoDivision->getCountryCode(),
+                ...$adminCodesArray
+            ];
+        }
         return [
-            'used_level' => $UsedLevel,
-            'country_code' => $geoDivision->getCountryCode(),
-            ...$adminCodesArray
+            'error' => true,
+            'message' => 'empty geonames coordinates Search'
         ];
     }
 
@@ -109,16 +115,22 @@ class GeonamesSearchService
             $geonamesZipCodeFound['postalcodes'][0]['lng']
         );
 
-        $geoDivision = $this->getGeoDivision($geoIdFound);
-        $UsedLevel = $this->getLevel($geoDivision);
-        $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $UsedLevel);
+        if (isset($geoIdFound)) {
+            $geoDivision = $this->getGeoDivision($geoIdFound);
+            $UsedLevel = $this->getLevel($geoDivision);
+            $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $UsedLevel);
 
+            return [
+                'lat' => $geoDivision->getLat(),
+                'lng' => $geoDivision->getLng(),
+                'used_level' => $UsedLevel,
+                'country_code' => $geoDivision->getCountryCode(),
+                ...$adminCodesArray
+            ];
+        }
         return [
-            'lat' => $geoDivision->getLat(),
-            'lng' => $geoDivision->getLng(),
-            'used_level' => $UsedLevel,
-            'country_code' => $geoDivision->getCountryCode(),
-            ...$adminCodesArray
+            'error' => true,
+            'message' => 'empty geonames zipcode search'
         ];
     }
     public function countrySubDivisionSearch(float $lat, float $lng): array
