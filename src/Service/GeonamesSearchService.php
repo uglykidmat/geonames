@@ -75,13 +75,13 @@ class GeonamesSearchService
             throw new BadRequestException('Unavailable Webservice or malformed API url for Coordinates lat/lng search.');
         }
 
-        if (isset($geoIdFound)) {
+        if ($geoIdFound) {
             $geoDivision = $this->getGeoDivision($geoIdFound);
-            $UsedLevel = $this->getLevel($geoDivision);
-            $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $UsedLevel);
+            $usedLevel = $this->getLevel($geoDivision);
+            $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $usedLevel);
 
             return [
-                'used_level' => $UsedLevel,
+                'used_level' => $usedLevel,
                 'country_code' => $geoDivision->getCountryCode(),
                 ...$adminCodesArray
             ];
@@ -115,15 +115,15 @@ class GeonamesSearchService
             $geonamesZipCodeFound['postalcodes'][0]['lng']
         );
 
-        if (isset($geoIdFound)) {
+        if ($geoIdFound) {
             $geoDivision = $this->getGeoDivision($geoIdFound);
-            $UsedLevel = $this->getLevel($geoDivision);
-            $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $UsedLevel);
+            $usedLevel = $this->getLevel($geoDivision);
+            $adminCodesArray = $this->adminCodesMapperService->codesMapper($geoDivision, $usedLevel);
 
             return [
                 'lat' => $geoDivision->getLat(),
                 'lng' => $geoDivision->getLng(),
-                'used_level' => $UsedLevel,
+                'used_level' => $usedLevel,
                 'country_code' => $geoDivision->getCountryCode(),
                 ...$adminCodesArray
             ];
