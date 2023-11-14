@@ -1,0 +1,23 @@
+{
+  "name": "geonames",
+  "version": "2.1.6",
+  "description": "Geonames",
+  "author": {
+    "name": "GTR Developers",
+    "email": "devs@gatoreviews.com"
+  },
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Gatoreviews/geonames.git"
+  },
+  "devDependencies": {
+    "@gatoreviews/node-semantic-release": "^1.15.0"
+  }
+}

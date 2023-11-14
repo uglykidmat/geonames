@@ -18,3 +18,7 @@
 ###< phpunit/phpunit ###
 
 /.vscode
+
+# Dependency directory
+node_modules
+yarn-error.log
