@@ -167,6 +167,7 @@ class AdministrativeDivisionsService
         } else $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode('ADM' . $level);
 
         foreach ($list as $subDivision) {
+            //dd($list);
             //____________________
             //_________COUNTRIES__
             //____________________
@@ -193,33 +194,43 @@ class AdministrativeDivisionsService
                 //____________________
                 //_________ADMX__TODO_
                 //____________________
+                //dd($subDivision);
 
-                $name = $this->entityManager->getRepository(
+                //_______________________
+                if ($subDivFound = $this->entityManager->getRepository(
                     AdministrativeDivisionLocale::class
                 )->findOneBy([
                     'locale' => $locale,
                     'geonameId' => $subDivision->getGeonameId()
-                ])->getName();
+                ])) {
+                    $name = $subDivFound->getName();
+                } else $name = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)
+                    ->findOneByGeonameId(
+                        $subDivision->getGeonameId()
+                    );
+                //_______________________
+
             }
 
             //____________________
             //_________OVERRIDES__
             //____________________
 
-            if ($translation = $this->entityManager->getRepository(
-                GeonamesTranslation::class
-            )->findOneBy(
-                [
-                    'locale' => $locale,
-                    'geonameId' => $subDivision->getGeonameId()
-                ]
-            )) {
-                $name = $translation->getName();
-            }
+            // if ($translation = $this->entityManager->getRepository(
+            //     GeonamesTranslation::class
+            // )->findOneBy(
+            //     [
+            //         'locale' => $locale,
+            //         'geonameId' => $subDivision->getGeonameId()
+            //     ]
+            // )) {
+            //     $name = $translation->getName();
+            // } else
+            $startPathId = $subDivision->getGeonameId();
 
             $subDivInfos[] = [
                 'name' => $name,
-                'path' => $name,
+                'path' => self::buildExportPath($startPathId, $level, $locale),
                 '_geoloc' =>
                 [
                     'lat' => (float)$subDivision->getLat(),
@@ -234,6 +245,79 @@ class AdministrativeDivisionsService
         file_put_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_" . $level . "_" . $locale . ".json", json_encode($subDivInfos, JSON_PRETTY_PRINT));
 
         return $subDivInfos;
+    }
+
+    public function buildExportPath(int $currentId, int $level, string $locale, string $path = ''): string
+    {
+        if ($level == 0) {
+            if ($nameFound = $this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId($currentId, $locale)[0]['name']) {
+
+                $path = $nameFound . '/' . $path;
+            } else $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getName();
+        } else {
+            $currentSubDiv = $this->entityManager->getRepository(
+                GeonamesAdministrativeDivision::class
+            )->findOneByGeonameId($currentId);
+        }
+
+        if ($level > 1) {
+            if ($localeFound = $this->entityManager->getRepository(
+                AdministrativeDivisionLocale::class
+            )->findLocalesForGeoId(
+                $currentId,
+                $locale
+            )) {
+                $nameFound = $localeFound[0]['name'];
+            } else $nameFound = $currentSubDiv->getName();
+            $path = $nameFound . '/' . $path;
+
+            if ($parentSubDiv = $this->entityManager->getRepository(
+                GeonamesAdministrativeDivision::class
+            )->findOneByGeonameId($currentSubDiv->{'getAdminId' . $level - 1}())) {
+                self::buildExportPath(
+                    $parentSubDiv->getGeonameId(),
+                    $level - 1,
+                    $locale,
+                    $path
+                );
+            } else {
+                $parentSubDiv = $this->entityManager->getRepository(
+                    GeonamesCountry::class
+                )->findOneByGeonameId($currentSubDiv->getCountryId());
+
+                if ($countryNameFound = $this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId(
+                    $parentSubDiv->getGeonameId(),
+                    $locale
+                )[0]['name']) {
+                    $path =  $countryNameFound . '/' . $path;
+                } else $path =  $currentSubDiv->getCountryName() . '/' . $path;
+            }
+        } else if ($level == 1) {
+            if ($localeFound = $this->entityManager->getRepository(
+                AdministrativeDivisionLocale::class
+            )->findLocalesForGeoId(
+                $currentId,
+                $locale
+            )) {
+                $nameFound = $localeFound[0]['name'];
+            } else $nameFound = $currentSubDiv->getName();
+            $path = $nameFound . '/' . $path;
+
+            $parentSubDiv = $this->entityManager->getRepository(
+                GeonamesCountry::class
+            )->findOneByGeonameId($currentSubDiv->getCountryId());
+
+            if ($countryNameFound = $this->entityManager->getRepository(GeonamesCountryLocale::class)->findLocalesForGeoId(
+                $parentSubDiv->getGeonameId(),
+                $locale
+            )[0]['name']) {
+                return $path =  $countryNameFound . '/' . $path;
+            } else return $path =  $currentSubDiv->getCountryName() . '/' . $path;
+        }
+
+        //$value = $subDivision->{'getAdminCode' . $level - 1};
+        dd($path);
+        return $path;
     }
 
     public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse

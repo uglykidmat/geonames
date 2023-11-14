@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesCountryLocale;
 use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +17,21 @@ class GeonamesTranslationService
     public function __construct(
         private EntityManagerInterface $entityManager
     ) {
+    }
+
+    public function findLocaleOrTranslationForId(int $geonameId, string $locale): string
+    {
+        $translationRepo = $this->entityManager->getRepository(GeonamesTranslation::class);
+        $subDivLocaleRepo = $this->entityManager->getRepository(AdministrativeDivisionLocale::class);
+        $countryLocaleRepo = $this->entityManager->getRepository(GeonamesCountryLocale::class);
+
+        if ($translationFound = $translationRepo->findOneByGeonameId($geonameId)) {
+            return $translationFound->getName();
+        } else if ($translationFound = $subDivLocaleRepo->findLocalesForGeoId($geonameId, $locale)) {
+            return $translationFound->getName();
+        } else if ($translationFound = $countryLocaleRepo->findLocalesForGeoId($geonameId, $locale)) {
+            return $translationFound->getName();
+        }
     }
 
     public function checkRequest(Request $postRequest): void
