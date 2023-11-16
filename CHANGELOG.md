@@ -1,3 +1,12 @@
+## [2.2.1](https://github.com/Gatoreviews/geonames/compare/v2.2.0...v2.2.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **geojson:** quick service fix ([2fff003](https://github.com/Gatoreviews/geonames/commit/2fff003c008832647a168ae15dc91520e077f8e6))
+* **levels:** command and service update ([f33e82c](https://github.com/Gatoreviews/geonames/commit/f33e82c86082af1a8fd773552f95e301ca282910))
+* **levels:** remove useless class use ([2bc50aa](https://github.com/Gatoreviews/geonames/commit/2bc50aafbf13cf09f4099ae8e3dd21b65dfa07b5))
+
 ## [2.2.0](https://github.com/Gatoreviews/geonames/compare/v2.1.6...v2.2.0) (2023-11-14)
 
 
