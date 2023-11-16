@@ -23,8 +23,8 @@ class GeonamesCountryLevelController extends AbstractController
     #[Route('/update', name: 'country_level_update', methods: ['GET'])]
     public function update(): JsonResponse
     {
-        $updatedLevels = [];
-        $levelsFound = [];
+        $updatedLevels = 0;
+        $newLevels = 0;
         $countryLevelJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_level.json'), true);
 
         foreach ($countryLevelJson as $countryLevelJsonIndex => $countryLevelJsonValue) {
@@ -32,16 +32,15 @@ class GeonamesCountryLevelController extends AbstractController
             if (!$this->entityManager->getRepository(GeonamesCountryLevel::class)
                 ->findByCountryCode($countryLevelJsonValue["countrycode"])) {
                 $this->levelService->addCountryLevel($countryLevelJsonValue);
-
-                $updatedLevels[] = $countryLevelJsonValue['countrycode'];
+                $newLevels++;
             } else {
-
-                $levelsFound[] = $countryLevelJsonValue['countrycode'];
+                $this->levelService->setCountryLevel($countryLevelJsonValue);
+                $updatedLevels++;
             }
         }
         $this->entityManager->flush();
 
-        return new JsonResponse(['Status' => 'Success', 'Countries OK' => implode(',', $levelsFound), 'Countries KO' => implode(',', $updatedLevels)]);
+        return new JsonResponse(['Status' => 'Success', 'Levels OK' => $updatedLevels]);
     }
 
     #[Route('/get', name: 'country_level_get', methods: ['GET'])]
