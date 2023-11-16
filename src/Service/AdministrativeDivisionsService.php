@@ -241,6 +241,7 @@ class AdministrativeDivisionsService
                 $nameFound = $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName();
                 $path = $nameFound . '/' . $path;
             }
+            //dd($path);
             return substr($path, 0, -1);
         }
         if ($level > 0) {
@@ -259,7 +260,7 @@ class AdministrativeDivisionsService
                 )->findOneByGeonameId($currentSubDiv->{'getAdminId' . $level - 1}());
             }
 
-            self::buildExportPath(
+            return $this->buildExportPath(
                 $parentSubDiv->getGeonameId(),
                 $level - 1,
                 $locale,
