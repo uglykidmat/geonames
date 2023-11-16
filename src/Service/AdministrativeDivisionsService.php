@@ -108,7 +108,9 @@ class AdministrativeDivisionsService
                         ->setFcode($entry->fcode ?? null)
                         ->setFcl($entry->fcl ?? null)
                         ->setSrtm3($entry->srtm3 ?? null)
-                        ->setAstergdem($entry->astergdem ?? null);
+                        ->setAstergdem($entry->astergdem ?? null)
+                        ->setAdminCodeAlt1($entry->adminCodes1->ISO3166_2 ?? null)
+                        ->setAdminCodeAlt2($entry->adminCodes2->ISO3166_2 ?? null);
 
                     $this->entityManager->persist($newAdminDiv);
 
@@ -131,6 +133,8 @@ class AdministrativeDivisionsService
     {
         $response = new JsonResponse();
         $count = 0;
+        $notFound = 0;
+        $idsNotFound = [];
         if ($altCodesList = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_alternative_divisions.json'))) {
             foreach ($altCodesList as $altCode) {
                 if ($adminDiv = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($altCode->geonameId)) {
@@ -140,10 +144,13 @@ class AdministrativeDivisionsService
                         ->setAdminCodeAlt3($altCode->adminCodes3 ?? null);
                     $this->entityManager->persist($adminDiv);
                     $count++;
+                } else {
+                    $notFound++;
+                    $idsNotFound[] = $altCode->geonameId;
                 }
             }
             $this->entityManager->flush();
-            $content = $count . ' alternative codes inserted';
+            $content = $count . ' alternative codes inserted. ' . $notFound . ' Ids not found in base : ' . (implode(",", $idsNotFound));
 
             return $response->setContent($content);
         }
