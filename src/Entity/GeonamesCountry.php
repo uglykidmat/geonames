@@ -254,6 +254,11 @@ class GeonamesCountry
         return $this->countryName;
     }
 
+    public function getAdminCode0(): ?string
+    {
+        return $this->geonameId;
+    }
+
     public function setCountryName(?string $countryName): static
     {
         $this->countryName = $countryName;

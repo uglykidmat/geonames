@@ -277,6 +277,11 @@ class GeonamesAdministrativeDivision
         return $this;
     }
 
+    public function getAdminId0(): ?string
+    {
+        return $this->countryId;
+    }
+
     public function getAdminId1(): ?int
     {
         return $this->adminId1;
