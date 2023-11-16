@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\GeonamesCountry;
 use App\Entity\GeonamesCountryLevel;
 use Doctrine\ORM\EntityManagerInterface;
 
