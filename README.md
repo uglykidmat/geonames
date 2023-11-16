@@ -121,6 +121,12 @@ php bin/console app:adbu {geoid},{geoid},{geoid},...
 ```
 the Ids must be separated by a comma.
 
+Locales update : 
+```bash
+php bin/console app:adlu {CountryCode}
+```
+This command can take a moment to execute, depending on the country's depth.
+
 ## Security information
 - `/status` is publicly available.
 - `/geonames/search` is accessible via a Bearer Token.
@@ -173,6 +179,11 @@ Handles GET requests for getting all the subdivision names of a country in a spe
 ```bash
   /administrativedivisions/export/{locale}/{level}
 ```
+
+```bash
+php bin/console app:ade {locale} {level}
+```
+
 Example :  `/administrativedivisions/export/fr/0`, `/administrativedivisions/export/it/1`
 Handles GET requests for getting all the subdivisions in a specific language, filtered by level. 0 represents the countries, 1,2,3 the subdivisions.
 The result page contains JSON information, and a file with the same content will be created in the `/var/geonames_export_data/` folder.
