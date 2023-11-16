@@ -1,3 +1,10 @@
+## [2.3.0](https://github.com/Gatoreviews/geonames/compare/v2.2.1...v2.3.0) (2023-11-16)
+
+
+### Features
+
+* **altCodes:** add AltCodes fetching during import ([3c03e95](https://github.com/Gatoreviews/geonames/commit/3c03e957fb02892917344a36ffcc9f4e6f18c1f9))
+
 ## [2.2.1](https://github.com/Gatoreviews/geonames/compare/v2.2.0...v2.2.1) (2023-11-16)
 
 
