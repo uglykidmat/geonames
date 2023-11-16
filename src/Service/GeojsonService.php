@@ -17,28 +17,35 @@ class GeojsonService
     public function updateAll(): JsonResponse
     {
         $response = new JsonResponse();
-        $outputOK = [];
-        $outputKO = [];
+        $outputOK = 0;
+        $outputKO = 0;
+        $geoIdsKO = [];
         if ($geojsonList = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_geojson.json'))) {
             foreach ($geojsonList as $geojson) {
                 if ($geojson->fcode == 'COUNTRY') {
                     if ($country = $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($geojson->geonameId)) {
                         $country->setGeojson($geojson->geojson);
                         $this->entityManager->persist($country);
-                        $outputOK[] = $geojson->geonameId;
-                    } else $outputKO[] = $geojson->geonameId;
+                        $outputOK++;
+                    } else {
+                        $outputKO++;
+                        $geoIdsKO[] = $geojson->geonameId;
+                    }
                 } else {
                     if ($adminDiv = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($geojson->geonameId)) {
                         $adminDiv->setGeojson($geojson->geojson);
                         $this->entityManager->persist($adminDiv);
-                        $outputOK[] = $geojson->geonameId;
-                    } else $outputKO[] = $geojson->geonameId;
+                        $outputOK++;
+                    } else {
+                        $outputKO++;
+                        $geoIdsKO[] = $geojson->geonameId;
+                    }
                 }
             }
             $this->entityManager->flush();
         }
 
-        $response->setContent(json_encode(['GeonameIDs OK' => implode(',', $outputOK), 'GeonameIDs KO' => implode(',', $outputKO)]));
+        $response->setContent(json_encode(['OK' => $outputOK, 'KO' => $outputKO, 'GeonameIDs KO' => $geoIdsKO]));
         return $response;
     }
 

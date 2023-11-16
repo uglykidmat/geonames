@@ -25,8 +25,9 @@ class GeojsonCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->text('Starting...');
-        $io->text($this->controller->update());
-        $io->success('Success. Countries data have been successfully updated.');
+        if ($geojsonupdate = $this->controller->update()) {
+            $io->success('Success. GeoJson data has been successfully updated. Output : ' . $geojsonupdate->getContent());
+        } else $io->error('Error. GeoJson data has not been updated !');
 
         return Command::SUCCESS;
     }
