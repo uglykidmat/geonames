@@ -19,19 +19,29 @@ class GeonamesTranslationService
     ) {
     }
 
-    public function findLocaleOrTranslationForId(int $geonameId, string $locale): string
+    public function findLocaleOrTranslationForId(int $geonameId, string $locale): string|null
     {
         $translationRepo = $this->entityManager->getRepository(GeonamesTranslation::class);
         $subDivLocaleRepo = $this->entityManager->getRepository(AdministrativeDivisionLocale::class);
         $countryLocaleRepo = $this->entityManager->getRepository(GeonamesCountryLocale::class);
 
-        if ($translationFound = $translationRepo->findOneByGeonameId($geonameId)) {
-            return $translationFound->getName();
+        if ($translationFound = $translationRepo->findLocalesForGeoId($geonameId, $locale)) {
+            return $translationFound[0]['name'];
         } else if ($translationFound = $subDivLocaleRepo->findLocalesForGeoId($geonameId, $locale)) {
-            return $translationFound->getName();
+
+            return $translationFound[0]['name'];
         } else if ($translationFound = $countryLocaleRepo->findLocalesForGeoId($geonameId, $locale)) {
-            return $translationFound->getName();
+            return $translationFound[0]['name'];
         }
+
+        if (!$translationFound && $locale == 'zh-tw') {
+            if ($translationFound = $subDivLocaleRepo->findLocalesForGeoId($geonameId, 'zh')) {
+                return $translationFound[0]['name'];
+            }
+
+            return $countryLocaleRepo->findLocalesForGeoId($geonameId, 'zh')[0]['name'];
+        }
+        return null;
     }
 
     public function checkRequest(Request $postRequest): void
