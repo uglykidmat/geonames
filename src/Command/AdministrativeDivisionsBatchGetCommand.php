@@ -38,13 +38,12 @@ class AdministrativeDivisionsBatchGetCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $io = new SymfonyStyle($input, $output);
-        if (!is_array($input->getArgument('geoids'))) {
+        $geoids = explode(',', $input->getArgument('geoids'));
+        if (!is_array($geoids)) {
             $io->error('An array of integers must be provided.');
             return Command::FAILURE;
         }
-        $geoids = explode(',', $input->getArgument('geoids'));
         $newIds = [];
-
         $io->title('Starting :');
         $io->text('Fetching geonames API...');
         $io->progressStart(count($geoids));
@@ -64,7 +63,7 @@ class AdministrativeDivisionsBatchGetCommand extends Command
         if (empty($newIds)) {
             $io->warning('Command successfully executed but no new Ids were inserted.');
         } else {
-            $io->success('Success ! New GeonameId(s) : ' . implode(',', $newIds));
+            $io->success('Success ! ' . count($newIds) . ' new GeonameId(s) : ' . implode(',', $newIds));
         }
 
         return Command::SUCCESS;
