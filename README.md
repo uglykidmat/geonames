@@ -106,7 +106,6 @@ php bin/console app:adu JP ADM2 1
 php bin/console app:adu ES ADM2 1000
 ```
 Some administrative divisions have an alternative admincode.
-
 To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' is in the 'base_data' folder, then visit
 ```php
 /administrativedivisions/alternatives/update
@@ -115,6 +114,12 @@ or
 ```bash
 php bin/console app:adaltu
 ```
+
+Quick command to import multiple geonameIds :
+```bash
+php bin/console app:adbu {geoid},{geoid},{geoid},...
+```
+the Ids must be separated by a comma.
 
 ## Security information
 - `/status` is publicly available.

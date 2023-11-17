@@ -32,34 +32,40 @@ class AdministrativeDivisionsBatchGetCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('geoids', InputArgument::REQUIRED, 'geoids');
+        $this->addArgument('geoids', InputArgument::REQUIRED, 'A comma-separated list of geoname IDs (integers)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $io = new SymfonyStyle($input, $output);
+        if (!is_array($input->getArgument('geoids'))) {
+            $io->error('An array of integers must be provided.');
+            return Command::FAILURE;
+        }
         $geoids = explode(',', $input->getArgument('geoids'));
         $newIds = [];
-        $progressBar = new ProgressBar($output, count($geoids));
 
-        $io->title('Fetching :');
-        $io->text('Running...');
-        $progressBar->start();
+        $io->title('Starting :');
+        $io->text('Fetching geonames API...');
+        $io->progressStart(count($geoids));
 
         foreach ($geoids as $geoid) {
             if (!$this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId((int)$geoid)) {
                 $newSubDiv = $this->apiService->getJsonSearch((int)$geoid);
                 $this->dbService->saveSubdivisionToDatabase($newSubDiv);
                 $newIds[] = $geoid;
-                $progressBar->advance();
+                $io->progressAdvance();
             }
+            $io->progressAdvance();
         }
 
         $this->entityManager->flush();
-        $progressBar->finish();
+        $io->progressFinish();
         if (empty($newIds)) {
-            $io->success('No new Ids inserted.');
-        } else $io->success('Success ! New GeonameIds : ' . implode(',', $newIds));
+            $io->warning('Command successfully executed but no new Ids were inserted.');
+        } else {
+            $io->success('Success ! New GeonameId(s) : ' . implode(',', $newIds));
+        }
 
         return Command::SUCCESS;
     }
