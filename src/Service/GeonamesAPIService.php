@@ -111,7 +111,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                     . '&style=full'
             )->getContent());
         } catch (\Exception $e) {
-            throw new BadRequestException('Invalid Geonames.org API token.');
+            throw new BadRequestException('Invalid request parameter or user token. ID must be of integer type.');
         }
         return $getJsonSearchResponse;
     }
