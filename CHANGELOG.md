@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/Gatoreviews/geonames/compare/v2.4.0...v2.4.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* **dbHydration:** wrong array conversion position... ([8adeb9b](https://github.com/Gatoreviews/geonames/commit/8adeb9b448d08c7d0429a2ed0fdd61fdc94f3ca6))
+
 ## [2.4.0](https://github.com/Gatoreviews/geonames/compare/v2.3.0...v2.4.0) (2023-11-17)
 
 
