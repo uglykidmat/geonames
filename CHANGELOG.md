@@ -1,3 +1,16 @@
+## [2.4.0](https://github.com/Gatoreviews/geonames/compare/v2.3.0...v2.4.0) (2023-11-17)
+
+
+### Features
+
+* **altCodes:** #[DEV-5166](https://linear.app/gtrsuite/issue/DEV-5166) scénario mi_8 ([d547f9e](https://github.com/Gatoreviews/geonames/commit/d547f9ea27d3a337ac27b229289aa5de8c7d3279))
+
+
+### Bug Fixes
+
+* **dbHyration:** clean batchGet command + Readme update ([fa56584](https://github.com/Gatoreviews/geonames/commit/fa56584c683eb8fd7db69be24aab75d5819f7fe4))
+* **dbHyration:** more accurate API error information. ([abcb92e](https://github.com/Gatoreviews/geonames/commit/abcb92e0523b3387c763fcd29942123b2d65142d))
+
 ## [2.3.0](https://github.com/Gatoreviews/geonames/compare/v2.2.1...v2.3.0) (2023-11-16)
 
 
