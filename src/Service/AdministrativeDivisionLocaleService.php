@@ -65,6 +65,7 @@ class AdministrativeDivisionLocaleService
         $newLocalesCount = 0;
         $apiResponse = $this->apiservice->getJsonSearch($geonameId);
         foreach ($apiResponse->alternateNames as $localeItem) {
+            #we exlude the wkdt+link(wikipedia) languages, as well as 'lauc' (?) and 'abbr'(abbreviation) data from fetching
             if (isset($localeItem->lang) &&  !in_array($localeItem->lang, ['link', 'lauc', 'abbr', 'wkdt'])) {
                 if (!$this->entityManager->getRepository(AdministrativeDivisionLocale::class)
                     ->findOneBy(array(

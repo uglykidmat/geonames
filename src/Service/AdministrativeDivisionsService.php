@@ -62,7 +62,6 @@ class AdministrativeDivisionsService
     public function addAdminDivisions(string $fcode, int $startrow, array|string $countries): JsonResponse
     {
         $response = new JsonResponse();
-        $responseContent = '';
         $newEntryCount = 0;
         $entriesFoundCount = 0;
         $adminDivRepository = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class);
@@ -113,8 +112,6 @@ class AdministrativeDivisionsService
                         ->setAdminCodeAlt2($entry->adminCodes2->ISO3166_2 ?? null);
 
                     $this->entityManager->persist($newAdminDiv);
-
-                    $responseContent .= $entry->name . ', ';
                     $newEntryCount++;
                 } else {
                     $entriesFoundCount++;
@@ -122,7 +119,7 @@ class AdministrativeDivisionsService
             }
             $this->entityManager->flush();
         }
-        $result = ['Status' => 'Success', 'Entries already found' => $entriesFoundCount + 1, 'New entries' => $newEntryCount, 'Max entries for this fcode' => $apiResult->totalResultsCount];
+        $result = ['Status' => 'Success', 'Entries already found' => $entriesFoundCount, 'New entries' => $newEntryCount, 'Max entries for this fcode' => $apiResult->totalResultsCount];
 
         $response->setContent(json_encode($result));
 
