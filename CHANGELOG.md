@@ -1,3 +1,21 @@
+## [2.5.0](https://github.com/Gatoreviews/geonames/compare/v2.4.1...v2.5.0) (2023-11-20)
+
+
+### Features
+
+* **export:** Entities update for specific Id0 fetching ([3717eb5](https://github.com/Gatoreviews/geonames/commit/3717eb5643e2c1cf12b613c02cc3aa7105637341))
+* **export:** main script -  recursive function ([d472d83](https://github.com/Gatoreviews/geonames/commit/d472d8332080b900aa6c2fafb877fdae6dbf831e))
+* **export:** new command for export function ([0d8ce78](https://github.com/Gatoreviews/geonames/commit/0d8ce789fe2846fbbb78ab80f9c98fca6a1310da))
+* **export:** repositories queries ([a0c5ff3](https://github.com/Gatoreviews/geonames/commit/a0c5ff34f6b74db19eb5898abaefc15ee437533a))
+* **export:** update entity locales for translation override fetch ([124ceed](https://github.com/Gatoreviews/geonames/commit/124ceed691eb4844b737c43bd6fb424f886c2a9e))
+* **export:** WIP new service + new export function ([7a6bdff](https://github.com/Gatoreviews/geonames/commit/7a6bdff222c1192a652badb7376a4c0266455858))
+
+
+### Bug Fixes
+
+* **export:** update raw query to object ([8367468](https://github.com/Gatoreviews/geonames/commit/8367468f9df74b9bba59f686ee744766aaf8c44e))
+* **search:** use MaxLevel instead of UsedLevel ([415bbf0](https://github.com/Gatoreviews/geonames/commit/415bbf0b985ad9a162752c75dd0b3932b5420461))
+
 ## [2.4.1](https://github.com/Gatoreviews/geonames/compare/v2.4.0...v2.4.1) (2023-11-17)
 
 
