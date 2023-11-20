@@ -16,7 +16,7 @@ class GeonamesSearchService
     public function __construct(
         private GeonamesAPIService $apiService,
         private GeonamesDBCachingService $dbCachingService,
-        private GeonamesCountryLevelRepository $geonameDivisionRepository,
+        private GeonamesCountryLevelRepository $gclRepository,
         private EntityManagerInterface $entityManager,
         private CacheItemPoolInterface $redisCache,
         private AdminCodesMapperService $adminCodesMapperService,
@@ -201,9 +201,9 @@ class GeonamesSearchService
 
     public function getLevel(GeonamesAdministrativeDivision|null $IdFoundInDb): ?int
     {
-        return ($this->geonameDivisionRepository->findOneByCountryCode(
+        return ($this->gclRepository->findOneByCountryCode(
             $IdFoundInDb->getCountryCode()
-        ) ?? (new GeonamesCountryLevel()))->getUsedLevel();
+        ) ?? (new GeonamesCountryLevel()))->getMaxLevel();
     }
 
     public function requestOne(stdClass $requestedGeoDivision, int|string $bulkIndex = 1): array
