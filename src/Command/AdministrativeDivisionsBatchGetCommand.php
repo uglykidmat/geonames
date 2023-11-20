@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesDBCachingService;
 use Symfony\Component\Console\Command\Command;
 use App\Service\AdministrativeDivisionsService;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
