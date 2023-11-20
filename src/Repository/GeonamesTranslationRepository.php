@@ -24,10 +24,20 @@ class GeonamesTranslationRepository extends ServiceEntityRepository
     public function findLocalesForGeoId($geonameId, $locale): array
     {
         $connection = $this->getEntityManager()->getConnection();
-        $query =
-            'SELECT g.geoname_id AS "geonameId", g.country_code AS "countryCode", g.name AS "name" FROM geonames_translation as g WHERE g.locale = :locale AND g.geoname_id = :geonameid';
-        $resultSet = $connection->executeQuery($query, ['locale' => $locale, 'geonameid' => $geonameId]);
 
-        return $resultSet->fetchAllAssociative();
+        $queryBuilderT = $connection->createQueryBuilder('g');
+        $queryBuilderT
+            ->select(
+                'g.geoname_id as geonameId,
+            g.country_code as countryCode,
+            g.name as name'
+            )
+            ->from('geonames_translation', 'g')
+            ->andWhere('g.geoname_id = :geonameid')
+            ->andWhere('g.locale = :locale')
+            ->setParameter('geonameid', $geonameId)
+            ->setParameter('locale', $locale);
+
+        return $queryBuilderT->fetchAllAssociative();
     }
 }
