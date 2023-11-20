@@ -168,7 +168,7 @@ class AdministrativeDivisionsService
             $list = $this->entityManager->getRepository(GeonamesCountry::class)->findAll();
         } else $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode('ADM' . $level);
 
-        foreach ($list as $subDivision) {
+        foreach ($list as $subKey => $subDivision) {
 
             if ($level == 0) {
                 if ($localeFound = $this->entityManager->getRepository(
@@ -205,10 +205,9 @@ class AdministrativeDivisionsService
                     )->getName();
             }
 
-
             $startPathId = $subDivision->getGeonameId();
 
-            $subDivInfos[] = [
+            $subDivInfos[$subKey] = [
                 'name' => $name,
                 'path' => self::buildExportPath($startPathId, $level, $locale),
                 '_geoloc' =>
@@ -216,11 +215,15 @@ class AdministrativeDivisionsService
                     'lat' => (float)$subDivision->getLat(),
                     'lng' => (float)$subDivision->getLng()
                 ],
-                'level' => (string)$this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($subDivision->getCountryCode())->getUsedLevel(),
                 'code' => $subDivision->{'getAdminCode' . $level}(),
                 'country_code' => $subDivision->getCountryCode(),
                 'objectID' => (string)$subDivision->getGeonameId()
             ];
+
+            if ($level === 0) {
+                $subDivInfos[$subKey]['level'] =
+                    (string)$this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($subDivision->getCountryCode())->getUsedLevel();
+            }
         }
         file_put_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_" . $level . "_" . $locale . ".json", json_encode($subDivInfos, JSON_PRETTY_PRINT));
 
@@ -234,23 +237,15 @@ class AdministrativeDivisionsService
         )->findOneByGeonameId($currentId);
 
         if ($level == 0) {
+            $nameFound = $this->translationService->findLocaleOrTranslationForId($currentId, $locale) ? $this->translationService->findLocaleOrTranslationForId($currentId, $locale) : $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName();
 
-            if ($nameFound = $this->translationService->findLocaleOrTranslationForId($currentId, $locale)) {
-                $path = $nameFound . '/' . $path;
-            } else {
-                $nameFound = $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName();
-                $path = $nameFound . '/' . $path;
-            }
-            //dd($path);
+            $path = $nameFound . '/' . $path;
+
             return substr($path, 0, -1);
-        }
-        if ($level > 0) {
-            if ($nameFound = $this->translationService->findLocaleOrTranslationForId($currentId, $locale)) {
-                $path = $nameFound . '/' . $path;
-            } else {
-                $nameFound = $currentSubDiv->getName();
-                $path = $nameFound . '/' . $path;
-            }
+        } else {
+            $nameFound = $this->translationService->findLocaleOrTranslationForId($currentId, $locale) ? $this->translationService->findLocaleOrTranslationForId($currentId, $locale) : $currentSubDiv->getName();
+
+            $path = $nameFound . '/' . $path;
 
             if (!$parentSubDiv = $this->entityManager->getRepository(
                 GeonamesAdministrativeDivision::class
