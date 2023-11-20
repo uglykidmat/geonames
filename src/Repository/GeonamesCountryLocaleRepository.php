@@ -24,24 +24,52 @@ class GeonamesCountryLocaleRepository extends ServiceEntityRepository
     public function findLocales($locale): array
     {
         $connection = $this->getEntityManager()->getConnection();
-        $query =
-            'SELECT g.geoname_id AS "geonameId", g.country_code AS "countryCode",
-                (SELECT name FROM geonames_country_locale as gcl WHERE gcl.geoname_id = g.geoname_id AND gcl.locale = g.locale ORDER BY gcl.is_preferred_name, gcl.is_short_name LIMIT 1)  
-            FROM geonames_country_locale as g WHERE g.locale = :locale GROUP BY g.geoname_id, g.locale, g.country_code';
-        $resultSet = $connection->executeQuery($query, ['locale' => $locale]);
+        $queryBuilderGcl = $connection->createQueryBuilder('gcl');
+        $queryBuilderGcli = $connection->createQueryBuilder('gcli');
 
-        return $resultSet->fetchAllAssociative();
+        $queryBuilderGcli
+            ->select('gcli.name')
+            ->from('geonames_country_locale', 'gcli')
+            ->andWhere('gcli.geoname_id = gcl.geoname_id')
+            ->andWhere('gcli.locale = gcl.locale')
+            ->orderBy('gcli.is_preferred_name, gcli.is_short_name')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        $queryBuilderGcl
+            ->select('gcl.geoname_id as geonameId, gcl.country_code as countryCode', '(' . $queryBuilderGcli . ')')
+            ->from('geonames_country_locale', 'gcl')
+            ->andWhere('gcl.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->getQueryParts();
+
+        return $queryBuilderGcl->fetchAllAssociative();
     }
 
     public function findLocalesForGeoId($geonameId, $locale): array
     {
         $connection = $this->getEntityManager()->getConnection();
-        $query =
-            'SELECT g.geoname_id AS "geonameId", g.country_code AS "countryCode",
-                (SELECT name FROM geonames_country_locale as gcl WHERE gcl.geoname_id = g.geoname_id AND gcl.locale = g.locale ORDER BY gcl.is_preferred_name, gcl.is_short_name LIMIT 1)  
-            FROM geonames_country_locale as g WHERE g.locale = :locale AND g.geoname_id = :geonameid GROUP BY g.geoname_id, g.locale, g.country_code';
-        $resultSet = $connection->executeQuery($query, ['locale' => $locale, 'geonameid' => $geonameId]);
+        $queryBuilderGcl = $connection->createQueryBuilder('gcl');
+        $queryBuilderGcli = $connection->createQueryBuilder('gcli');
 
-        return $resultSet->fetchAllAssociative();
+        $queryBuilderGcli
+            ->select('gcli.name')
+            ->from('geonames_country_locale', 'gcli')
+            ->andWhere('gcli.geoname_id = gcl.geoname_id')
+            ->andWhere('gcli.locale = gcl.locale')
+            ->orderBy('gcli.is_preferred_name, gcli.is_short_name')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        $queryBuilderGcl
+            ->select('gcl.geoname_id as geonameId, gcl.country_code as countryCode', '(' . $queryBuilderGcli . ')')
+            ->from('geonames_country_locale', 'gcl')
+            ->andWhere('gcl.geoname_id = :geonameid')
+            ->andWhere('gcl.locale = :locale')
+            ->setParameter('geonameid', $geonameId)
+            ->setParameter('locale', $locale)
+            ->getQueryParts();
+
+        return $queryBuilderGcl->fetchAllAssociative();
     }
 }

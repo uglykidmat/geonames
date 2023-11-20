@@ -21,21 +21,6 @@ class AdministrativeDivisionLocaleRepository extends ServiceEntityRepository
         parent::__construct($registry, AdministrativeDivisionLocale::class);
     }
 
-    //    /**
-    //     * @return AdministrativeDivisionLocale[] Returns an array of AdministrativeDivisionLocale objects
-    //     */
-    // public function findByCountryCodeAndFCode($countrycode): array
-    // {
-    //     return $this->createQueryBuilder('a')
-    //         ->andWhere('a.countryCode = :cc')
-    //         ->setParameter('cc', $countrycode)
-    //         ->andWhere('a.fCode = ADM1')
-    //         ->orderBy('a.id', 'ASC')
-    //         ->setMaxResults(10)
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-
     public function findOneFallBack(int $geonameId, string $countryCode): ?AdministrativeDivisionLocale
     {
         return $this->createQueryBuilder('a')
@@ -50,12 +35,27 @@ class AdministrativeDivisionLocaleRepository extends ServiceEntityRepository
     public function findLocalesForGeoId(int $geonameId, string $locale): array
     {
         $connection = $this->getEntityManager()->getConnection();
-        $query =
-            'SELECT g.geoname_id AS "geonameId", g.country_code AS "countryCode",
-                (SELECT name FROM administrative_division_locale as gcl WHERE gcl.geoname_id = g.geoname_id AND gcl.locale = g.locale ORDER BY gcl.is_preferred_name, gcl.is_short_name LIMIT 1)  
-            FROM administrative_division_locale as g WHERE g.locale = :locale AND g.geoname_id = :geonameid GROUP BY g.geoname_id, g.locale, g.country_code';
-        $resultSet = $connection->executeQuery($query, ['locale' => $locale, 'geonameid' => $geonameId]);
+        $queryBuilderAdl = $connection->createQueryBuilder('adl');
+        $queryBuilderAdli = $connection->createQueryBuilder('adli');
 
-        return $resultSet->fetchAllAssociative();
+        $queryBuilderAdli
+            ->select('adli.name')
+            ->from('administrative_division_locale', 'adli')
+            ->andWhere('adli.geoname_id = adl.geoname_id')
+            ->andWhere('adli.locale = adl.locale')
+            ->orderBy('adli.is_preferred_name, adli.is_short_name')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        $queryBuilderAdl
+            ->select('adl.geoname_id as geonameId, adl.country_code as countryCode', '(' . $queryBuilderAdli . ')')
+            ->from('administrative_division_locale', 'adl')
+            ->andWhere('adl.geoname_id = :geonameid')
+            ->andWhere('adl.locale = :locale')
+            ->setParameter('geonameid', $geonameId)
+            ->setParameter('locale', $locale)
+            ->getQueryParts();
+
+        return $queryBuilderAdl->fetchAllAssociative();
     }
 }
