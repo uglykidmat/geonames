@@ -36,7 +36,11 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             'lng' => $lng,
             'username' => $this->token,
             'style' => 'full',
-            'maxRows' => '1'
+            'maxRows' => '1',
+            'fcode' => 'PPLA',
+            'fcode' => 'PPLX',
+            'fcode' => 'PPLC',
+            'fcode' => 'PPL',
         ],];
         $latlngSearchResponse = $this->client->request(
             'GET',
