@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/Gatoreviews/geonames/compare/v2.5.1...v2.5.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* **search:** oneResultOnly and used level ([ab761ff](https://github.com/Gatoreviews/geonames/commit/ab761ffc6f136ce5a4afcb076b51d1c8151f09f3))
+
 ## [2.5.1](https://github.com/Gatoreviews/geonames/compare/v2.5.0...v2.5.1) (2023-11-21)
 
 
