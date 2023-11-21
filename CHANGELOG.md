@@ -1,3 +1,10 @@
+## [2.5.3](https://github.com/Gatoreviews/geonames/compare/v2.5.2...v2.5.3) (2023-11-21)
+
+
+### Bug Fixes
+
+* **api:** update UsedLevel in Api ([86d5b52](https://github.com/Gatoreviews/geonames/commit/86d5b528174e8a184c48b7ea93513cc00a0522e5))
+
 ## [2.5.2](https://github.com/Gatoreviews/geonames/compare/v2.5.1...v2.5.2) (2023-11-21)
 
 
