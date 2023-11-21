@@ -1,3 +1,11 @@
+## [2.5.4](https://github.com/Gatoreviews/geonames/compare/v2.5.3...v2.5.4) (2023-11-21)
+
+
+### Bug Fixes
+
+* **CI:** auto rebase dev ([6ed0fae](https://github.com/Gatoreviews/geonames/commit/6ed0fae6be554b511b9c8661ff27ffba81c70155))
+* **Subdvision:** default response content + divers code cleaning ([0a67995](https://github.com/Gatoreviews/geonames/commit/0a67995c66f3eaa310f36a2edd97c86b3bfbdae6))
+
 ## [2.5.3](https://github.com/Gatoreviews/geonames/compare/v2.5.2...v2.5.3) (2023-11-21)
 
 
