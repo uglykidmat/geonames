@@ -21,7 +21,7 @@ class AdministrativeDivisionLocaleRepository extends ServiceEntityRepository
         parent::__construct($registry, AdministrativeDivisionLocale::class);
     }
 
-    public function findOneFallBack(int $geonameId, string $countryCode): ?AdministrativeDivisionLocale
+    public function findOneFallBack(int $geonameId, string $countryCode): ?array
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.geonameId = :id')
@@ -29,7 +29,8 @@ class AdministrativeDivisionLocaleRepository extends ServiceEntityRepository
             ->andWhere('a.locale = :locale')
             ->setParameter('locale', $countryCode)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->setMaxResults(1)
+            ->getResult();
     }
 
     public function findLocalesForGeoId(int $geonameId, string $locale): array

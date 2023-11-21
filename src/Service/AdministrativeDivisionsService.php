@@ -272,16 +272,13 @@ class AdministrativeDivisionsService
         if ($apiCacheData->isHit()) {
             return $response->setContent($apiCacheData->get());
         }
-
         $responseContent = [];
         for ($level = 1; $level <= $countryLevelForApi; $level++) {
             $levelList = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
                 ['countryCode' => $countrycode, 'fcode' => 'ADM' . $level]
             );
-
             $responseContent['level' . $level] = $this->buildApiResponse($levelList, $locale, $countrycode, $level);
         }
-
         $apiCacheData->set(json_encode($responseContent));
         $this->redisCache->save($apiCacheData);
         $response->setContent(json_encode($responseContent));
@@ -295,15 +292,15 @@ class AdministrativeDivisionsService
 
         foreach ($adminDivsForLevel as $adminDiv) {
             $name = $adminDiv->getName();
-
-            if ($adminDivLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneBy(
-                ['geonameId' => $adminDiv->getGeonameId(), 'locale' => $locale]
-            )) {
-                $name = $adminDivLocale->getName();
-            } else if ($fallbackLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneFallBack($adminDiv->getGeonameId(), strtolower($countrycode))) {
-                $name = $fallbackLocale->getName();
+            if (
+                $adminDivLocale = $this->translationService->findLocaleOrTranslationForId($adminDiv->getGeonameId(), $locale)
+            ) {
+                $name = $adminDivLocale;
+            } else if (
+                $fallbackLocale = $this->entityManager->getRepository(AdministrativeDivisionLocale::class)->findOneFallBack($adminDiv->getGeonameId(), strtolower($countrycode))
+            ) {
+                $name = $fallbackLocale[0]->getName();
             }
-
             if ($level == 1) {
                 $adminCodeUp = $countrycode;
             } else {

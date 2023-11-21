@@ -203,7 +203,7 @@ class GeonamesSearchService
     {
         return ($this->gclRepository->findOneByCountryCode(
             $IdFoundInDb->getCountryCode()
-        ) ?? (new GeonamesCountryLevel()))->getMaxLevel();
+        ) ?? (new GeonamesCountryLevel()))->getUsedLevel();
     }
 
     public function requestOne(stdClass $requestedGeoDivision, int|string $bulkIndex = 1): array
