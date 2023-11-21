@@ -265,7 +265,7 @@ class AdministrativeDivisionsService
     {
         set_time_limit(0);
         $response = new JsonResponse();
-        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countrycode)->getMaxLevel();
+        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countrycode)->getUsedLevel();
 
         $apiCacheKey = 'apiAdminDiv_' . $locale . '_' . $countrycode;
         $apiCacheData = $this->redisCache->getItem($apiCacheKey);

@@ -172,6 +172,11 @@ then call the endpoint :
 ```bash
   /administrativedivisions/api/{lang}/{countryCode}
 ```
+The inline command for this API endpoint (JSON generation) is :
+```bash
+  php bin/console app:adapi {lang} {countryCode}
+```
+
 Example : /administrativedivisions/api/it/FR
 Handles GET requests for getting all the subdivision names of a country in a specific language.
 
