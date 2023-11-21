@@ -255,20 +255,19 @@ class AdministrativeDivisionsService
             $locale,
             $path
         );
-
     }
 
     public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse
     {
         set_time_limit(0);
         $response = new JsonResponse();
-        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countrycode)->getUsedLevel();
 
         $apiCacheKey = 'apiAdminDiv_' . $locale . '_' . $countrycode;
         $apiCacheData = $this->redisCache->getItem($apiCacheKey);
         if ($apiCacheData->isHit()) {
             return $response->setContent($apiCacheData->get());
         }
+        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countrycode)->getUsedLevel();
         $responseContent = [
             'level1' => [],
             'level2' => [],
