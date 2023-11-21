@@ -1,3 +1,12 @@
+## [2.5.1](https://github.com/Gatoreviews/geonames/compare/v2.5.0...v2.5.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* **locales:** link, lauc, abbr, wkdt removed from fetching ([f531ad9](https://github.com/Gatoreviews/geonames/commit/f531ad9f5531e3c27f7eaaadf6f6bea1f84311e4))
+* **search:** add fcodes in request URL for Places ([60d906c](https://github.com/Gatoreviews/geonames/commit/60d906cf018ae0792e3f2dfe757dc2865ba7e504))
+* **search:** update max level in api script ([f36cae9](https://github.com/Gatoreviews/geonames/commit/f36cae9e2517883debc013698e451ffa8309fea1))
+
 ## [2.5.0](https://github.com/Gatoreviews/geonames/compare/v2.4.1...v2.5.0) (2023-11-20)
 
 
