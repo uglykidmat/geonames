@@ -11,7 +11,6 @@ use App\Entity\AdministrativeDivisionLocale;
 use App\Entity\GeonamesAdministrativeDivision;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Service\AdministrativeDivisionLocaleService;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -68,6 +67,7 @@ class AdministrativeDivisionsService
         }
         if (count($apiResult->geonames) != 0) {
             foreach ($apiResult->geonames as $entry) {
+
                 if (!$adminDivRepository->findOneByGeonameId($entry->geonameId)) {
                     $newAdminDiv = new GeonamesAdministrativeDivision();
                     $newAdminDiv
@@ -109,9 +109,7 @@ class AdministrativeDivisionsService
 
                     $this->entityManager->persist($newAdminDiv);
                     $newEntryCount++;
-                } else {
-                    $entriesFoundCount++;
-                }
+                } else $entriesFoundCount++;
             }
             $this->entityManager->flush();
         }
@@ -154,15 +152,21 @@ class AdministrativeDivisionsService
     public function getSubdivisionsForExport(string $locale, int $level): array
     {
         set_time_limit(0);
+        $subDivInfos = [];
         //______NOTE
         $locales = ["en", "fr", "it", "de", "es", "nl", "pl", "ru", "th", "zh", "ko", "ar", "ja", "tr", "uk", "zh-tw",];
         //__________
         if ($level == 0) {
             $list = $this->entityManager->getRepository(GeonamesCountry::class)->findAll();
-        } else $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByFcode('ADM' . $level);
-
+        } else {
+            $countriesToFetch = [];
+            foreach ($this->entityManager->getRepository(GeonamesCountryLevel::class)->findUsedLevelMoreThan($level) as $country) {
+                $countriesToFetch[] = $country['countryCode'];
+            }
+            $list = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)
+                ->findADMsForCountryLevel($level, $countriesToFetch);
+        }
         foreach ($list as $subKey => $subDivision) {
-
             if ($level == 0) {
                 if ($localeFound = $this->entityManager->getRepository(
                     GeonamesCountryLocale::class
@@ -182,7 +186,6 @@ class AdministrativeDivisionsService
                     )->getName();
                 }
             } else {
-
                 if ($subDivFound = $this->entityManager->getRepository(
                     AdministrativeDivisionLocale::class
                 )->findOneBy(
@@ -197,9 +200,7 @@ class AdministrativeDivisionsService
                         $subDivision->getGeonameId()
                     )->getName();
             }
-
             $startPathId = $subDivision->getGeonameId();
-
             $subDivInfos[$subKey] = [
                 'name' => $name,
                 'path' => $this->buildExportPath($startPathId, $level, $locale),
@@ -212,10 +213,17 @@ class AdministrativeDivisionsService
                 'country_code' => $subDivision->getCountryCode(),
                 'objectID' => (string)$subDivision->getGeonameId()
             ];
-
             if ($level === 0) {
                 $subDivInfos[$subKey]['level'] =
                     (string)$this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($subDivision->getCountryCode())->getUsedLevel();
+                $subDivInfos[$subKey]['code'] = $subDivision->getCountryCode();
+            }
+            if ($level === 2) {
+                $subDivInfos[$subKey]['code1'] = $subDivision->getAdminCode1();
+            }
+            if ($level === 3) {
+                $subDivInfos[$subKey]['code1'] = $subDivision->getAdminCode1();
+                $subDivInfos[$subKey]['code2'] = $subDivision->getAdminCode2();
             }
         }
         file_put_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_" . $level . "_" . $locale . ".json", json_encode($subDivInfos, JSON_PRETTY_PRINT));
@@ -230,23 +238,31 @@ class AdministrativeDivisionsService
         )->findOneByGeonameId($currentId);
 
         if ($level === 0) {
-            $nameFound = $this->translationService->findLocaleOrTranslationForId($currentId, $locale) ? $this->translationService->findLocaleOrTranslationForId($currentId, $locale) : $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName();
+            $nameFound = str_replace(' ', '+', $this->translationService->findLocaleOrTranslationForId($currentId, $locale)) ?: str_replace(' ', '+', $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName());
 
             $path = $nameFound . '/' . $path;
 
             return substr($path, 0, -1);
         }
 
-        $nameFound = $this->translationService->findLocaleOrTranslationForId($currentId, $locale) ?: $currentSubDiv->getName();
-
+        $nameFound = str_replace(' ', '+', $this->translationService->findLocaleOrTranslationForId($currentId, $locale)) ?: str_replace(' ', '+', $currentSubDiv->getName());
         $path = $nameFound . '/' . $path;
-
-        if (!$parentSubDiv = $this->entityManager->getRepository(
-            GeonamesAdministrativeDivision::class
-        )->findOneByGeonameId($currentSubDiv->{'getAdminId' . $level - 1}())) {
-            $parentSubDiv = $this->entityManager->getRepository(
+        $parentSubDiv =
+            $this->entityManager->getRepository(
+                GeonamesAdministrativeDivision::class
+            )->findOneByGeonameId($currentSubDiv->{'getAdminId' . $level - 1}()) ?:
+            $this->entityManager->getRepository(
                 GeonamesCountry::class
             )->findOneByGeonameId($currentSubDiv->{'getAdminId' . $level - 1}());
+
+        #special case for country "DE" where ADM3 had no ADM2 parent
+        #we have to fetch ADM1 grandparent and lessen level by 1
+        if (!$parentSubDiv && $level === 3) {
+            $parentSubDiv =
+                $this->entityManager->getRepository(
+                    GeonamesAdministrativeDivision::class
+                )->findOneByGeonameId($currentSubDiv->{'getAdminId' . $level - 2}());
+            $level--;
         }
 
         return $this->buildExportPath(

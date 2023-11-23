@@ -21,37 +21,27 @@ class GeonamesCountryLevelRepository extends ServiceEntityRepository
         parent::__construct($registry, GeonamesCountryLevel::class);
     }
 
-    //    /**
-    //     * @return GeonamesCountryLevel[] Returns an array of GeonamesCountryLevel objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?GeonamesCountryLevel
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
     public function findUsedLevelMoreThan($value): array
     {
         return $this->createQueryBuilder('g')
+            ->select('g.countryCode')
             ->andWhere('g.usedLevel >= :val')
-            ->andWhere('g.usedLevel != 0')
+            ->andWhere('g.usedLevel <> 0')
             ->setParameter('val', $value)
+            ->orderBy('g.countryCode', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByUsedLevelLessThan(int $level)
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.countryCode')
+            ->andWhere('g.usedLevel <= :level')
+            ->andWhere('g.usedLevel <> 0')
+            ->setParameter('level', $level)
+            ->orderBy('g.countryCode', 'ASC')
+            ->getQuery()
+            ->execute();
     }
 }

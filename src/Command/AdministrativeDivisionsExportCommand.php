@@ -40,7 +40,7 @@ class AdministrativeDivisionsExportCommand extends Command
             $io->success('Success ! File exported ');
 
             return Command::SUCCESS;
-        } else $io->error('Something went wrong !');
+        } else $io->error('Something went wrong during subdivisions file export!');
 
         return Command::FAILURE;
     }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\GeonamesAdministrativeDivision;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -72,13 +73,13 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByCountryCodeADM($countrycode): ?array
+    public function findADMsForCountryLevel(int $level, array $searchCodes): ?array
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.countryCode = :cc')
-            ->setParameter('cc', $countrycode)
-            ->andWhere('g.fcode LIKE :adm')
-            ->setParameter('adm', 'ADM%')
+        return $this->createQueryBuilder('ad')
+            ->andWhere('ad.fcode LIKE :adm')
+            ->setParameter('adm', 'ADM' . $level)
+            ->andWhere('ad.countryCode IN (:searchCodes)')
+            ->setParameter('searchCodes', $searchCodes)
             ->getQuery()
             ->execute();
     }
