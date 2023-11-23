@@ -17,6 +17,13 @@ class GeonamesCountryController extends AbstractController
         private GeonamesCountryService $service
     ) {
     }
+
+    #[Route('/list/{locale}')]
+    public function listCountries(string $locale): JsonResponse
+    {
+        return $this->json($this->service->listCountries($locale));
+    }
+
     #[Route('/update', methods: ['GET'])]
     public function updateCountries(): JsonResponse
     {

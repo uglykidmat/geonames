@@ -3,19 +3,46 @@
 namespace App\Service;
 
 use App\Entity\GeonamesCountry;
+use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\GeonamesTranslationService;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GeonamesCountryService
 {
     public function __construct(
         private HttpClientInterface $client,
         private string $token,
-        public EntityManagerInterface $entityManager
+        public EntityManagerInterface $entityManager,
+        private GeonamesTranslationService $translationService,
+        private CacheItemPoolInterface $redisCache,
+        private string $redisDsn,
     ) {
+    }
+
+    public function listCountries(string $locale): array
+    {
+        $countryListCacheKey = 'countryList_' . $locale;
+        $countryListData = $this->redisCache->getItem($countryListCacheKey);
+
+        if ($countryListData->isHit()) {
+            return $countryListData->get();
+        }
+        $listCountries = [];
+        foreach ($this->entityManager->getRepository(GeonamesCountry::class)->findAll() as $country) {
+            $listCountries[] = [
+                'countryCode' => $country->getCountryCode(),
+                'geonameId' => $country->getGeonameId(),
+                'name' => $this->translationService->findLocaleOrTranslationForId($country->getGeonameId(), $locale)
+            ];
+        }
+        $countryListData->set($listCountries);
+        $this->redisCache->save($countryListData);
+
+        return $listCountries;
     }
 
     public function purgeCountryList(): JsonResponse

@@ -105,6 +105,11 @@ php bin/console app:adu IT ADM3 2000
 php bin/console app:adu JP ADM2 1
 php bin/console app:adu ES ADM2 1000
 ```
+Multiple countries' ADM can be imported at once :
+```bash
+php bin/console app:adu DE,ES,FI,CH ADM1 1
+```
+
 Some administrative divisions have an alternative admincode.
 To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' is in the 'base_data' folder, then visit
 ```php
@@ -163,7 +168,7 @@ Handles POST requests : the content must be a JSON string following this structu
 The search will be on the coordinates, and use the postalcode/countrycode couple to find the subdivisions.
 This URL is protected by a token, if not provided you will encounter a 401 error.
 
-### GET endpoint
+### GET endpoints
 Hydrate the database first, for every country code needed. Example for Japan : 
 ```bash
 /administrativedivisions/locales/update/JP
@@ -176,6 +181,13 @@ The inline command for this API endpoint (JSON generation) is :
 ```bash
   php bin/console app:adapi {lang} {countryCode}
 ```
+
+Country list : 
+```bash
+  /country/list/{lang}
+```
+A GET request on this URL will return the country list with the following information : countryCode, geonameId, name.
+The name will be translated in {lang}, for example /fr, /de, etc
 
 Example : /administrativedivisions/api/it/FR
 Handles GET requests for getting all the subdivision names of a country in a specific language.

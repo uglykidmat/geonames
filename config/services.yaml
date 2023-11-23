@@ -28,6 +28,7 @@ services:
     App\Service\GeonamesCountryService:
         arguments:
             $token: '%env(GEONAMES_TOKEN)%'
+            $redisDsn: '%env(REDIS_HOST)%'
 
     App\Service\GeonamesSearchService:
         arguments:
