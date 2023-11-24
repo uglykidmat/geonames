@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\GeonamesTranslationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ApiResource(order: ['geonameId' => 'ASC'])]
 #[ORM\Entity(repositoryClass: GeonamesTranslationRepository::class)]
@@ -16,9 +18,16 @@ class GeonamesTranslation
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?int $geonameId = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     private ?string $name = null;
 
     #[ORM\Column(length: 10)]
@@ -28,6 +37,8 @@ class GeonamesTranslation
     private ?string $fcode = null;
 
     #[ORM\Column(length: 5)]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     private ?string $locale = null;
 
     public function getId(): ?int

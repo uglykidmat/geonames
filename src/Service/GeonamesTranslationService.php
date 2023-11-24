@@ -76,6 +76,9 @@ class GeonamesTranslationService
         $dbInsertionDone = array();
 
         foreach ($postContent as $postValue) {
+            if (bccomp($postValue->geonameId, PHP_INT_MAX, 0) !== 1) {
+                throw new BadRequestHttpException('GeonameId must be an integer : value "' . print_r($postValue->geonameId, true) . '" is too big.');
+            }
             if ($this->entityManager
                 ->getRepository(GeonamesTranslation::class)
                 ->findOneBy(array(
