@@ -1,3 +1,20 @@
+## [2.6.0](https://github.com/Gatoreviews/geonames/compare/v2.5.4...v2.6.0) (2023-11-27)
+
+
+### Features
+
+* **countries:** new countryList endpoint ([19b7c60](https://github.com/Gatoreviews/geonames/commit/19b7c60ad3073e78793838a0ef8487dfbc66d27a))
+* **export:** update command + export service ([f04763d](https://github.com/Gatoreviews/geonames/commit/f04763dcfc0d72ca610b1a04f961bc0ca3b54388))
+
+
+### Bug Fixes
+
+* **api:** set cacheResponse before function ([d13b757](https://github.com/Gatoreviews/geonames/commit/d13b7577908a49fa9e0563d303a88ccd72180140))
+* **tests:** accurate assertions ([ea34aa9](https://github.com/Gatoreviews/geonames/commit/ea34aa9810cbc19879d87492cf1ea451732be0ea))
+* **tests:** rename folders + update config ([ca751d2](https://github.com/Gatoreviews/geonames/commit/ca751d258b6ef7c3c7d70dd64247ee49c5455c24))
+* **translations:** BIGINT case now logs an error ([97c43b2](https://github.com/Gatoreviews/geonames/commit/97c43b2c4003616e700bdd54535cd065f26676c1))
+* **Typo:** clearer error ([49a11d1](https://github.com/Gatoreviews/geonames/commit/49a11d1f1b2ea62dccc92a861dc3ae03caa85670))
+
 ## [2.5.4](https://github.com/Gatoreviews/geonames/compare/v2.5.3...v2.5.4) (2023-11-21)
 
 
