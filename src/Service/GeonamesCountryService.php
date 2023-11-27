@@ -95,7 +95,8 @@ class GeonamesCountryService
             $this->entityManager->flush();
 
             return $response->setContent(implode(',', $updateList));
-        } else throw new HttpException(500, "Could not get country list from Geonames");
+        }
+        throw new HttpException($apiresponse->getStatusCode(), "Could not get country list from api.geonames.org");
     }
 
     public function updateBarycenters(): Response
