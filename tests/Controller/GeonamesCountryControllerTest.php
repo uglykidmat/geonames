@@ -9,9 +9,12 @@ class GeonamesCountryControllerTest extends WebTestCase
     public function testShouldGetCountryList(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/country/list/fr');
-        $response = json_decode($client->getResponse()->getContent(), true);
+        $client->request('GET', '/country/list/fr');
+        $response = json_decode($client->getResponse()->getContent());
         $this->assertResponseIsSuccessful();
-        $this->assertCount(250, $response, 'Failed to meet the 250 entries requirement !');
+        $this->assertIsArray($response);
+        $this->assertArrayNotHasKey(250, $response);
+        $this->assertArrayHasKey(249, $response);
+        $this->assertEquals('France', $response[74]->name, 'Key 74 should be "France"');
     }
 }
