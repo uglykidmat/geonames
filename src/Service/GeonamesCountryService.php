@@ -41,7 +41,6 @@ class GeonamesCountryService
         }
         $countryListData->set($listCountries);
         $this->redisCache->save($countryListData);
-        dd($listCountries);
         return $listCountries;
     }
 

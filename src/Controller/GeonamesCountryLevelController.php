@@ -28,7 +28,6 @@ class GeonamesCountryLevelController extends AbstractController
         $countryLevelJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_level.json'), true);
 
         foreach ($countryLevelJson as $countryLevelJsonIndex => $countryLevelJsonValue) {
-
             if (!$this->entityManager->getRepository(GeonamesCountryLevel::class)
                 ->findByCountryCode($countryLevelJsonValue["countrycode"])) {
                 $this->levelService->addCountryLevel($countryLevelJsonValue);
@@ -40,7 +39,11 @@ class GeonamesCountryLevelController extends AbstractController
         }
         $this->entityManager->flush();
 
-        return new JsonResponse(['Status' => 'Success', 'Levels OK' => $updatedLevels]);
+        return new JsonResponse([
+            'Status' => 'Success',
+            'Levels already found' => $updatedLevels,
+            'Levels inserted' => $newLevels
+        ]);
     }
 
     #[Route('/get', name: 'country_level_get', methods: ['GET'])]
