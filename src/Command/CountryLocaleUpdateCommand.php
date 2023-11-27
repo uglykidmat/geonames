@@ -23,6 +23,7 @@ class CountryLocaleUpdateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
+        set_time_limit(0);
         $io = new SymfonyStyle($input, $output);
         $progressBar = new ProgressBar($output, 5);
 
