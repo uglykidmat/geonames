@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/Gatoreviews/geonames/compare/v2.6.0...v2.6.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* **Typo:** #[DEV-5267](https://linear.app/gtrsuite/issue/DEV-5267) always upper case ([ebf6590](https://github.com/Gatoreviews/geonames/commit/ebf659019f3223173f60333076cd3c2da81baf01))
+
 ## [2.6.0](https://github.com/Gatoreviews/geonames/compare/v2.5.4...v2.6.0) (2023-11-27)
 
 
