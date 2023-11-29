@@ -273,17 +273,18 @@ class AdministrativeDivisionsService
         );
     }
 
-    public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse
+    public function getSubdivisionsForApi(string $locale, string $countryCode): JsonResponse
     {
         set_time_limit(0);
         $response = new JsonResponse();
+        $countryCode = strtoupper($countryCode);
 
-        $apiCacheKey = 'apiAdminDiv_' . $locale . '_' . $countrycode;
+        $apiCacheKey = 'apiAdminDiv_' . $locale . '_' . $countryCode;
         $apiCacheData = $this->redisCache->getItem($apiCacheKey);
         if ($apiCacheData->isHit()) {
             return $response->setContent($apiCacheData->get());
         }
-        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countrycode)->getUsedLevel();
+        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countryCode)->getUsedLevel();
         $responseContent = [
             'level1' => [],
             'level2' => [],
@@ -291,9 +292,9 @@ class AdministrativeDivisionsService
         ];
         for ($level = 1; $level <= $countryLevelForApi; $level++) {
             $levelList = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findBy(
-                ['countryCode' => $countrycode, 'fcode' => 'ADM' . $level]
+                ['countryCode' => $countryCode, 'fcode' => 'ADM' . $level]
             );
-            $responseContent['level' . $level] = $this->buildApiResponse($levelList, $locale, $countrycode, $level);
+            $responseContent['level' . $level] = $this->buildApiResponse($levelList, $locale, $countryCode, $level);
         }
         $apiCacheData->set(json_encode($responseContent));
         $this->redisCache->save($apiCacheData);

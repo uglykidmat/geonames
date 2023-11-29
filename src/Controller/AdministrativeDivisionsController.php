@@ -21,9 +21,9 @@ class AdministrativeDivisionsController extends AbstractController
     }
 
     #[Route('/api/{locale}/{countrycode}', name: 'subdivisions_api', methods: ['GET', 'HEAD'])]
-    public function getSubdivisionsForApi(string $locale, string $countrycode): JsonResponse
+    public function getSubdivisionsForApi(string $locale, string $countryCode): JsonResponse
     {
-        return $this->service->getSubdivisionsForApi($locale, $countrycode);
+        return $this->service->getSubdivisionsForApi($locale, $countryCode);
     }
 
     #--5043------------------------------------------------------------
