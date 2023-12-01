@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'app:adu',
-    description: 'Administrative Divisions Update'
+    description: 'Administrative Divisions Update by country code and featurecode'
 )]
 class AdministrativeDivisionsCommand extends Command
 {
@@ -23,9 +23,9 @@ class AdministrativeDivisionsCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('country', InputArgument::REQUIRED, 'country');
-        $this->addArgument('fcode', InputArgument::REQUIRED, 'fcode');
-        $this->addArgument('startrow', InputArgument::REQUIRED, 'startrow');
+        $this->addArgument('country', InputArgument::REQUIRED, 'A 2-letter country code');
+        $this->addArgument('fcode', InputArgument::REQUIRED, 'FeatureCode (ADM1, ADM2, ADM3)');
+        $this->addArgument('startrow', InputArgument::REQUIRED, 'The start row in geonames search. Run this command with "1" and see the "Max entries for this level" info when it is done. Run it again with 1000 if there are more than 1000 entries, since the script gets the information by batch of 1000.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): ?int
@@ -34,10 +34,15 @@ class AdministrativeDivisionsCommand extends Command
         $country = $input->getArgument('country');
         $fcode = $input->getArgument('fcode');
         $startrow = $input->getArgument('startrow');
+
+        if (strlen($country) > 2) {
+            $country = explode(',', $input->getArgument('country'));
+        }
+
         $io->title('Fetching :');
         $io->text('Running...');
 
-        if ($serviceResult = $this->service->addAdminDivisions($fcode, $startrow, $country)) {
+        if ($serviceResult = $this->service->addAdminDivisionsBatch($fcode, $startrow, $country)) {
             $io->success($serviceResult->getContent());
 
             return Command::SUCCESS;

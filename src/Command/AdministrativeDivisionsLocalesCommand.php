@@ -16,24 +16,28 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class AdministrativeDivisionsLocalesCommand extends Command
 {
-    public function __construct(private AdministrativeDivisionLocaleService $service)
-    {
+    public function __construct(
+        private AdministrativeDivisionLocaleService $service
+    ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->addArgument('country', InputArgument::REQUIRED, 'country');
+        $this->addArgument(
+            'countries',
+            InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+            'The countries to update (multiple country codes separated by a space).'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $io = new SymfonyStyle($input, $output);
-        $country = $input->getArgument('country');
         $io->title('Fetching :');
         $io->text('Running...');
 
-        if ($serviceResult = $this->service->updateSubdivisionsLocales($country)) {
+        if ($serviceResult = $this->service->updateSubdivisionsLocales($input->getArgument('countries'))) {
             $io->success($serviceResult->getContent());
 
             return Command::SUCCESS;

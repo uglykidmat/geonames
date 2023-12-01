@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'app:ade',
-    description: 'Administrative Divisions Export'
+    description: 'Administrative Divisions File Export. Outputs a .json file in the /var/geonames_export_data folder.'
 )]
 class AdministrativeDivisionsExportCommand extends Command
 {
@@ -23,8 +23,8 @@ class AdministrativeDivisionsExportCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('level', InputArgument::REQUIRED, 'level');
-        $this->addArgument('locale', InputArgument::REQUIRED, 'locale');
+        $this->addArgument('level', InputArgument::REQUIRED, 'The level you want to import (0 = countries, 1/2/3 = Administrative divisions).');
+        $this->addArgument('locale', InputArgument::REQUIRED, 'The language to export ("fr", "de", etc).');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): ?int
