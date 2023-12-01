@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Interface\GeonamesAPIServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class GeonamesAPIService implements GeonamesAPIServiceInterface
 {
@@ -103,25 +102,34 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         return $countrySubDivisionSearchResponse;
     }
 
-    public function getJsonSearch(int $geonameId): ?stdClass
+    public function getJsonSearch(int $geonameId): stdClass|string
     {
-        try {
-            $getJsonSearchResponse = json_decode($this->client->request(
-                'GET',
-                $this->urlBase
-                    . 'getJSON?geonameId=' . $geonameId
-                    . '&username=' . $this->token
-                    . '&style=full'
-            )->getContent());
-        } catch (\Exception $e) {
-            throw new BadRequestException('Invalid request parameter or user token. ID must be of integer type.');
+        $options = [
+            'query' => [
+                'username' => $this->token,
+                'geonameId' => $geonameId,
+                'style' => 'full',
+            ],
+            'timeout' => 250
+        ];
+
+        $getJsonSearchResponse = $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'getJSON',
+            $options
+        );
+        if ($getJsonSearchResponse->getStatusCode() == 200) {
+            return json_decode($getJsonSearchResponse->getContent());
         }
-        return $getJsonSearchResponse;
+
+        return $getJsonSearchResponse->getContent();
     }
 
     public function searchJSON(string $fCode, int $startRow, array|string $countries): JsonResponse
     {
         $response = new JsonResponse();
+
         if (gettype($countries) !== 'string') {
             foreach ($countries as $country) {
                 $countriesArray[] = ['country' => $country];
@@ -158,10 +166,32 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
                 $query
             )->toArray();
         }
-        $this->responseCheck(null, $searchResponse, "search");
+        $this->responseCheck($query, $searchResponse, "search");
         $response->setContent(json_encode($searchResponse));
 
         return $response;
+    }
+
+    public function childrenJSON(int $geonameId): array
+    {
+        $options = [
+            'query' => [
+                'style' => 'full',
+                'formatted' => 'true',
+                'username' => $this->token,
+                'geonameId' => $geonameId,
+                'maxRows' => 1000,
+                //'hierarchy' => 'dependency'
+            ],
+            'timeout' => 250
+        ];
+
+        return $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'childrenJSON',
+            $options
+        )->toArray();
     }
 
     private function responseCheck(array|null $request, array $searchResponse, string $searchType): void

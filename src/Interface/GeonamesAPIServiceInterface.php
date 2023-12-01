@@ -1,5 +1,5 @@
 <?php
-// src/Interface/GeonamesAPIServiceInterface.php
+
 namespace App\Interface;
 
 use stdClass;
@@ -11,7 +11,9 @@ interface GeonamesAPIServiceInterface
 
     public function latLngSearch(float $lat, float $lng): ?int;
 
-    public function getJsonSearch(int $geonameId): ?stdClass;
+    public function getJsonSearch(int $geonameId): stdClass|string;
+
+    public function childrenJSON(int $geonameId): array;
 
     public function searchJSON(string $fCode, int $startRow, array $countries): JsonResponse;
 }
