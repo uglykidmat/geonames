@@ -19,6 +19,7 @@ class GeonamesCountryService
         public EntityManagerInterface $entityManager,
         private GeonamesTranslationService $translationService,
         private CacheItemPoolInterface $redisCache,
+        private GeonamesDBCachingService $dbservice,
         private string $redisDsn,
     ) {
     }
@@ -46,15 +47,13 @@ class GeonamesCountryService
 
     public function purgeCountryList(): JsonResponse
     {
-        $countriesListJSON = json_decode(file_get_contents(__DIR__ . '/../../all_countries_data/allCountries.json'));
         $repository = $this->entityManager->getRepository(GeonamesCountry::class);
         $response = new JsonResponse();
         $purgeList = [];
-        foreach ($countriesListJSON as $countryCode => $uselessValue) {
-            if ($country = $repository->findOneByCountryCode($countryCode)) {
-                $this->entityManager->remove($country);
-                $purgeList[] = $countryCode;
-            }
+        $countries = $repository->findAll();
+        foreach ($countries as $country) {
+            $this->entityManager->remove($country);
+            $purgeList[] = $country->getCountryCode();
         }
         $this->entityManager->flush();
 
@@ -70,27 +69,8 @@ class GeonamesCountryService
             $countryList = json_decode($apiresponse->getContent());
             $updateList = [];
             foreach ($countryList->geonames as $countryEntry) {
-                $country = new GeonamesCountry();
-                $country
-                    ->setContinent($countryEntry->continent)
-                    ->setCapital($countryEntry->capital)
-                    ->setLanguages($countryEntry->languages)
-                    ->setGeonameId($countryEntry->geonameId)
-                    ->setSouth($countryEntry->south)
-                    ->setNorth($countryEntry->north)
-                    ->setEast($countryEntry->east)
-                    ->setWest($countryEntry->west)
-                    ->setIsoAlpha3($countryEntry->isoAlpha3)
-                    ->setFipsCode($countryEntry->fipsCode)
-                    ->setPopulation($countryEntry->population)
-                    ->setIsoNumeric($countryEntry->isoNumeric)
-                    ->setAreaInSqKm($countryEntry->areaInSqKm)
-                    ->setCountryCode($countryEntry->countryCode)
-                    ->setCountryName($countryEntry->countryName)
-                    ->setContinentName($countryEntry->continentName)
-                    ->setCurrencyCode($countryEntry->currencyCode);
-                $this->entityManager->persist($country);
-                $updateList[] = $country->getCountryCode();
+                $this->dbservice->saveCountryToDatabase($countryEntry);
+                $updateList[] = $countryEntry->countryCode;
             }
             $this->entityManager->flush();
 

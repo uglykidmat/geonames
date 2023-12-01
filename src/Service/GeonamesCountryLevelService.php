@@ -9,11 +9,10 @@ class GeonamesCountryLevelService
 {
     public function __construct(
         public EntityManagerInterface $entityManager,
-
     ) {
     }
 
-    public function addCountryLevel(array $countryLevel): void
+    public function addCountryLevel(array $countryLevel): ?GeonamesCountryLevel
     {
         $countryLevelObj = (new GeonamesCountryLevel())
             ->setCountryCode($countryLevel["countrycode"])
@@ -27,9 +26,10 @@ class GeonamesCountryLevelService
             ->setDone($countryLevel["done"]);
 
         $this->entityManager->persist($countryLevelObj);
+        return $countryLevelObj;
     }
 
-    public function setCountryLevel(array $countryLevel): void
+    public function setCountryLevel(array $countryLevel): ?GeonamesCountryLevel
     {
         $levelToUpdate = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countryLevel['countrycode'])
             ->setMaxLevel($countryLevel["max_level"])
@@ -41,5 +41,7 @@ class GeonamesCountryLevelService
             ->setADM5($countryLevel["ADM5"])
             ->setDone($countryLevel["done"]);
         $this->entityManager->persist($levelToUpdate);
+
+        return $levelToUpdate;
     }
 }

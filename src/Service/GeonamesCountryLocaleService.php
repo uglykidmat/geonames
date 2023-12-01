@@ -27,7 +27,7 @@ class GeonamesCountryLocaleService
             foreach ($idsList as $geonameId => $uselessvalue) {
                 $countryResponse = $this->apiservice->getJsonSearch($geonameId);
                 foreach ($countryResponse->alternateNames as $countryLang) {
-                    if (isset($countryLang->lang)) {
+                    if (isset($countryLang->lang) &&  !in_array($countryLang->lang, ['link', 'lauc', 'abbr', 'wkdt'])) {
                         if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
                             ->findOneBy(array(
                                 'geonameId' => $geonameId,
