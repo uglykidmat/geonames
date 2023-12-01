@@ -224,6 +224,7 @@ class AdministrativeDivisionsService
     {
         set_time_limit(0);
         $subDivInfos = [];
+        $outputCount = 0;
         //______NOTE
         $locales = ["en", "fr", "it", "de", "es", "nl", "pl", "ru", "th", "zh", "ko", "ar", "ja", "tr", "uk", "zh-tw",];
         //__________
@@ -256,20 +257,48 @@ class AdministrativeDivisionsService
                         ]
                     )->getName();
                 }
+                $outputCount++;
+                $this->logger->info(
+                    '✅ Adding locale (Country' .
+                        ' ' .
+                        $outputCount .
+                        '/' .
+                        count($list) .
+                        ' id: ' .
+                        $subDivision->getGeonameId() .
+                        ') - "' .
+                        $name .
+                        '" to the file.'
+                );
             } else {
                 if ($subDivFound = $this->entityManager->getRepository(
                     AdministrativeDivisionLocale::class
-                )->findOneBy(
-                    [
-                        'locale' => $locale,
-                        'geonameId' => $subDivision->getGeonameId()
-                    ]
+                )->findLocalesForGeoId(
+                    $subDivision->getGeonameId(),
+                    $locale
                 )) {
                     $name = $subDivFound->getName();
-                } else $name = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)
-                    ->findOneByGeonameId(
-                        $subDivision->getGeonameId()
-                    )->getName();
+                } else
+
+                    $name = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)
+                        ->findOneByGeonameId(
+                            $subDivision->getGeonameId()
+                        )->getName();
+
+                $outputCount++;
+                $this->logger->info(
+                    '✅ Adding locale (ADM' .
+                        $level .
+                        ' ' .
+                        $outputCount .
+                        '/' .
+                        count($list) .
+                        ' id: ' .
+                        $subDivision->getGeonameId() .
+                        ') - "' .
+                        $name .
+                        '" to the file.'
+                );
             }
             $startPathId = $subDivision->getGeonameId();
             $subDivInfos[$subKey] = [
