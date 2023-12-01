@@ -76,6 +76,10 @@ class GeonamesCountry
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $geojson = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?GeonamesCountryLevel $level = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -322,6 +326,18 @@ class GeonamesCountry
     public function setGeojson(?string $geojson): static
     {
         $this->geojson = $geojson;
+
+        return $this;
+    }
+
+    public function getLevel(): ?GeonamesCountryLevel
+    {
+        return $this->level;
+    }
+
+    public function setLevel(GeonamesCountryLevel $level): static
+    {
+        $this->level = $level;
 
         return $this;
     }
