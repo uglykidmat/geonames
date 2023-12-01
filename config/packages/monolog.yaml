@@ -2,6 +2,7 @@ when@dev:
     monolog:
         channels:
             - deprecation
+            - geoinfo
         handlers:
             main:
                 type: stream
@@ -16,6 +17,11 @@ when@dev:
                 type: rotating_file
                 channels: [deprecation]
                 path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+            geoinfo:
+                type: stream
+                path: php://stderr
+                level: info
+                channels: ["!http_client", "!doctrine", "!deprecation"]
 
 when@test:
     monolog:
