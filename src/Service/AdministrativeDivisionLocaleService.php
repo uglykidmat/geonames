@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Psr\Log\LoggerInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AdministrativeDivisionLocale;
@@ -16,6 +17,7 @@ class AdministrativeDivisionLocaleService
         public EntityManagerInterface $entityManager,
         private CacheItemPoolInterface $redisCache,
         private string $redisDsn,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -38,17 +40,37 @@ class AdministrativeDivisionLocaleService
         return $response;
     }
 
-    public function updateSubdivisionsLocales(string $countrycode): JsonResponse
+    public function updateSubdivisionsLocales(array $countrycodes): JsonResponse
     {
         set_time_limit(0);
         $response = new JsonResponse();
         $totalLocalesCount = 0;
-        $adminDivsList = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByCountryCodeADM(
-            $countrycode
-        );
 
-        foreach ($adminDivsList as $adminDiv) {
-            $totalLocalesCount += self::getSubdivisionsLocalesForId($adminDiv->getGeonameId());
+        foreach ($countrycodes as $countrycode) {
+            $adminDivsList = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findByCountryCode(
+                strtoupper($countrycode)
+            );
+            $this->logger->info(
+                '🌍 Getting locales for country code ' .
+                    $countrycode . ' 🌏'
+            );
+            $divsCount = 0;
+            $totalDivsCount = count($adminDivsList);
+            foreach ($adminDivsList as $adminDiv) {
+                $totalLocalesCount += $this->getSubdivisionsLocalesForId($adminDiv->getGeonameId());
+                $divsCount++;
+                $this->logger->info(
+                    '👉 ::' .
+                        $divsCount . '/' .
+                        $totalDivsCount .
+                        ' :: Getting locales for ' .
+                        $adminDiv->getFcode() . ' - ' .
+                        $adminDiv->getGeonameId() . ' (' .
+                        $adminDiv->getName() . ')'
+                );
+            }
+            #Sometimes the geonames API is in the cabbages, a small delay in the next requests can help
+            usleep(500000);
         }
         $response->setContent(
             json_encode([
@@ -64,29 +86,39 @@ class AdministrativeDivisionLocaleService
     {
         $newLocalesCount = 0;
         $apiResponse = $this->apiservice->getJsonSearch($geonameId);
-        foreach ($apiResponse->alternateNames as $localeItem) {
-            #we exlude the wkdt+link(wikipedia) languages, as well as 'lauc' (?) and 'abbr'(abbreviation) data from fetching
-            if (isset($localeItem->lang) &&  !in_array($localeItem->lang, ['link', 'lauc', 'abbr', 'wkdt'])) {
-                if (!$this->entityManager->getRepository(AdministrativeDivisionLocale::class)
-                    ->findOneBy(array(
-                        'geonameId' => $geonameId,
-                        'locale' => strtolower($localeItem->lang)
-                    ))) {
-                    $newLocale = new AdministrativeDivisionLocale();
-                    $newLocale
-                        ->setGeonameId($geonameId)
-                        ->setLocale($localeItem->lang)
-                        ->setCountryCode($apiResponse->countryCode)
-                        ->setFCode($apiResponse->fcode)
-                        ->setName($localeItem->name)
-                        ->setIsPreferredName($localeItem->isPreferredName ?? null)
-                        ->setIsShortName($localeItem->isShortName ?? null);
-                    $this->entityManager->persist($newLocale);
-                    $newLocalesCount++;
-                }
+
+        if (isset($apiResponse->alternateNames)) {
+            foreach ($apiResponse->alternateNames as $localeItem) {
+                #we exlude the wkdt+link(wikipedia) languages, as well as 'lauc' (?) and 'abbr'(abbreviation) data from fetching
+                if (isset($localeItem->lang) &&  !in_array($localeItem->lang, ['link', 'lauc', 'abbr', 'wkdt', 'unlc'])) {
+                    if (!$this->entityManager->getRepository(AdministrativeDivisionLocale::class)
+                        ->findOneBy(array(
+                            'geonameId' => $geonameId,
+                            'locale' => strtolower($localeItem->lang)
+                        ))) {
+                        $newLocale = new AdministrativeDivisionLocale();
+                        $newLocale
+                            ->setGeonameId($geonameId)
+                            ->setLocale($localeItem->lang)
+                            ->setCountryCode($apiResponse->countryCode)
+                            ->setFCode($apiResponse->fcode)
+                            ->setName($localeItem->name)
+                            ->setIsPreferredName($localeItem->isPreferredName ?? null)
+                            ->setIsShortName($localeItem->isShortName ?? null);
+                        $this->entityManager->persist($newLocale);
+                        $this->logger->info('  ✅ Locale added.', ['Language' => $localeItem->lang]);
+                        $newLocalesCount++;
+                    } else $this->logger->info('  ❕ Locale already found.', ['Language' => $localeItem->lang]);
+                } else $this->logger->info('  🚭 No locales available or excluded by the script.');
             }
+            $this->entityManager->flush();
+        } else {
+            $errMsg = json_decode($apiResponse);
+            $this->logger->warning(
+                '  ❌ ' .
+                    $$errMsg['status']['message']
+            );
         }
-        $this->entityManager->flush();
 
         return $newLocalesCount;
     }
