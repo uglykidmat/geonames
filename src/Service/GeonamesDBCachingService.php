@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use stdClass;
+use Psr\Log\LoggerInterface;
 use App\Adapter\GeonamesAdapter;
 use App\Service\GeonamesAPIService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +16,7 @@ class GeonamesDBCachingService
         private HttpClientInterface $httpClientInterface,
         private EntityManagerInterface $entityManager,
         private GeonamesAPIService $apiservice,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -42,5 +44,22 @@ class GeonamesDBCachingService
     {
         $newSubDivision = GeonamesAdapter::AdaptObjToSubdiv($subdivision);
         $this->entityManager->persist($newSubDivision);
+    }
+
+    public function saveCountryToDatabase(stdClass $country): void
+    {
+        $newCountry = GeonamesAdapter::AdaptObjToCountry($country);
+        $this->entityManager->persist($newCountry);
+    }
+
+    public function saveChildren(array $children): void
+    {
+        foreach ($children as $child) {
+            $this->entityManager->persist($child);
+        }
+        $this->logger->info(
+            '🍆 Flushing...'
+        );
+        $this->entityManager->flush();
     }
 }

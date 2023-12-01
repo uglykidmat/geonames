@@ -4,6 +4,7 @@ namespace App\Adapter;
 
 use stdClass;
 use App\Entity\GeonamesAdministrativeDivision;
+use App\Entity\GeonamesCountry;
 
 class GeonamesAdapter
 {
@@ -51,5 +52,28 @@ class GeonamesAdapter
             ->setFcl($subdivision->fcl ?? null)
             ->setSrtm3($subdivision->srtm3 ?? null)
             ->setAstergdem($subdivision->astergdem ?? null);
+    }
+
+    public static function AdaptObjToCountry(
+        stdClass $country
+    ): GeonamesCountry {
+        return (new GeonamesCountry())
+            ->setContinent($country->continent)
+            ->setCapital($country->capital)
+            ->setLanguages($country->languages)
+            ->setGeonameId($country->geonameId)
+            ->setSouth($country->south)
+            ->setNorth($country->north)
+            ->setEast($country->east)
+            ->setWest($country->west)
+            ->setIsoAlpha3($country->isoAlpha3)
+            ->setFipsCode($country->fipsCode)
+            ->setPopulation($country->population)
+            ->setIsoNumeric($country->isoNumeric)
+            ->setAreaInSqKm($country->areaInSqKm)
+            ->setCountryCode($country->countryCode)
+            ->setCountryName($country->countryName)
+            ->setContinentName($country->continentName)
+            ->setCurrencyCode($country->currencyCode);
     }
 }
