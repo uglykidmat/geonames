@@ -30,8 +30,28 @@ the database should then be ready for hydration.
 `symfony server:start -d` to start the server.
 
 ## Countries hydration
+
+#### tl;dr
+##### Hydration
+```bash
+php bin/console app:cu
+php bin/console app:clu
+php bin/console app:clvu
+php bin/console app:cgu
+php bin/console app:cbu
+php bin/console app:adcu AD AE AF AG AI AL AM AO AR AS AT AU AX AZ BA BB BD BE BF BG BH BI BJ BM BN BO BQ BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FM FO FR GA GB GD GE GF GH GM GN GP GQ GR GT GU GW GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KM KN KP KR KW KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NG NI NL NO NP NR NZ OM PA PE PF PG PH PK PL PM PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SH SI SJ SK SL SM SN SO SR ST SV SY SZ TD TF TG TH TJ TL TM TN TO TR TT TW TZ UA UG UM US UY UZ VC VE VI VN VU WF WS YE YT ZA ZM ZW
+php bin/console app:adaltu
+php bin/console app:adlu AD AE AF AG AI AL AM AO AR AS AT AU AX AZ BA BB BD BE BF BG BH BI BJ BM BN BO BQ BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FM FO FR GA GB GD GE GF GH GM GN GP GQ GR GT GU GW GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KM KN KP KR KW KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NG NI NL NO NP NR NZ OM PA PE PF PG PH PK PL PM PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SH SI SJ SK SL SM SN SO SR ST SV SY SZ TD TF TG TH TJ TL TM TN TO TR TT TW TZ UA UG UM US UY UZ VC VE VI VN VU WF WS YE YT ZA ZM ZW
+```
+
+##### API/Export
+```bash
+php bin/console app:adapi {lang} {countryCode}
+php bin/console app:ade {locale} {level}
+```
+
 #### 1. update the countries
-- basic information ( ⚠️ make sure you have the file "allCountries.json" in your /all_countries_data/ folder). This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of september 2023, there were 250 entries.
+- basic country information. This performs a purge of the "geonames_country" table and fills it up with fresh information from Geonames. As of november 2023, there were 250 entries.
 
 ```bash
 php bin/console app:cu
@@ -110,6 +130,24 @@ Multiple countries' ADM can be imported at once :
 php bin/console app:adu DE,ES,FI,CH ADM1 1
 ```
 
+Update subdivisions by children :
+```bash
+php bin/console app:adcu {countrycodes}
+```
+This command will run a database hydration by parent <-> children geonames Search.
+
+It is important for your current database to empty of administrative divisions from the countries you are trying to import.  
+The list of countries must be separated by a blank space.
+
+The command to run a FULL hydration is :
+⚠️ this command can take a while to finish and can be hard on the RAM.
+
+Make sure you are not running on an 8Gb RAM Laptop like me.
+
+```bash
+php bin/console app:adcu AD AE AF AG AI AL AM AO AR AS AT AU AX AZ BA BB BD BE BF BG BH BI BJ BM BN BO BQ BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FM FO FR GA GB GD GE GF GH GM GN GP GQ GR GT GU GW GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KM KN KP KR KW KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NG NI NL NO NP NR NZ OM PA PE PF PG PH PK PL PM PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SH SI SJ SK SL SM SN SO SR ST SV SY SZ TD TF TG TH TJ TL TM TN TO TR TT TW TZ UA UG UM US UY UZ VC VE VI VN VU WF WS YE YT ZA ZM ZW
+```
+
 Some administrative divisions have an alternative admincode.
 To import them, ⚠️ make sure the file 'geonames_alternative_divisions.json' is in the 'base_data' folder, then visit
 ```php
@@ -129,6 +167,10 @@ the Ids must be separated by a comma.
 Locales update : 
 ```bash
 php bin/console app:adlu {CountryCode}
+```
+As for the subdivisions update above, it is possible to import every translation for every country in one command : 
+```bash
+php bin/console app:adlu AD AE AF AG AI AL AM AO AR AS AT AU AX AZ BA BB BD BE BF BG BH BI BJ BM BN BO BQ BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FM FO FR GA GB GD GE GF GH GM GN GP GQ GR GT GU GW GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KM KN KP KR KW KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NG NI NL NO NP NR NZ OM PA PE PF PG PH PK PL PM PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SH SI SJ SK SL SM SN SO SR ST SV SY SZ TD TF TG TH TJ TL TM TN TO TR TT TW TZ UA UG UM US UY UZ VC VE VI VN VU WF WS YE YT ZA ZM ZW
 ```
 This command can take a moment to execute, depending on the country's depth.
 
