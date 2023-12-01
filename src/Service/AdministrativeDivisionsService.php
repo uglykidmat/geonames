@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use Psr\Log\LoggerInterface;
 use App\Entity\GeonamesCountry;
+use App\Adapter\GeonamesAdapter;
 use App\Entity\GeonamesCountryLevel;
 use App\Entity\GeonamesCountryLocale;
 use Psr\Cache\CacheItemPoolInterface;
@@ -24,7 +26,9 @@ class AdministrativeDivisionsService
         private EntityManagerInterface $entityManager,
         private CacheItemPoolInterface $redisCache,
         private GeonamesTranslationService $translationService,
-        private string $redisDsn
+        private GeonamesDBCachingService $dbservice,
+        private string $redisDsn,
+        private LoggerInterface $logger,
     ) {
     }
     public function purgeAdminDivisions(string $fcode): string
@@ -54,6 +58,21 @@ class AdministrativeDivisionsService
         return $response;
     }
 
+    public function addAdminDivisionsBatch(string $fcode, int $startrow, array|string $countries): JsonResponse
+    {
+        $response = new JsonResponse();
+        $count = 0;
+        if (is_array($countries)) {
+            foreach ($countries as $countryKey => $country) {
+                self::addAdminDivisions($fcode, $startrow, $country);
+                $count++;
+            }
+        } else return self::addAdminDivisions($fcode, $startrow, $countries);
+
+        $response->setContent('Countries done : ' . $count);
+        return $response;
+    }
+
     public function addAdminDivisions(string $fcode, int $startrow, array|string $countries): JsonResponse
     {
         $response = new JsonResponse();
@@ -65,59 +84,111 @@ class AdministrativeDivisionsService
         } catch (\Exception $e) {
             throw new BadRequestException('Error during Geonames searchJSON request.');
         }
+
         if (count($apiResult->geonames) != 0) {
+            $trouve = [];
+            $pastrouve = [];
             foreach ($apiResult->geonames as $entry) {
-
                 if (!$adminDivRepository->findOneByGeonameId($entry->geonameId)) {
-                    $newAdminDiv = new GeonamesAdministrativeDivision();
-                    $newAdminDiv
-                        ->setGeonameId($entry->geonameId)
-                        ->setName($entry->name)
-                        ->setAsciiName($entry->asciiName ?? null)
-                        ->setToponymName($entry->toponymName ?? null)
-                        ->setContinentCode($entry->continentCode ?? null)
-                        ->setCc2($entry->cc2 ?? null)
-                        ->setCountryCode($entry->countryCode ?? null)
-                        ->setCountryId($entry->countryId ?? null)
-                        ->setAdminName1($entry->adminName1 ?? null)
-                        ->setAdminName2($entry->adminName2 ?? null)
-                        ->setAdminName3($entry->adminName3 ?? null)
-                        ->setAdminName4($entry->adminName4 ?? null)
-                        ->setAdminName5($entry->adminName5 ?? null)
-                        ->setAdminId1($entry->adminId1 ?? null)
-                        ->setAdminId2($entry->adminId2 ?? null)
-                        ->setAdminId3($entry->adminId3 ?? null)
-                        ->setAdminId4($entry->adminId4 ?? null)
-                        ->setAdminId5($entry->adminId5 ?? null)
-                        ->setAdminCode1($entry->adminCode1 ?? null)
-                        ->setAdminCode2($entry->adminCode2 ?? null)
-                        ->setAdminCode3($entry->adminCode3 ?? null)
-                        ->setAdminCode4($entry->adminCode4 ?? null)
-                        ->setLat($entry->lat ?? null)
-                        ->setLng($entry->lng ?? null)
-                        ->setPopulation($entry->population ?? null)
-                        ->setTimezoneGmtOffset($entry->timezone->gmtOffset ?? null)
-                        ->setTimezoneTimeZoneId($entry->timezone->timeZoneId ?? null)
-                        ->setTimezoneDstOffset($entry->timezone->dstOffset ?? null)
-                        ->setAdminTypeName($entry->adminTypeName ?? null)
-                        ->setFcode($entry->fcode ?? null)
-                        ->setFcl($entry->fcl ?? null)
-                        ->setSrtm3($entry->srtm3 ?? null)
-                        ->setAstergdem($entry->astergdem ?? null)
-                        ->setAdminCodeAlt1($entry->adminCodes1->ISO3166_2 ?? null)
-                        ->setAdminCodeAlt2($entry->adminCodes2->ISO3166_2 ?? null);
-
-                    $this->entityManager->persist($newAdminDiv);
+                    $this->dbservice->saveSubdivisionToDatabase($entry);
                     $newEntryCount++;
-                } else $entriesFoundCount++;
+                    $pastrouve[] = $entry->name;
+                } else {
+                    $entriesFoundCount++;
+                    $trouve[] = $entry->name;
+                }
             }
             $this->entityManager->flush();
         }
+        //ATTENTION le tableau retourné n'est pas vraiment cohérent,
+        //certaines fois il manque des éléments...
         $result = ['Status' => 'Success', 'Entries already found' => $entriesFoundCount, 'New entries' => $newEntryCount, 'Max entries for this fcode' => $apiResult->totalResultsCount];
 
         $response->setContent(json_encode($result));
 
         return $response;
+    }
+
+    public function addChildrenDivisions(array $geonameParents): string
+    {
+        set_time_limit(0);
+        $outputCount = 0;
+        foreach ($geonameParents as $geonameParent) {
+            $geonameCountry = $this->entityManager->getRepository(GeonamesCountry::class)->findOneByCountryCode($geonameParent);
+            $countryUsedLevel = $geonameCountry->getLevel()->getUsedLevel();
+            $this->logger->info(
+                '👉 Starting crawl for country code ' .
+                    $geonameParent .
+                    ' 👈'
+            );
+            $finalChildren = $this->getChildrenDivs($geonameCountry->getGeonameId(), $countryUsedLevel, 0);
+            $this->dbservice->saveChildren($finalChildren);
+            $outputCount += count($finalChildren);
+            #Sometimes the geonames API is in the cabbages, a small delay in the next requests can help
+            sleep(1);
+        }
+
+        return json_encode(['Status' => 'Success', 'New children subdivisions' => $outputCount]);
+    }
+
+    private function getChildrenDivs(
+        int $parentId,
+        int $countryUsedLevel,
+        int $currentDepth,
+        array $childrens = []
+    ): array {
+        //usage principal : codes ADM1-2-3
+        $forbiddenFCodes = ['PPL', 'PPLL', 'PPLA', 'PPLA2', 'PPLC',];
+        $adminDivRepository = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class);
+
+        if ($currentDepth >= $countryUsedLevel) {
+
+            return $childrens;
+        }
+        try {
+            $childrenDivs = $this->apiservice->childrenJSON($parentId);
+        } catch (\Exception $e) {
+            throw new BadRequestException('Error during Geonames searchJSON request : ' . $e->getMessage());
+        }
+        //Specific case for American Samoa id 5880801
+        if (array_key_exists('status', $childrenDivs)) {
+            $this->logger->warning(
+                '  ❌ ' .
+                    $childrenDivs['status']['message']
+            );
+            return $childrens;
+        }
+        if (!array_key_exists('geonames', $childrenDivs) || !count($childrenDivs['geonames'])) {
+
+            return $childrens;
+        }
+
+        foreach ($childrenDivs['geonames'] as $childDiv) {
+            if (
+                $adminDivRepository->findOneByGeonameId($childDiv['geonameId'])
+                || in_array($childDiv['fcode'], $forbiddenFCodes)
+            ) {
+                $this->logger->info(
+                    '⏹️  Skipping ' .
+                        $childDiv['geonameId'] . '(' .
+                        $childDiv['name'] . ')' . '...'
+                );
+                continue;
+            }
+
+            $childrens[] = GeonamesAdapter::AdaptObjToSubdiv((object)$childDiv);
+
+            $this->logger->info('✅ Adding GeonameId ' . $childDiv['geonameId'] . '(' . $childDiv['name'] . ')' . ' to the repository');
+
+            $childrens =
+                $this->getChildrenDivs(
+                    $childDiv['geonameId'],
+                    $countryUsedLevel,
+                    $currentDepth + 1,
+                    $childrens
+                );
+        }
+        return $childrens;
     }
 
     public function updateAlternativeCodes(): JsonResponse
@@ -231,21 +302,26 @@ class AdministrativeDivisionsService
         return $subDivInfos;
     }
 
-    public function buildExportPath(int $currentId, int $level, string $locale, string $path = ''): string
+    private function buildExportPath(int $currentId, int $level, string $locale, string $path = ''): string
     {
         $currentSubDiv = $this->entityManager->getRepository(
             GeonamesAdministrativeDivision::class
         )->findOneByGeonameId($currentId);
 
         if ($level === 0) {
-            $nameFound = str_replace(' ', '+', $this->translationService->findLocaleOrTranslationForId($currentId, $locale)) ?: str_replace(' ', '+', $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName());
-
+            $nameFound =
+                $this->translationService->findLocaleOrTranslationForId($currentId, $locale)
+                ?: $this->entityManager->getRepository(GeonamesCountry::class)->findOneByGeonameId($currentId)->getCountryName();
+            $nameFound = str_replace(' ', '+', $nameFound);
             $path = $nameFound . '/' . $path;
 
             return substr($path, 0, -1);
         }
 
-        $nameFound = str_replace(' ', '+', $this->translationService->findLocaleOrTranslationForId($currentId, $locale)) ?: str_replace(' ', '+', $currentSubDiv->getName());
+        $nameFound =
+            $this->translationService->findLocaleOrTranslationForId($currentId, $locale)
+            ?: $currentSubDiv->getName();
+        $nameFound = str_replace(' ', '+', $nameFound);
         $path = $nameFound . '/' . $path;
         $parentSubDiv =
             $this->entityManager->getRepository(
@@ -303,7 +379,7 @@ class AdministrativeDivisionsService
         return $response;
     }
 
-    public function buildApiResponse(array $adminDivsForLevel, string $locale, string $countrycode, int $level): array
+    private function buildApiResponse(array $adminDivsForLevel, string $locale, string $countrycode, int $level): array
     {
         $apiLevelResponse = [];
 
