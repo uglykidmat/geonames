@@ -37,7 +37,7 @@ class AdministrativeDivisionsController extends AbstractController
     #------------------------------------------------------------------
 
     #[Route('/locales/update/{countrycode}', name: 'locales_update', methods: ['GET', 'HEAD'])]
-    public function updateSubdivisionsLocales(string $countrycode): Response
+    public function updateSubdivisionsLocales(array $countrycode): Response
     {
         return $this->localeService->updateSubdivisionsLocales($countrycode);
     }

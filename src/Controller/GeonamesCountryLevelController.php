@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\GeonamesCountry;
 use App\Entity\GeonamesCountryLevel;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeonamesCountryLevelService;
@@ -27,15 +28,18 @@ class GeonamesCountryLevelController extends AbstractController
         $newLevels = 0;
         $countryLevelJson = json_decode(file_get_contents(__DIR__ . '/../../base_data/geonames_country_level.json'), true);
 
-        foreach ($countryLevelJson as $countryLevelJsonIndex => $countryLevelJsonValue) {
+        foreach ($countryLevelJson as $countryLevelJsonValue) {
             if (!$this->entityManager->getRepository(GeonamesCountryLevel::class)
                 ->findByCountryCode($countryLevelJsonValue["countrycode"])) {
-                $this->levelService->addCountryLevel($countryLevelJsonValue);
+                $level = $this->levelService->addCountryLevel($countryLevelJsonValue);
                 $newLevels++;
             } else {
-                $this->levelService->setCountryLevel($countryLevelJsonValue);
+                $level = $this->levelService->setCountryLevel($countryLevelJsonValue);
                 $updatedLevels++;
             }
+            $countryAssociated = $this->entityManager->getRepository(GeonamesCountry::class)->findOneByCountryCode($countryLevelJsonValue["countrycode"]);
+
+            $countryAssociated->setLevel($level);
         }
         $this->entityManager->flush();
 
