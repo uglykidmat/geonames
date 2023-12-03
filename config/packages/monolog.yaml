@@ -2,13 +2,12 @@ when@dev:
     monolog:
         channels:
             - deprecation
-            - geoinfo
         handlers:
             main:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event", "!deprecation"]
+                channels: ["!event", "!deprecation","!geoinfo"]
             console:
                 type: console
                 process_psr_3_messages: false

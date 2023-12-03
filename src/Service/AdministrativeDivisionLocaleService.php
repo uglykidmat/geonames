@@ -109,7 +109,7 @@ class AdministrativeDivisionLocaleService
                         $this->logger->info('  ✅ Locale added.', ['Language' => $localeItem->lang]);
                         $newLocalesCount++;
                     } else $this->logger->info('  ❕ Locale already found.', ['Language' => $localeItem->lang]);
-                } else $this->logger->info('  🚭 No locales available or excluded by the script.');
+                } else $this->logger->info('  ⏹️ No locales available or excluded by the script.');
             }
             $this->entityManager->flush();
         } else {
