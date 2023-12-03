@@ -194,6 +194,66 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         )->toArray();
     }
 
+    public function hierarchyJSON(int $geonameId): array
+    {
+        $options = [
+            'query' => [
+                'style' => 'full',
+                'formatted' => 'true',
+                'username' => $this->token,
+                'geonameId' => $geonameId,
+            ],
+            'timeout' => 250
+        ];
+
+        return $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'hierarchyJSON',
+            $options
+        )->toArray();
+    }
+
+    public function siblingsJSON(int $geonameId): array
+    {
+        $options = [
+            'query' => [
+                'style' => 'full',
+                'formatted' => 'true',
+                'username' => $this->token,
+                'geonameId' => $geonameId,
+            ],
+            'timeout' => 250
+        ];
+
+        return $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'siblingsJSON',
+            $options
+        )->toArray();
+    }
+
+    public function neighboursJSON(int $geonameId): array
+    {
+        $options = [
+            'query' => [
+                'style' => 'full',
+                'formatted' => 'true',
+                'username' => $this->token,
+                'geonameId' => $geonameId,
+            ],
+            'timeout' => 250
+        ];
+
+        return $this->client->request(
+            'GET',
+            $this->urlBase
+                . 'neighboursJSON',
+            $options
+        )->toArray();
+    }
+
     private function responseCheck(array|null $request, array $searchResponse, string $searchType): void
     {
         $formattedSearchResponse = array_change_key_case($searchResponse, CASE_LOWER);
