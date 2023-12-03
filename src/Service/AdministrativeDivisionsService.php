@@ -6,7 +6,6 @@ use Psr\Log\LoggerInterface;
 use App\Entity\GeonamesCountry;
 use App\Adapter\GeonamesAdapter;
 use App\Entity\GeonamesCountryLevel;
-use App\Entity\GeonamesCountryLocale;
 use Psr\Cache\CacheItemPoolInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AdministrativeDivisionLocale;
@@ -191,6 +190,38 @@ class AdministrativeDivisionsService
         return $childrens;
     }
 
+    public function tryAndFindAFamily(array $geonameIds): array
+    {
+        #VERY specific case for country_code SJ these islands had no parents
+        #set up in geonames so I had to fetch a different way(hierarchy,siblings,etc)
+        #See other xxxxxJSON methods in Service\GeonamesAPIService.php
+        foreach ($geonameIds as $geonameId) {
+            $addedSiblings = 0;
+            $hierarchy = $this->apiservice->hierarchyJSON($geonameId);
+
+            foreach ($hierarchy['geonames'] as $parent) {
+                if ($parent['fcode'] == 'ADM1') {
+                    $lostSiblings = $this->apiservice->childrenJSON($parent['geonameId']);
+                    $siblingsCount = $lostSiblings['totalResultsCount'];
+                    foreach ($lostSiblings['geonames'] as $lostSibling) {
+                        if (!$this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($lostSibling['geonameId'])) {
+                            $this->dbservice->saveSubdivisionToDatabase((object)$lostSibling);
+                            $addedSiblings++;
+                            $this->logger->info('✅ [' . $addedSiblings . '/' . $siblingsCount . ']Adding GeonameId ' . $lostSibling['geonameId'] . '(' . $lostSibling['name'] . 'of level ' . $lostSibling['fcode'] . ') to the repository');
+                        } else $this->logger->info('⏹️  [' . $lostSibling['geonameId'] . ' already found !');
+                    }
+                    if (!$this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($parent['geonameId'])) {
+                        $this->dbservice->saveSubdivisionToDatabase((object)$parent);
+                        $this->logger->info('✅ Reluctant parent ' . $lostSibling['name'] . ' added to the repository');
+                    }
+
+                    $this->entityManager->flush();
+                }
+            }
+        }
+        return ['status' => 'Success', 'Siblings added' => $addedSiblings];
+    }
+
     public function updateAlternativeCodes(): JsonResponse
     {
         $response = new JsonResponse();
@@ -239,67 +270,25 @@ class AdministrativeDivisionsService
                 ->findADMsForCountryLevel($level, $countriesToFetch);
         }
         foreach ($list as $subKey => $subDivision) {
-            if ($level == 0) {
-                if ($localeFound = $this->entityManager->getRepository(
-                    GeonamesCountryLocale::class
-                )->findLocalesForGeoId(
-                    $subDivision->getGeonameId(),
-                    $locale
-                )) {
-                    $name = $localeFound[0]['name'];
-                } else if ($locale === 'zh-tw') {
-                    $name = $this->entityManager->getRepository(
-                        GeonamesCountryLocale::class
-                    )->findOneBy(
-                        [
-                            'locale' => 'zh',
-                            'geonameId' => $subDivision->getGeonameId()
-                        ]
-                    )->getName();
-                }
-                $outputCount++;
-                $this->logger->info(
-                    '✅ Adding locale (Country' .
-                        ' ' .
-                        $outputCount .
-                        '/' .
-                        count($list) .
-                        ' id: ' .
-                        $subDivision->getGeonameId() .
-                        ') - "' .
-                        $name .
-                        '" to the file.'
-                );
-            } else {
-                if ($subDivFound = $this->entityManager->getRepository(
-                    AdministrativeDivisionLocale::class
-                )->findLocalesForGeoId(
-                    $subDivision->getGeonameId(),
-                    $locale
-                )) {
-                    $name = $subDivFound->getName();
-                } else
-
-                    $name = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)
-                        ->findOneByGeonameId(
-                            $subDivision->getGeonameId()
-                        )->getName();
-
-                $outputCount++;
-                $this->logger->info(
-                    '✅ Adding locale (ADM' .
-                        $level .
-                        ' ' .
-                        $outputCount .
-                        '/' .
-                        count($list) .
-                        ' id: ' .
-                        $subDivision->getGeonameId() .
-                        ') - "' .
-                        $name .
-                        '" to the file.'
-                );
-            }
+            $name = $this->translationService->findLocaleOrTranslationForId(
+                $subDivision->getGeonameId(),
+                $locale
+            );
+            $outputCount++;
+            $this->logger->info(
+                '✅ Adding locale (' .
+                    $outputCount .
+                    '/' .
+                    count($list) .
+                    ' - ' .
+                    $subDivision->getCountryCode() .
+                    ' - ' .
+                    $name .
+                    ' - ' .
+                    'id ' .
+                    $subDivision->getGeonameId() .
+                    ') to the file.'
+            );
             $startPathId = $subDivision->getGeonameId();
             $subDivInfos[$subKey] = [
                 'name' => $name,

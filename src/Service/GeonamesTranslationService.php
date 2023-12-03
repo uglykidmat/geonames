@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\AdministrativeDivisionLocale;
+use App\Entity\GeonamesAdministrativeDivision;
 use App\Entity\GeonamesCountryLocale;
 use App\Entity\GeonamesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,10 +39,9 @@ class GeonamesTranslationService
             if ($translationFound = $subDivLocaleRepo->findLocalesForGeoId($geonameId, 'zh')) {
                 return $translationFound[0]['name'];
             }
-
-            return $countryLocaleRepo->findLocalesForGeoId($geonameId, 'zh')[0]['name'];
         }
-        return null;
+        $lastResortName = $this->entityManager->getRepository(GeonamesAdministrativeDivision::class)->findOneByGeonameId($geonameId);
+        return $lastResortName->getName();
     }
 
     public function checkRequest(Request $postRequest): void
