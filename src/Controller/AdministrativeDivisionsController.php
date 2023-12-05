@@ -20,7 +20,7 @@ class AdministrativeDivisionsController extends AbstractController
     ) {
     }
 
-    #[Route('/api/{locale}/{countrycode}', name: 'subdivisions_api', methods: ['GET', 'HEAD'])]
+    #[Route('/api/{locale}/{countryCode}', name: 'subdivisions_api', methods: ['GET', 'HEAD'])]
     public function getSubdivisionsForApi(string $locale, string $countryCode): JsonResponse
     {
         return $this->service->getSubdivisionsForApi($locale, $countryCode);
@@ -36,16 +36,16 @@ class AdministrativeDivisionsController extends AbstractController
     }
     #------------------------------------------------------------------
 
-    #[Route('/locales/update/{countrycode}', name: 'locales_update', methods: ['GET', 'HEAD'])]
-    public function updateSubdivisionsLocales(array $countrycode): Response
+    #[Route('/locales/update/{countryCode}', name: 'locales_update', methods: ['GET', 'HEAD'])]
+    public function updateSubdivisionsLocales(array $countryCode): Response
     {
-        return $this->localeService->updateSubdivisionsLocales($countrycode);
+        return $this->localeService->updateSubdivisionsLocales($countryCode);
     }
 
-    #[Route('/locales/{countrycode}/{locale}/{fcode}', name: 'locales_get', methods: ['GET', 'HEAD'])]
-    public function showSubdivisionsLocales(string $countrycode, string $locale, string $fcode): Response
+    #[Route('/locales/{countryCode}/{locale}/{fcode}', name: 'locales_get', methods: ['GET', 'HEAD'])]
+    public function showSubdivisionsLocales(string $countryCode, string $locale, string $fcode): Response
     {
-        return $this->localeService->showSubdivisionsLocales($countrycode, strtolower($locale), $fcode);
+        return $this->localeService->showSubdivisionsLocales($countryCode, strtolower($locale), $fcode);
     }
 
     #[Route('/alternatives/update', name: 'alternatives_update', methods: ['GET'])]
