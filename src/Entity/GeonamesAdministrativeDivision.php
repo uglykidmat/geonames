@@ -34,7 +34,6 @@ class GeonamesAdministrativeDivision
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cc2 = null;
 
-    #[ORM\ManyToOne(targetEntity: GeonamesCountryLevel::class, inversedBy: 'countryCode')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $countryCode = null;
 
