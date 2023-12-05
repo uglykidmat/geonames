@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/Gatoreviews/geonames/compare/v2.7.0...v2.7.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* **migration:** update 2 files missing from prod... ([08cf506](https://github.com/Gatoreviews/geonames/commit/08cf5069e9f827d924ab478b1e360a8e654501a0))
+
 ## [2.7.0](https://github.com/Gatoreviews/geonames/compare/v2.6.0...v2.7.0) (2023-12-05)
 
 
