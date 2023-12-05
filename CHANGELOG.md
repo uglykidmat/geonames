@@ -1,3 +1,26 @@
+## [2.7.0](https://github.com/Gatoreviews/geonames/compare/v2.6.0...v2.7.0) (2023-12-05)
+
+
+### Features
+
+* **commands:** new commands and update existing one to fit new functions ([8a45933](https://github.com/Gatoreviews/geonames/commit/8a45933dd54e9327b43c72a794fa68ccf2829136))
+* **dbcaching:** add method for country in dbcaching service & adapter ([8609499](https://github.com/Gatoreviews/geonames/commit/86094999e5640dde008e7d05c6f93499bc413c6c))
+* **export:** new command - hydrate database by children ([afaac6a](https://github.com/Gatoreviews/geonames/commit/afaac6a09cd6fd6f44fc0e974268fccd7f68194d))
+* **export:** new methods to fetch geonames endpoints ([9ce7a50](https://github.com/Gatoreviews/geonames/commit/9ce7a502f02293cc45ecb8f33edf22c1d888f31e))
+* **export:** oneToOne relation country<->level ([f334021](https://github.com/Gatoreviews/geonames/commit/f3340212996dd6bbaec2d8dfdb8eeea11e06bdb6))
+* **geoApi:** new childrenJSON endpoint ([24be008](https://github.com/Gatoreviews/geonames/commit/24be00805515c6e92ebf17b6618d64b8449a9365))
+* **logs:** monolog config to get logger info in console ([5bf930d](https://github.com/Gatoreviews/geonames/commit/5bf930dbe2e560a43c663b8ab897cce93d70c033))
+* **services:** update AdminDivLocale service, loggers etc ([3a771be](https://github.com/Gatoreviews/geonames/commit/3a771be0540e48b6ac8b4df8c9d1b977bed5e9e1))
+
+
+### Bug Fixes
+
+* **controller:** wrong variable names in routes ([4f97ab9](https://github.com/Gatoreviews/geonames/commit/4f97ab9852f6e9562bf0eb4fb9b18c2838ec5e8d))
+* **export:** findOne bug ([65dc38f](https://github.com/Gatoreviews/geonames/commit/65dc38fd78c6a9084e38150d8bc5adf4a7859017))
+* **export:** Translations fallback + main Service refact ([2ab0a3d](https://github.com/Gatoreviews/geonames/commit/2ab0a3db505682f79e46219dffa38e0c7c413a1c))
+* **misc:** remove older unavailable migrations ([9173199](https://github.com/Gatoreviews/geonames/commit/9173199036b4a36a356ab7ba90f7a18f22406177))
+* **Typo:** #[DEV-5267](https://linear.app/gtrsuite/issue/DEV-5267) always upper case ([c39de8b](https://github.com/Gatoreviews/geonames/commit/c39de8b7ddeaf52bb8bf8d69dac9c2803ffc5e53))
+
 ## [2.6.1](https://github.com/Gatoreviews/geonames/compare/v2.6.0...v2.6.1) (2023-11-29)
 
 
