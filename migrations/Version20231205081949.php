@@ -14,7 +14,7 @@ final class Version20231205081949 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Initial Doctrine migration for mail AdminDiv table -> recreated because it went missing, for some reason...';
     }
 
     public function up(Schema $schema): void
