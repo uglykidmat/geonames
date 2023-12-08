@@ -33,7 +33,8 @@ class GeonamesCountryService
             return $countryListData->get();
         }
         $listCountries = [];
-        foreach ($this->entityManager->getRepository(GeonamesCountry::class)->findAll() as $country) {
+        $allCountries = $this->entityManager->getRepository(GeonamesCountry::class)->findBy([], ['countryCode' => 'ASC']);
+        foreach ($allCountries as $country) {
             $listCountries[] = [
                 'countryCode' => $country->getCountryCode(),
                 'geonameId' => $country->getGeonameId(),
