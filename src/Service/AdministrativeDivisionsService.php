@@ -151,7 +151,7 @@ class AdministrativeDivisionsService
         }
         //Specific case for American Samoa id 5880801
         if (array_key_exists('status', $childrenDivs)) {
-            $this->logger->warning(
+            $this->logger->info(
                 '  ❌ ' .
                     $childrenDivs['status']['message']
             );
@@ -424,6 +424,11 @@ class AdministrativeDivisionsService
                 'name' => $name,
                 'geonameId' => (string)$adminDiv->getGeonameId(),
             ];
+            $this->logger->info(
+                ' ✅ Adding ID ' .
+                    $adminDiv->getGeonameId() .
+                    'to the API list.'
+            );
         }
 
         return $apiLevelResponse;
