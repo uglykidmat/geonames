@@ -34,16 +34,17 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             'lng' => $lng,
             'username' => $this->token,
             'style' => 'full',
-            'maxRows' => '1',
-            'fcode' => 'PPLA',
-            'fcode' => 'PPLX',
-            'fcode' => 'PPLC',
-            'fcode' => 'PPL',
+            'maxRows' => '3',
         ],];
         $latlngSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
-                . 'findNearbyJSON',
+                . 'findNearbyJSON?'
+                . 'featureCode=PPL'
+                . 'featureCode=ADM1'
+                . '&featureCode=ADM2'
+                . '&featureCode=ADM3'
+                . '&featureCode=ADM4',
             $query
         )->toArray();
 
