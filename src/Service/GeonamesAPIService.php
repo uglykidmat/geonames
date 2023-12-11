@@ -41,7 +41,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $this->urlBase
                 . 'findNearbyJSON?'
                 . 'featureCode=PPL'
-                . 'featureCode=ADM1'
+                . '&featureCode=ADM1'
                 . '&featureCode=ADM2'
                 . '&featureCode=ADM3'
                 . '&featureCode=ADM4',
