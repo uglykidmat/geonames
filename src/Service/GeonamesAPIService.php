@@ -39,8 +39,8 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         $latlngSearchResponse = $this->client->request(
             'GET',
             $this->urlBase
-                . 'findNearbyJSON?'
-                . 'featureCode=PPL'
+                . 'findNearbyJSON'
+                . '?featureCode=PPL'
                 . '&featureCode=ADM1'
                 . '&featureCode=ADM2'
                 . '&featureCode=ADM3'
