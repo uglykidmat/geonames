@@ -3,12 +3,7 @@
 namespace App\tests\ServicesTests;
 
 use PHPUnit\Framework\TestCase;
-use App\Controller\GeonamesController;
-use App\Service\GeonamesSearchService;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\MockHttpClient;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
 class GeonamesSearchServiceTest extends TestCase
