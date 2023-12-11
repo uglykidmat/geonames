@@ -1,3 +1,20 @@
+## [2.8.0](https://github.com/Gatoreviews/geonames/compare/v2.7.1...v2.8.0) (2023-12-11)
+
+
+### Features
+
+* **tests:** new test file for levels endpoint ([0ba4895](https://github.com/Gatoreviews/geonames/commit/0ba4895a91be6dffb7396b7b61f79294c306f0c6))
+* **tests:** new test for JSON export files ([f35f76d](https://github.com/Gatoreviews/geonames/commit/f35f76d24490e9461afaf0cb58442fc203191e8c))
+
+
+### Bug Fixes
+
+* **search:** fix missing character in URL parameters ([46c522d](https://github.com/Gatoreviews/geonames/commit/46c522d00eb27e1fbded9aad31dcc972cb4fd065))
+* **search:** update APIservice 'lat-lng' method ([e17b5fc](https://github.com/Gatoreviews/geonames/commit/e17b5fc2641666efdaf6cc639ba2a22fb0679fa9))
+* **search:** woops. Moved question mark in URL parameters ([549e735](https://github.com/Gatoreviews/geonames/commit/549e735da5e7e4a3a9194633cff4f9a352a773b7))
+* **tests:** countryList ordered by countryCode ASC ([b8e6ae7](https://github.com/Gatoreviews/geonames/commit/b8e6ae7a48571e0a7925feab93cb399405cba757))
+* **tests:** missing conversion to Array ([a2fb914](https://github.com/Gatoreviews/geonames/commit/a2fb9143bda855f8619956079842d789a44e66a7))
+
 ## [2.7.1](https://github.com/Gatoreviews/geonames/compare/v2.7.0...v2.7.1) (2023-12-05)
 
 
