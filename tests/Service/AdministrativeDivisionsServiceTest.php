@@ -8,7 +8,8 @@ class AdministrativeDivisionsServiceTest extends ApiTestCase
 {
     public function testJSONFileLevel0Has250Entries(): void
     {
-        $jsonFile = json_decode(file_get_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_0_fr.json"));
+        $jsonFile = json_decode(file_get_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_0_fr.json"), true);
+        //dd($jsonFile[0]);
         $this->assertArrayHasKey(249, $jsonFile, 'Hummmm no.');
         $this->assertArraySubset(['objectID' => '3576396'], $jsonFile[0]);
     }
@@ -19,12 +20,14 @@ class AdministrativeDivisionsServiceTest extends ApiTestCase
         $this->assertArrayHasKey(3765, $jsonFile, 'Hummmm no.');
         $this->assertArraySubset(['objectID' => '6269131'], $jsonFile[0]);
     }
+
     public function testJSONFileLevel2HasEvenMoreEntries(): void
     {
         $jsonFile = json_decode(file_get_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_2_fr.json"), true);
         $this->assertArrayHasKey(16684, $jsonFile, 'Hummmm no.');
         $this->assertArraySubset(['objectID' => '3333122'], $jsonFile[0]);
     }
+
     public function testJSONFileLevel3HasEntriesIThink(): void
     {
         $jsonFile = json_decode(file_get_contents(__DIR__ . "/../../var/geonames_export_data/subdivisions_3_fr.json"), true);
