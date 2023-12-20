@@ -29,7 +29,7 @@ class GeonamesSearchService
         $bulkResponse = [];
         $bulkRequest = json_decode($request);
         foreach ($bulkRequest as $bulkIndex => $bulkRow) {
-            $bulkResponse[$bulkIndex] = $this->requestOne($bulkRow);
+            $bulkResponse[] = $this->requestOne($bulkRow, $bulkIndex);
         }
 
         return json_encode($bulkResponse, JSON_THROW_ON_ERROR);
@@ -142,7 +142,6 @@ class GeonamesSearchService
         }
         return $countrySubDivResult;
     }
-
     // TODO : externalize those method in CacheRedisService
     public function getCacheKey(string $requestType, stdClass $bulkRow): string
     {
@@ -245,7 +244,7 @@ class GeonamesSearchService
                 $geodata = $this->getByZipcode($requestedGeoDivision);
                 break;
             default:
-                // this case should never append due to previous $requestType error check
+                // this case should never happen due to previous $requestType error check
                 $geodata['error'] = true;
         }
 
