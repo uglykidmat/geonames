@@ -48,6 +48,39 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $query
         )->toArray();
 
+        // Very specific case for Svarlbard Jan Mayen
+        if ($latlngSearchResponse['geonames'][0]['countryCode'] == 'SJ') {
+            $latlngSearchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'findNearbyJSON'
+                    . '?featureCode=PPLA',
+                $query
+            )->toArray();
+
+            return $this->findSubDivByParent($latlngSearchResponse['geonames'][0]['geonameId']);
+        }
+
+        // Very specific case for Capo Verde
+        if ($latlngSearchResponse['geonames'][0]['countryCode'] == 'CV') {
+            return $this->findSubDivByParent($latlngSearchResponse['geonames'][0]['geonameId']);
+        }
+
+        // Very specific case for French Polynesia, which returned populated places without any hierarchy 
+        if (
+            $latlngSearchResponse['geonames'][0]['fcode'] === 'PPL'
+            && $latlngSearchResponse['geonames'][0]['adminCode1'] == '00'
+            && $latlngSearchResponse['geonames'][0]['countryCode'] == 'PF'
+        ) {
+            $latlngSearchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'findNearbyJSON'
+                    . '?featureCode=PPLX',
+                $query
+            )->toArray();
+        }
+
         if (!empty($latlngSearchResponse['geonames'][0]) && is_array($latlngSearchResponse['geonames'][0])) {
             $this->responseCheck($query, $latlngSearchResponse, "latlng");
 
@@ -56,6 +89,18 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         $this->logger->error('Empty response from Geonames Service for Coordinates lat/lng search.');
 
         return null;
+    }
+
+    private function findSubDivByParent(int $geonameId)
+    {
+        foreach ($this->hierarchyJSON($geonameId)['geonames'] as $parent) {
+            if (
+                $parent['fcode'] === 'ADM2'
+                || $parent['fcode'] === 'ADM1'
+            ) {
+                return $this->childrenJSON($parent['geonameId'])['geonames'][0]['geonameId'];
+            }
+        }
     }
 
     public function postalCodeLookupJSON(string $postalCode, string $countrycode): array
