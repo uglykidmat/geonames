@@ -41,7 +41,6 @@ class GeonamesSearchService
             $requestEntry->lat = $requestEntry->latitude;
             $requestEntry->lng = $requestEntry->longitude;
         }
-
         if (
             !empty($requestEntry->lat)
             && is_numeric($requestEntry->lat)
@@ -94,6 +93,14 @@ class GeonamesSearchService
 
     public function getByZipcode(mixed $bulkRow): array
     {
+        // Specific case for US zipcodes which would be received as ZIP+4 format.
+        // We need to remove the last digits and the hyphen for the search to work.
+        if (
+            $bulkRow->country_code === 'US'
+            && preg_match('/\d{5}-\d+/', (string)$bulkRow->zip_code, $output)
+        ) {
+            $bulkRow->zip_code = substr($bulkRow->zip_code, 0, 5);
+        }
         try {
             $geonamesZipCodeFound = $this->apiService->postalCodeLookupJSON(
                 $bulkRow->zip_code,
@@ -106,7 +113,7 @@ class GeonamesSearchService
         if (empty($geonamesZipCodeFound['postalcodes'][0])) {
             return [
                 'error' => true,
-                'message' => 'empty geonames postalCodeLookup response'
+                'message' => 'Empty geonames postalCodeLookup response. Make sure the zipcode format is the right one for this country code.'
             ];
         }
 
