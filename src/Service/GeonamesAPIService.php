@@ -86,7 +86,7 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
 
             return $latlngSearchResponse['geonames'][0]['geonameId'];
         }
-        $this->logger->error('Empty response from Geonames Service for Coordinates lat/lng search.');
+        $this->logger->info('Empty response from Geonames Service for Coordinates lat/lng search.');
 
         return null;
     }
@@ -306,18 +306,18 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
         switch ($searchType) {
             case "postalcode":
                 if (empty($formattedSearchResponse['postalcodes'])) {
-                    $this->logger->error('PostalCode search error - empty response', $request);
+                    $this->logger->warning('PostalCode search error - empty response', $request);
                 }
                 break;
 
             case "latlng":
                 if (empty($formattedSearchResponse['geonames'])) {
-                    $this->logger->error('Coordinates search error - empty response', $request);
+                    $this->logger->warning('Coordinates search error - empty response', $request);
                 }
                 break;
             case 'search':
                 if (empty($formattedSearchResponse['geonames'])) {
-                    $this->logger->error('Coordinates search error - empty response', $request);
+                    $this->logger->warning('Coordinates search error - empty response', $request);
                 }
                 break;
         }

@@ -106,7 +106,7 @@ class GeonamesSearchService
         if (empty($geonamesZipCodeFound['postalcodes'][0])) {
             return [
                 'error' => true,
-                'message' => 'empty geocode postalCodeLookupJSON'
+                'message' => 'empty geonames postalCodeLookup response'
             ];
         }
 
