@@ -1,3 +1,15 @@
+## [2.9.0](https://github.com/Gatoreviews/geonames/compare/v2.8.0...v2.9.0) (2023-12-21)
+
+
+### Features
+
+* **search:** add 3 specific cases-PF,CV,SJ ([71ab25f](https://github.com/Gatoreviews/geonames/commit/71ab25f37822fcbfaf260f335e548316011f1087))
+
+
+### Bug Fixes
+
+* **search:** broken 'elt_id' increment ([a2a5019](https://github.com/Gatoreviews/geonames/commit/a2a50195e22ae1c3934d49bf0aabb6f0c0b549b3))
+
 ## [2.8.0](https://github.com/Gatoreviews/geonames/compare/v2.7.1...v2.8.0) (2023-12-11)
 
 
