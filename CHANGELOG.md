@@ -1,3 +1,11 @@
+## [2.9.1](https://github.com/Gatoreviews/geonames/compare/v2.9.0...v2.9.1) (2023-12-21)
+
+
+### Bug Fixes
+
+* **doctrine:** re-add missing first migration from july ([d56e58c](https://github.com/Gatoreviews/geonames/commit/d56e58cb7bc6aea683d2537a843ef9db594c4940))
+* **search:** regex to find incorrect US ZIP+4 zipcodes ([e80b047](https://github.com/Gatoreviews/geonames/commit/e80b047c4db08dc6d4e0b00f16513d19b2e72515))
+
 ## [2.9.0](https://github.com/Gatoreviews/geonames/compare/v2.8.0...v2.9.0) (2023-12-21)
 
 
