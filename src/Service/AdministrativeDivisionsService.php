@@ -430,8 +430,11 @@ class AdministrativeDivisionsService
             ];
             $this->logger->info(
                 ' ✅ Adding ID ' .
-                    $adminDiv->getGeonameId() .
-                    'to the API list.'
+                    $adminDiv->getGeonameId()
+                    . ' ('
+                    . $name
+                    . ') '
+                    . ' to the API list.'
             );
         }
 

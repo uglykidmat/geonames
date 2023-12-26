@@ -36,8 +36,8 @@ class AdministrativeDivisionsApiCommand extends Command
 
         $io->title('Starting :');
         $io->text('Building file for API levels search...');
-
-        $io->success($this->service->getSubdivisionsForApi($locale, $countryCode));
+        $this->service->getSubdivisionsForApi($locale, $countryCode);
+        $io->success(['Status' => 'Success', 'Message' => 'Response generated in Redis cache']);
 
         return Command::SUCCESS;
     }
