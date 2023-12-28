@@ -32,16 +32,16 @@ class GeonamesCountry
     private ?int $geonameId = null;
 
     #[ORM\Column(type: Types::FLOAT, precision: 17, scale: 15)]
-    private ?string $south = null;
+    private ?float $south = null;
 
     #[ORM\Column(type: Types::FLOAT, precision: 17, scale: 15)]
-    private ?string $north = null;
+    private ?float $north = null;
 
     #[ORM\Column(type: Types::FLOAT, precision: 17, scale: 15)]
-    private ?string $east = null;
+    private ?float $east = null;
 
     #[ORM\Column(type: Types::FLOAT, precision: 17, scale: 15)]
-    private ?string $west = null;
+    private ?float $west = null;
 
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $isoAlpha3 = null;
