@@ -61,7 +61,7 @@ class GeonamesCountryLocaleService
         $output = '';
 
         foreach ($countryResponse->alternateNames as $countryLang) {
-            if (isset($countryLang->lang)) {
+            if (isset($countryLang->lang) &&  !in_array($countryLang->lang, ['link', 'lauc', 'abbr', 'wkdt', 'unlc'])) {
                 if (!$this->entityManager->getRepository(GeonamesCountryLocale::class)
                     ->findOneBy(array(
                         'geonameId' => $geonameId,
