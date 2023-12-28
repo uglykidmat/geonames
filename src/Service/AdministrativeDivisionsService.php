@@ -378,7 +378,11 @@ class AdministrativeDivisionsService
         if ($apiCacheData->isHit()) {
             return $response->setContent($apiCacheData->get());
         }
-        $countryLevelForApi = $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countryCode)->getUsedLevel();
+
+        if (!$countryLevelForApi =
+            $this->entityManager->getRepository(GeonamesCountryLevel::class)->findOneByCountryCode($countryCode)->getUsedLevel()) {
+            return $response->setContent(json_encode(['Status' => 'Error', 'Message' => 'Invalid CountryCode']));
+        }
         $responseContent = [
             'level1' => [],
             'level2' => [],
