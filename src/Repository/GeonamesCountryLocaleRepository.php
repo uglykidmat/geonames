@@ -72,4 +72,18 @@ class GeonamesCountryLocaleRepository extends ServiceEntityRepository
 
         return $queryBuilderGcl->fetchAllAssociative();
     }
+
+    public function findCountryCodeByName(string $name): array
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $queryBuilder = $connection->createQueryBuilder('c');
+
+        $queryBuilder->select('c.country_code')
+            ->from('geonames_country_locale', 'c')
+            ->andWhere('c.name iLIKE :name')
+            ->setParameter('name', $name . '%')
+            ->groupBy('c.country_code');
+
+        return $queryBuilder->fetchAllAssociative();
+    }
 }

@@ -133,4 +133,9 @@ class GeonamesCountryLocaleService
 
         return $response->setContent(json_encode(array_values($baseLocales)));
     }
+
+    public function findCountryCodeByName(string $name): array
+    {
+        return $this->entityManager->getRepository(GeonamesCountryLocale::class)->findCountryCodeByName($name);
+    }
 }

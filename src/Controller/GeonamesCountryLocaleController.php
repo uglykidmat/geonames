@@ -21,4 +21,11 @@ class GeonamesCountryLocaleController extends AbstractController
     {
         return $this->localeService->getCountryNamesForLocale($locale);
     }
+
+    #[Route('/findCountryCodeByName/{name}', name: 'countrycodebyname', methods: ['GET', 'HEAD'])]
+    #[OA\Tag(name: 'Geonames Country Code By Name')]
+    public function findCountryCodeByName(string $name): JsonResponse
+    {
+        return $this->json($this->localeService->findCountryCodeByName($name));
+    }
 }
