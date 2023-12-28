@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/Gatoreviews/geonames/compare/v2.9.1...v2.9.2) (2023-12-28)
+
+
+### Bug Fixes
+
+* **countrylist:** return error if countrycode not found ([a04a026](https://github.com/Gatoreviews/geonames/commit/a04a0261ef302f4cc2f8704903c0272f64bc3644))
+
 ## [2.9.1](https://github.com/Gatoreviews/geonames/compare/v2.9.0...v2.9.1) (2023-12-21)
 
 
