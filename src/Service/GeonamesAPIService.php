@@ -48,6 +48,24 @@ class GeonamesAPIService implements GeonamesAPIServiceInterface
             $query
         )->toArray();
 
+        # Backup URL parameters if no response from geonames
+        if (!isset($latlngSearchResponse['geonames'])) {
+            $latlngSearchResponse = $this->client->request(
+                'GET',
+                $this->urlBase
+                    . 'findNearbyJSON'
+                    . '?fclass=P'
+                    . '&fcode=PPLA'
+                    . '&fcode=PPLC',
+                $query
+            )->toArray();
+        }
+
+        # In case of wrong coordinates
+        if (!isset($latlngSearchResponse['geonames'])) {
+            return null;
+        }
+
         // Very specific case for Svarlbard Jan Mayen
         if ($latlngSearchResponse['geonames'][0]['countryCode'] == 'SJ') {
             $latlngSearchResponse = $this->client->request(

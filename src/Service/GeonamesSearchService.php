@@ -41,6 +41,12 @@ class GeonamesSearchService
             $requestEntry->lat = $requestEntry->latitude;
             $requestEntry->lng = $requestEntry->longitude;
         }
+        if (isset($requestEntry->countryCode)) {
+            $requestEntry->country_code = $requestEntry->countryCode;
+        }
+        if (isset($requestEntry->postalCode)) {
+            $requestEntry->zip_code = $requestEntry->postalCode;
+        }
         if (
             !empty($requestEntry->lat)
             && is_numeric($requestEntry->lat)
@@ -87,7 +93,7 @@ class GeonamesSearchService
         }
         return [
             'error' => true,
-            'message' => 'empty geonames coordinates Search'
+            'message' => 'Empty geonames coordinates Search. Make sure the lat/lng coordinates are not inverted ?'
         ];
     }
 
@@ -137,7 +143,7 @@ class GeonamesSearchService
         }
         return [
             'error' => true,
-            'message' => 'empty geonames zipcode search'
+            'message' => 'Empty geonames zipcode search. Make sure the zipcode format is the right one for this country code.'
         ];
     }
     public function countrySubDivisionSearch(float $lat, float $lng): array
