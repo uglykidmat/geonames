@@ -12,5 +12,4 @@ return [
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true, 'dev' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
-    Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],
 ];
