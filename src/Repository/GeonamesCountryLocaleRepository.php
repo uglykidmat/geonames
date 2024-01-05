@@ -81,7 +81,7 @@ class GeonamesCountryLocaleRepository extends ServiceEntityRepository
         $queryBuilder->select('c.country_code')
             ->from('geonames_country_locale', 'c')
             ->andWhere('c.name iLIKE :name')
-            ->setParameter('name', $name . '%')
+            ->setParameter('name', $name)
             ->groupBy('c.country_code');
 
         return $queryBuilder->fetchAllAssociative();
