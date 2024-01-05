@@ -2,12 +2,30 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\GeonamesAdministrativeDivisionRepository;
 
-#[ApiResource(order: ['geonameId' => 'ASC'])]
+#[ApiResource(
+    order: ['geonameId' => 'ASC'],
+    uriTemplate: '/administrativedivision',
+    operations: [
+        new Get(
+            uriTemplate: '/administrativedivision/{id}',
+            stateless: false,
+            requirements: ['id' => '\S+'],
+            normalizationContext: ['groups' => ['standard']],
+        ),
+        new GetCollection(
+            uriTemplate: '/administrativedivisions',
+            stateless: false,
+            normalizationContext: ['groups' => ['standard']],
+        )
+    ]
+)]
 #[ORM\Entity(repositoryClass: GeonamesAdministrativeDivisionRepository::class)]
 class GeonamesAdministrativeDivision
 {

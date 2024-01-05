@@ -2,11 +2,29 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\GeonamesCountryLevelRepository;
 
-#[ApiResource(order: ['countryCode' => 'ASC'])]
+#[ApiResource(
+    order: ['geonameId' => 'ASC'],
+    uriTemplate: '/countrylevel',
+    operations: [
+        new Get(
+            uriTemplate: '/countrylevel/{id}',
+            stateless: false,
+            requirements: ['id' => '\S+'],
+            normalizationContext: ['groups' => ['standard']],
+        ),
+        new GetCollection(
+            uriTemplate: '/countrylevels',
+            stateless: false,
+            normalizationContext: ['groups' => ['standard']],
+        )
+    ]
+)]
 #[ORM\Entity(repositoryClass: GeonamesCountryLevelRepository::class)]
 class GeonamesCountryLevel
 {

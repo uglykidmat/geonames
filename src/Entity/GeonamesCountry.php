@@ -2,12 +2,31 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\GeonamesCountryRepository;
 
-#[ApiResource(order: ['geonameId' => 'ASC'])]
+#[ApiResource(
+    order: ['geonameId' => 'ASC'],
+    uriTemplate: '/country',
+    operations: [
+        new Get(
+            uriTemplate: '/country/{id}',
+            stateless: false,
+            requirements: ['id' => '\S+'],
+            normalizationContext: ['groups' => ['standard']],
+        ),
+        new GetCollection(
+            uriTemplate: '/countries',
+            stateless: false,
+            normalizationContext: ['groups' => ['standard']],
+        )
+    ]
+)]
 #[ORM\Entity(repositoryClass: GeonamesCountryRepository::class)]
 class GeonamesCountry
 {
@@ -17,6 +36,13 @@ class GeonamesCountry
     private ?int $id = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'string',
+            'format' => '2 letters',
+            'example' => 'EU'
+        ]
+    )]
     private ?string $continent = null;
 
     #[ORM\Column(length: 10, nullable: true)]

@@ -2,13 +2,52 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\GeonamesTranslationRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-#[ApiResource(order: ['geonameId' => 'ASC'])]
+#[ApiResource(
+    order: ['geonameId' => 'ASC'],
+    uriTemplate: '/translation',
+    operations: [
+        new Get(
+            uriTemplate: '/translation/{id}',
+            stateless: false,
+            requirements: ['id' => '\S+'],
+            normalizationContext: ['groups' => ['standard']],
+        ),
+        new Post(
+            uriTemplate: '/translation/{id}',
+            stateless: false,
+            requirements: ['id' => '\S+'],
+            normalizationContext: ['groups' => ['standard']],
+        ),
+        new Put(
+            normalizationContext: ['groups' => ['standard']],
+            stateless: false,
+            extraProperties: ['standard_put' => false],
+        ),
+        new Delete(
+            uriTemplate: '/translation/{id}',
+            stateless: false,
+            requirements: ['id' => '\S+'],
+            normalizationContext: ['groups' => ['standard']],
+        ),
+        new GetCollection(
+            uriTemplate: '/translations',
+            stateless: false,
+            normalizationContext: ['groups' => ['standard']],
+        )
+    ]
+)]
 #[ORM\Entity(repositoryClass: GeonamesTranslationRepository::class)]
 class GeonamesTranslation
 {
@@ -23,6 +62,7 @@ class GeonamesTranslation
         type: 'integer',
         message: 'The value {{ value }} is not a valid {{ type }}.',
     )]
+    #[ApiProperty(identifier: true)]
     private ?int $geonameId = null;
 
     #[ORM\Column(length: 255)]
