@@ -13,9 +13,9 @@ use App\Repository\GeonamesCountryLevelRepository;
     uriTemplate: '/countrylevel',
     operations: [
         new Get(
-            uriTemplate: '/countrylevel/{id}',
+            uriTemplate: '/countrylevel/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new GetCollection(

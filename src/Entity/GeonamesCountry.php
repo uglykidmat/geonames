@@ -15,9 +15,9 @@ use App\Repository\GeonamesCountryRepository;
     uriTemplate: '/country',
     operations: [
         new Get(
-            uriTemplate: '/country/{id}',
+            uriTemplate: '/country/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new GetCollection(

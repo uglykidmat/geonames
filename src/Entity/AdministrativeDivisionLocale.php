@@ -13,9 +13,9 @@ use App\Repository\AdministrativeDivisionLocaleRepository;
     uriTemplate: '/administrativedivisionlocale',
     operations: [
         new Get(
-            uriTemplate: '/administrativedivisionlocale/{id}',
+            uriTemplate: '/administrativedivisionlocale/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new GetCollection(

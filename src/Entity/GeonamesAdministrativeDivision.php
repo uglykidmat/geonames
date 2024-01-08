@@ -14,9 +14,9 @@ use App\Repository\GeonamesAdministrativeDivisionRepository;
     uriTemplate: '/administrativedivision',
     operations: [
         new Get(
-            uriTemplate: '/administrativedivision/{id}',
+            uriTemplate: '/administrativedivision/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new GetCollection(

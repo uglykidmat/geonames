@@ -19,15 +19,15 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriTemplate: '/translation',
     operations: [
         new Get(
-            uriTemplate: '/translation/{id}',
+            uriTemplate: '/translation/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new Post(
-            uriTemplate: '/translation/{id}',
+            uriTemplate: '/translation/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new Put(
@@ -36,9 +36,9 @@ use Symfony\Component\Validator\Constraints as Assert;
             extraProperties: ['standard_put' => false],
         ),
         new Delete(
-            uriTemplate: '/translation/{id}',
+            uriTemplate: '/translation/{geonameId}',
             stateless: false,
-            requirements: ['id' => '\S+'],
+            requirements: ['geonameId' => '\d+'],
             normalizationContext: ['groups' => ['standard']],
         ),
         new GetCollection(
