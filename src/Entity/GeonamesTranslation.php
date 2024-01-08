@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\GeonamesTranslationRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,7 +29,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             uriTemplate: '/translation/{geonameId}',
             stateless: false,
             requirements: ['geonameId' => '\d+'],
-            normalizationContext: ['groups' => ['standard']],
+        ),
+        new Post(
+            uriTemplate: '/translation/bulk',
+            output: ArrayCollection::class,
+            stateless: false,
+            validate: false,
         ),
         new Put(
             normalizationContext: ['groups' => ['standard']],
