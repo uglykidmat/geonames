@@ -1,3 +1,20 @@
+## [2.10.0](https://github.com/Gatoreviews/geonames/compare/v2.9.2...v2.10.0) (2024-01-09)
+
+
+### Features
+
+* **apiplatform:** first entity updates, basic HTTP methods ([2310e17](https://github.com/Gatoreviews/geonames/commit/2310e170c126eece43ccb8921d516063af6adb9f))
+* **countryCodes:** search for CountryCode by Country name ([ec1df53](https://github.com/Gatoreviews/geonames/commit/ec1df53901305ea3c9621ca6130bbfc728acdc2f))
+
+
+### Bug Fixes
+
+* **apiCommand:** remove humongous output ([919d6f0](https://github.com/Gatoreviews/geonames/commit/919d6f06a37bdc26965f81db4ed7b1ad759153be))
+* **countryCodes:** remove useless langs from update ([4c7a935](https://github.com/Gatoreviews/geonames/commit/4c7a9357a514f55e14b8f52633870a310b81bd14))
+* **entities:** fix Country bbox variable type ([8c85dc1](https://github.com/Gatoreviews/geonames/commit/8c85dc1d5c2e0b81bcf30fa4f24a93b8865a5218))
+* **readme:** version ([51638ca](https://github.com/Gatoreviews/geonames/commit/51638cacdc97ea69d40e2dca1a3308a5a7bdb700))
+* **search:** add backup search URL and avoid err500 ([aeaabb9](https://github.com/Gatoreviews/geonames/commit/aeaabb9b3dcb2bc7dbf4631744c6eaa3b1a5ffc9))
+
 ## [2.9.2](https://github.com/Gatoreviews/geonames/compare/v2.9.1...v2.9.2) (2023-12-28)
 
 
