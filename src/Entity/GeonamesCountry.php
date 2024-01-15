@@ -103,7 +103,7 @@ class GeonamesCountry
     private ?string $geojson = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?GeonamesCountryLevel $level = null;
 
     public function getId(): ?int
