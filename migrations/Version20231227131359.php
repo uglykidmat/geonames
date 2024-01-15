@@ -27,6 +27,6 @@ final class Version20231227131359 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA IF NOT EXISTS public');
-        $this->addSql('ALTER TABLE NOT EXISTS geonames_country ALTER level_id DROP NOT NULL');
+        $this->addSql('ALTER TABLE IF EXISTS geonames_country ALTER level_id DROP NOT NULL');
     }
 }
