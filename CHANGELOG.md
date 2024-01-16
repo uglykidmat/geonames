@@ -1,3 +1,12 @@
+## [2.10.1](https://github.com/Gatoreviews/geonames/compare/v2.10.0...v2.10.1) (2024-01-16)
+
+
+### Bug Fixes
+
+* **Cron:** remove all unessecary script ([1b5be49](https://github.com/Gatoreviews/geonames/commit/1b5be49fb038ccb6abc51c6f92df2d5412d29438))
+* **database:** fix faulty SQL command ([a2bf32e](https://github.com/Gatoreviews/geonames/commit/a2bf32e89e07d9c0a94046ca7eda1f8d1ae912f2))
+* **database:** fix nullable value and add migration ([cea87e2](https://github.com/Gatoreviews/geonames/commit/cea87e2a6ff2abcf38974b821a37b9072c9765e3))
+
 ## [2.10.0](https://github.com/Gatoreviews/geonames/compare/v2.9.2...v2.10.0) (2024-01-09)
 
 
