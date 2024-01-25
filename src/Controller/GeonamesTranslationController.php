@@ -47,6 +47,24 @@ class GeonamesTranslationController extends AbstractController
         return new JsonResponse($result);
     }
 
+    #[Route('/search/countrycode/{countrycode}', name: 'translation_searchbycountrycode', methods: ['GET'])]
+    public function searchByCountryCode(string $countrycode): JsonResponse
+    {
+        $getResponse = $this->entityManager->getRepository(GeonamesTranslation::class)->findByCountryCode(strtoupper($countrycode));
+        $result = array_map(static fn (GeonamesTranslation $value): array => $value->toArray(), $getResponse);
+
+        return new JsonResponse($result);
+    }
+    #[Route('/search/locale/{locale}', name: 'translation_searchbylocale', methods: ['GET'])]
+    public function searchByLocale(string $locale): JsonResponse
+    {
+        $getResponse = $this->entityManager->getRepository(GeonamesTranslation::class)->findByLocale(strtolower($locale));
+        $result = array_map(static fn (GeonamesTranslation $value): array => $value->toArray(), $getResponse);
+
+        return new JsonResponse($result);
+    }
+
+
     #[Route('', name: 'translation_post', methods: ['POST'])]
     public function post(
         Request $postRequest,

@@ -157,7 +157,7 @@ class GeonamesTranslation
         return [
             "geonameId"   => $this->geonameId,
             "name"        => $this->name,
-            "countrycode" => $this->countryCode,
+            "countryCode" => $this->countryCode,
             "fcode"       => $this->fcode,
             "locale"      => $this->locale
         ];
