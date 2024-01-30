@@ -41,6 +41,7 @@ class GeonamesAdministrativeDivisionRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('g')
             ->andWhere('g.geonameId = :val')
             ->setParameter('val', $value)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
